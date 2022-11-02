@@ -21,5 +21,5 @@ const indivTraineeSchema = new Schema({
   }
 }, { timestamps: true });
 
-const inidvTrainee = mongoose.model('IndivTrainee', userSchema);
+const inidvTrainee = mongoose.model('IndivTrainee', indivTraineeSchema);
 module.exports = inidvTrainee;
