@@ -4,7 +4,7 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "nodemon backend/App.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "express": "^4.18.2",
     "mongoose": "^6.0.11",
     "node": "^19.0.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "react-native": "^0.70.4"
   }
 }
