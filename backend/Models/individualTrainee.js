@@ -16,7 +16,7 @@ const indivTraineeSchema = new Schema({
     required: true,
   },
   PurchasedCourses: {
-    type: [Course],
+    type: String,
     required: true
   }
 }, { timestamps: true });

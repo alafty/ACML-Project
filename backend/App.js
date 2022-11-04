@@ -35,6 +35,7 @@ app.get("/home", (req, res) => {
 // #Routing to userController here
 
 require('./Routes/coursesRoutes')(app);
+require('./Routes/adminRoutes')(app);
 
 
 /*

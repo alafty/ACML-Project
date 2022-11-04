@@ -14,7 +14,7 @@ const adminSchema = new Schema({
     type: String,
     required: true,
   },
-  PrefereneLevel: {
+  PreferenceLevel: {
     type: Number,
     required: true
   }
