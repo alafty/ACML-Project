@@ -16,15 +16,20 @@ const instructorSchema = new Schema(
     },
     NumberOfCourses: {
       type: Number,
-      required: true,
+      required: false,
     },
     Courses: {
       type: String,
-      required: true,
+      required: false,
     },
     Rating: {
       type: Number,
-      required: true,
+      required: false,
+    },
+    Country: {
+      type: String,
+      required: false,
+      default: "Egypt",
     },
   },
   { timestamps: true }
