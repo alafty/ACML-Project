@@ -1,14 +1,11 @@
-//USE THIS FORMAT WHEN MAKING A CONTROLLER FILE
-const coursesModel = require ("../Models/course");
+import { Request, Response } from "express";
+import coursesModel from "../Models/course";
 
-// @desc    Get Goals
-//  @rout    GET /api/test
-// @access  private
-const getBySubject= async (req, res) => {
+const getBySubject= async (req: Request, res: Response) => {
     //used Acml as test name, replace to get the required name from the user
     // Courses should have attribute subject in them 
-    var factor = req.body.Name
-    const courses = await coursesModel.find({Subject:factor});
+    var factor = req.body.Subject
+    const courses = await coursesModel.find({Subject: factor});
     try {
         res.send(courses);
       } catch (error) {
@@ -17,13 +14,10 @@ const getBySubject= async (req, res) => {
     // filter specific subjects
 }
 
-// @desc    Set Goals
-// @rout    POST /api/test
-// @access  private
-const getByRating = async (req, res) => {
+const getByRating = async (req: Request, res: Response) => {
     //used 3 as test rating, replace to get the required name from the user
     var factor = req.body.Rating
-    const courses = await coursesModel.find({ rating: { $gte: factor } });
+    const courses = await coursesModel.find({ Rating: { $gte: factor } });
     try {
         res.send(courses);
       } catch (error) {
@@ -32,10 +26,7 @@ const getByRating = async (req, res) => {
     // filter the ratings under a specific number
 }
 
-// @desc    Update Goal
-// @rout    PUT /api/test/:id
-// @access  private
-const getByPrice = async (req, res) => {
+const getByPrice = async (req: Request, res: Response) => {
    //used 0,1000 as test prices, replace to get the required name from the user
    var factorSmaller  = req.body.PriceLow;
    var factorGreater = req.body.PriceHigh;
@@ -50,11 +41,5 @@ const getByPrice = async (req, res) => {
     // filter in price range
 }
 
-// @desc    Delete Goal
-// @rout    DELETE /api/test/:id
-// @access  private
-
-
-// export {getByRating,getByPrice,getBySubject}
-module.exports = {
+export {
     getBySubject, getByRating, getByPrice};
