@@ -1,13 +1,13 @@
 //USE THIS TEMPLATE WHEN MAKING A ROUTES FILE
 
-const express = require("express");
-const dummyRouter = express.Router();
-const {
+import { Router } from "express";
+const dummyRouter = Router();
+import {
   getGoals,
   setGoals,
   updateGoal,
   deleteGoal,
-} = require("../Controllers/testControllers");
+} from "../Controllers/dummyController";
 
 dummyRouter.get("/", getGoals);
 
@@ -17,4 +17,4 @@ dummyRouter.put("/:id", updateGoal);
 
 dummyRouter.delete("/:id", deleteGoal);
 
-module.exports = dummyRouter;
+export default dummyRouter;
