@@ -4,10 +4,7 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "server": "nodemon Backend/App.ts",
-    "node": "ts-node Backend/App.ts",
-    "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\" "
+    "server": "nodemon backend/App.js"
   },
   "repository": {
     "type": "git",
