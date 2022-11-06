@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 const validateRequest = (
-  checks: { id : boolean | undefined ; [k: string]: boolean | undefined },
+  checks: { id? : boolean | undefined ; [k: string]: boolean | undefined },
   req: Request
 ): boolean => {
   var valid: boolean = true;
@@ -21,7 +21,7 @@ const validateRequest = (
 };
 
 export type BooleanMapperWithId<Union extends string | number | symbol> = {
-  [Prop in Union | 'id']: boolean;
+  [Prop in Union | 'id']?: boolean;
 };
 
 export default validateRequest;
