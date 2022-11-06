@@ -1,9 +1,10 @@
-const Course = require("../Models/course");
+import { Request, Response } from "express";
+import Course from "../Models/course";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
 // @access  private
-const getCourses = async (req, res) => {
+const getCourses = async (req: Request, res: Response) => {
   const result = await Course.find({}, { Name: 1, Rating: 1 });
   console.log(result);
   res.send(result);
@@ -12,7 +13,7 @@ const getCourses = async (req, res) => {
 // @desc    Search Courses
 // @rout    GET /courses/search
 // @access  private
-const searchCourses = (req, res) => {
+const searchCourses = (req: Request, res: Response) => {
   console.log(req.body.perm);
   Course.find({ Name: req.body.perm }, { Name: 1 }, function (err, data) {
     if (err) {
@@ -26,7 +27,7 @@ const searchCourses = (req, res) => {
 // @desc    Add a New Course
 // @rout    POST /courses
 // @access  private
-const addCourse = (req, res) => {
+const addCourse = (req: Request, res: Response) => {
   if (!req.body) {
     res.status(400);
   } else {
@@ -35,8 +36,4 @@ const addCourse = (req, res) => {
   }
 };
 
-module.exports = {
-  getCourses,
-  searchCourses,
-  addCourse,
-};
+export { getCourses, searchCourses, addCourse };

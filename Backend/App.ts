@@ -8,6 +8,7 @@ require("dotenv").config();
 require("dotenv").config({ path: `EnvFiles/.env.${process.env.NODE_ENV}` });
 
 import connectDB from "./db";
+import coursesRouter from "./Routes/coursesRoutes";
 
 
 
@@ -41,7 +42,7 @@ app.get("/home", (req: Request, res: Response) => {
 
 // #Routing to userController here
 
-require("./Routes/coursesRoutes")(app);
+app.use('/courses', coursesRouter)
 require("./Routes/adminRoutes")(app);
 
 /*
