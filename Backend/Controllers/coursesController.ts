@@ -6,7 +6,7 @@ import courseInputValidate from "../Validators/courseValidator";
 // @rout    GET /courses/
 // @access  private
 const getCourses = async (req: Request, res: Response) => {
-  const result = await Course.find({}, { Name: 1, Rating: 1 });
+  const result = await Course.find();
   console.log(result);
   res.send(result);
 };
