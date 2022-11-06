@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import admin from "../Models/admin";
 import instructor from "../Models/instructor";
 import cTrainee from "../Models/corporateTrainee";
+import iTrainee from '../Models/individualTrainee';
 
 const createAdmin = async (req: Request, res: Response) => {
   const existUsername = await admin.findOne({ Username: req.body.Username });
@@ -35,4 +36,14 @@ const createCTrainee = async (req: Request, res: Response) => {
   }
 };
 
-export { createAdmin, createInstructor, createCTrainee };
+const createITrainee = async (req: Request, res: Response) => {
+  const existUsername = await iTrainee.findOne({ Username: req.body.Username });
+  if (existUsername) {
+    console.log("username taken");
+  } else {
+    iTrainee.create(req.body);
+    res.json({ message: "individual trainee created" });
+  }
+};
+
+export { createAdmin, createInstructor, createCTrainee, createITrainee};
