@@ -27,19 +27,19 @@ const hoverCourse = async (req: Request, res: Response) => {
   }
 };
 
-// @desc    Search Courses
-// @rout    GET /courses/search
-// @access  private
+// @desc    Search Courses By Subject
+// @rout    POST /courses/search/:subje
+// @access  public
 const searchCourses = (req: Request, res: Response) => {
-  console.log(req.body.perm);
-  Course.find({ Name: req.body.perm }, { Name: 1 }, function (err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(data);
-    }
+  Course.find({$or: [{Subject: req.body.searchTerm}, {Instructor: req.body.searchTerm}, {Name: req.body.searchTerm}]} , function(err, data) {
+      if(err){
+          console.log(err);
+      }
+      else{
+          res.send(data);
+      }
   });
-};
+}
 
 // @desc    Add a New Course
 // @rout    POST /courses
@@ -66,4 +66,15 @@ const addCourse = async (req: Request, res: Response) => {
   }
 };
 
-export { getCourses, searchCourses, addCourse, hoverCourse };
+// @desc    Remove a Course
+// @rout    POST /courses/:id
+// @access  private
+const deleteCourse = (req: Request, res: Response) => {
+  if(!req.body){
+      res.status(400);
+  }  else {
+      Course.findByIdAndDelete(req.params.id)
+  }
+}
+
+export { getCourses, searchCourses, addCourse, hoverCourse, deleteCourse };

@@ -4,14 +4,17 @@ import {
   searchCourses,
   addCourse,
   hoverCourse,
+  deleteCourse,
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
 
 coursesRouter.route("/").get(getCourses).post(addCourse);
 
-coursesRouter.get("/search", searchCourses);
+coursesRouter.post("/search", searchCourses);
 
-coursesRouter.get("/hover", hoverCourse);
+coursesRouter.delete('/courses', deleteCourse);
+
+coursesRouter.post("/hover", hoverCourse);
 
 export default coursesRouter;
