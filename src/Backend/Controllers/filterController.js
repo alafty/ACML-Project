@@ -8,7 +8,7 @@ const getBySubject= async (req, res) => {
     //used Acml as test name, replace to get the required name from the user
     // Courses should have attribute subject in them 
     var factor = req.body.Name
-    const courses = await coursesModel.find({Name:factor});
+    const courses = await coursesModel.find({Subject:factor});
     try {
         res.send(courses);
       } catch (error) {

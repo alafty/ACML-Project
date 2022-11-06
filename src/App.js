@@ -1,43 +1,38 @@
 // External variables
-const express = require("express");
-const mongoose = require('mongoose');
-const dotenv = require('dotenv').config();
-const connectDB = require('./Backend/db.js');
-const bodyParser = require('body-parser')
-
+var express = require("express");
+var mongoose = require('mongoose');
+var dotenv = require('dotenv').config();
+var connectDB = require('./Backend/db.js');
+var bodyParser = require('body-parser');
 //App variables
-const app = express();
-const port = process.env.PORT || "8000";
-
+const filterRoute = require('./Backend/Routes/FilterRoutes');
+var app = express();
+var port = process.env.PORT || "8000";
+connectDB()
 app.use(bodyParser.urlencoded({
-  extended: true
+    extended: true
 }));
-
-
 // configurations
 // Mongo DB
-connectDB()
-.then(()=>{
-  console.log("MongoDB is now connected!")
-// Starting server
- app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  })
-})
-.catch(err => console.log(err));
+    connectDB()
+    .then(function () {
+    console.log("MongoDB is now connected!");
+    // Starting server
+    app.listen(port, function () {
+        console.log("Listening to requests on http://localhost:".concat(port));
+    });
+})["catch"](function (err) { return console.log(err); });
+
+app.use('/filter', filterRoute);
+
 /*
                                                     Start of your code
 */
-app.get("/home", (req, res) => {
+app.get("/home", function (req, res) {
     res.status(200).send("You have everything installed!");
-  });
-
+});
 // #Routing to userController here
-
-require('./Backend/Controllers/userController')(app)
-
-
+const Controller = require('./Backend/Controllers/filterController');
 /*
                                                     End of your code
 */
-

@@ -4,16 +4,11 @@ const express = require('express');
 const FiltersRouter = express.Router();
 const filterControllers =  require( "../Controllers/filterController");
 const CourseModel = require("../Models/course");
-const app = express();
-FiltersRouter.use(express.json());
-FiltersRouter.use(express.urlencoded({ extended: true }));
 
-FiltersRouter.route("/filter/subject").get(filterControllers.getBySubject);
-FiltersRouter.route("/filter/rating").get(filterControllers.getByRating);
-FiltersRouter.route("/filter/price").get(filterControllers.getByPrice);
+FiltersRouter.get("/subject",filterControllers.getBySubject);
+FiltersRouter.get("/rating", filterControllers.getByRating);
+FiltersRouter.get("/price", filterControllers.getByPrice);
 
-// FiltersRouter.get('/filter/subject', getByPrice);
-// FiltersRouter.get('/filter/price', getBySubject);
 FiltersRouter.get("" ,async (request, response) => {
     const users = await CourseModel.find({});
   

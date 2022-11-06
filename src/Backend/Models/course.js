@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Instructor = require('./instructor')
 
 const courseSchema = new Schema({
   Name: {
     type: String,
     required: true,
   },
-  Instructor: {
-    type: Instructor,
-    required: true
+  Subject: {
+    type: String,
+    required: true,
   },
   Price: {
     type: Number,
@@ -19,11 +18,7 @@ const courseSchema = new Schema({
     type: Number,
     required: true
   },
-  Discount:{
-    type: Number,
-    required: true
-  }
 }, { timestamps: true });
 
-const course = mongoose.model('Course', userSchema);
+const course = mongoose.model('Course', courseSchema);
 module.exports = course;
