@@ -3,9 +3,9 @@ const Course = require("../Models/course");
 
 // @desc    Get All Courses
 // @rout    GET /courses/
-// @access  private
+// @access  public
 const getCourses = (req, res) => {
-    Course.find({}, 'Name Rating TotalHours', function(err, data) {
+    Course.find({},'Subject', function(err, data) {
         if(err){
             console.log(err);
         }
@@ -15,12 +15,11 @@ const getCourses = (req, res) => {
     });  
 }
 
-// @desc    Search Courses
-// @rout    GET /courses/search
-// @access  private
+// @desc    Search Courses By Subject
+// @rout    POST /courses/search/:subje
+// @access  public
 const searchCourses = (req, res) => {
-    console.log(req.body.perm)
-    Course.find({Subject: req.body.perm} , 'Name', function(err, data) {
+    Course.find({$or: [{Subject: req.body.searchTerm}, {Instructor: req.body.searchTerm}, {Name: req.body.searchTerm}]} , function(err, data) {
         if(err){
             console.log(err);
         }
@@ -42,7 +41,18 @@ const addCourse = (req, res) => {
     }
 }
 
+// @desc    Remove a Course
+// @rout    POST /courses/:id
+// @access  private
+const deleteCourse = (req, res) => {
+    if(!req.body){
+        res.status(400);
+    }  else {
+        Course.findByIdAndDelete(req.params.id)
+    }
+}
+
 
 module.exports = {
-    getCourses, searchCourses, addCourse
+    getCourses, searchCourses, addCourse, deleteCourse
 }
