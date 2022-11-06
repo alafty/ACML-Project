@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Schema, model } from "mongoose";
 
 const adminSchema = new Schema({
   Username: {
@@ -20,5 +19,5 @@ const adminSchema = new Schema({
   }
 }, { timestamps: true });
 
-const admin = mongoose.model('Admin', adminSchema);
-module.exports = admin;
+const admin = model('Admin', adminSchema);
+export default admin;
