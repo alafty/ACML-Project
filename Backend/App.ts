@@ -10,7 +10,7 @@ require("dotenv").config({ path: `EnvFiles/.env.${process.env.NODE_ENV}` });
 import connectDB from "./db";
 import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
-
+import filterRoute from './Routes/filterRoutes';
 
 
 //App variables
@@ -22,7 +22,6 @@ app.use(
     extended: true,
   })
 );
-
 // configurations
 // Mongo DB
 connectDB()
@@ -41,9 +40,10 @@ app.get("/home", (req: Request, res: Response) => {
   res.status(200).send("You have everything installed!");
 });
 
-
+//Routing to different functionalities
 app.use('/courses', coursesRouter)
 app.use("/create", adminRouter);
+app.use("/filter", filterRoute);
 
 /*
                                                     End of your code
