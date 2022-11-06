@@ -1,6 +1,6 @@
 import validateRequest from "./validatorBase";
 import { Request } from "express";
-import Course from '../../backend/Models/course';
+import Course from '../../Backend/Models/course';
 
 const courseInputValidate = (
   checks: {
