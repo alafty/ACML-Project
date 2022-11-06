@@ -10,6 +10,14 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
+    Subtitle: {
+      type: String,
+      required: true,
+    },
+    Exercises: {
+      type: [String],
+      required: true,
+    },
     Instructor: {
       type: String,
       required: true,
@@ -20,11 +28,11 @@ const courseSchema = new Schema(
     },
     Rating: {
       type: Number,
-      required: true,
+      required: false,
     },
     Discount: {
-      type: Number,
-      required: true,
+      type: [{ Country: String, Percentage: Number }],
+      required: false,
     },
     TotalHours: {
       type: Number,
