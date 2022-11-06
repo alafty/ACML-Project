@@ -2,7 +2,7 @@ import { Request } from "express";
 
 const validateRequest = (
   checks: { id? : boolean ; [k: string]: boolean | undefined },
-  req: Request
+  body: any
 ): boolean => {
   var valid: boolean = true;
 
@@ -10,9 +10,9 @@ const validateRequest = (
   for (field in checks) {
     if (checks[field] != undefined) {
       if (checks[field]) {
-        valid = valid && req.body[field] != undefined;
+        valid = valid && body[field] != undefined;
       } else {
-        valid = valid && req.body[field] == undefined;
+        valid = valid && body[field] == undefined;
       }
     }
   }

@@ -10,7 +10,7 @@ const indivTraineeInputValidate = (
   checks: { [k in keyof indivTraineeTypeCheck]: boolean | undefined },
   req: Request
 ): boolean => {
-  return validateRequest(checks, req);
+  return validateRequest(checks, req.body);
 };
 
 export default indivTraineeInputValidate;

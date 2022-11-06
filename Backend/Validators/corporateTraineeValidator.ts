@@ -10,7 +10,7 @@ const corpTraineeInputValidate = (
   checks: { [k in keyof corpTraineeTypeCheck]: boolean | undefined },
   req: Request
 ): boolean => {
-  return validateRequest(checks, req);
+  return validateRequest(checks, req.body);
 };
 
 export default corpTraineeInputValidate;

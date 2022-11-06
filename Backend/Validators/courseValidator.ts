@@ -8,7 +8,7 @@ const courseInputValidate = (
   checks: {[k in keyof courseTypeCheck]: boolean},
   req: Request
 ): boolean => {    
-  return validateRequest(checks, req);
+  return validateRequest(checks, req.body);
 };
 
 export default courseInputValidate;

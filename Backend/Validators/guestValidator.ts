@@ -8,7 +8,7 @@ const guestInputValidate = (
   },
   req: Request
 ): boolean => {
-  return validateRequest(checks, req);
+  return validateRequest(checks, req.body);
 };
 
 export default guestInputValidate;
