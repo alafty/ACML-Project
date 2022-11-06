@@ -10,8 +10,8 @@ require("dotenv").config({ path: `EnvFiles/.env.${process.env.NODE_ENV}` });
 import connectDB from "./db";
 import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
-import filterRoute from './Routes/filterRoutes';
-
+import filterRoute from "./Routes/filterRoutes";
+import countryRouter from "./Routes/countryRoutes";
 
 //App variables
 const app: Application = express();
@@ -41,9 +41,10 @@ app.get("/home", (req: Request, res: Response) => {
 });
 
 //Routing to different functionalities
-app.use('/courses', coursesRouter)
+app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
+app.use("/country", countryRouter);
 
 /*
                                                     End of your code
