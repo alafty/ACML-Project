@@ -15,8 +15,13 @@ const indivTraineeSchema = new Schema({
   },
   PurchasedCourses: {
     type: String,
-    required: true
-  }
+    required: false
+  },
+  Country: {
+    type: String,
+    required: false,
+    default: "Egypt",
+  },
 }, { timestamps: true });
 
 const inidvTrainee = model('IndivTrainee', indivTraineeSchema);
