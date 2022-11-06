@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Course = require('./course')
+import { Schema, model } from "mongoose";
 
 //MIGHT MERGE WITH INDIV TRAINEE AND MAKE A CORPORATE AS AN ATTRIBUTE
 const corpTraineeSchema = new Schema({
@@ -26,5 +24,5 @@ const corpTraineeSchema = new Schema({
   }
 }, { timestamps: true });
 
-const corpTrainee = mongoose.model('CorpTrainee', corpTraineeSchema);
-module.exports = corpTrainee;
+const corpTrainee = model('CorpTrainee', corpTraineeSchema);
+export default corpTrainee;

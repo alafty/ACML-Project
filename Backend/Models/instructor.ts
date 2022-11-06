@@ -1,6 +1,4 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const Course = require("./course");
+import { Schema, model } from "mongoose";
 
 const instructorSchema = new Schema(
   {
@@ -32,5 +30,5 @@ const instructorSchema = new Schema(
   { timestamps: true }
 );
 
-const instructor = mongoose.model("Instructor", instructorSchema);
-module.exports = instructor;
+const instructor = model("Instructor", instructorSchema);
+export default instructor;
