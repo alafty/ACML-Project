@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Course from "../Models/course";
+import courseInputValidate from "../Validators/courseValidator";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -8,6 +9,22 @@ const getCourses = async (req: Request, res: Response) => {
   const result = await Course.find({}, { Name: 1, Rating: 1 });
   console.log(result);
   res.send(result);
+};
+
+const hoverCourse = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true }, req)) {
+    const result = await Course.findById(req.body.id, {
+      Subtitle: 1,
+      Name: 1,
+      Subject: 1,
+      Exercises: 1,
+      TotalHours: 1,
+      Price: 1,
+      Discount: 1,
+    });
+
+    res.status(200).json(result);
+  }
 };
 
 // @desc    Search Courses
@@ -27,13 +44,26 @@ const searchCourses = (req: Request, res: Response) => {
 // @desc    Add a New Course
 // @rout    POST /courses
 // @access  private
-const addCourse = (req: Request, res: Response) => {
-  if (!req.body) {
-    res.status(400);
+const addCourse = async (req: Request, res: Response) => {
+  const inputValid = courseInputValidate(
+    {
+      id: false,
+      Name: true,
+      Subject: true,
+      Subtitle: true,
+      Exercises: true,
+      Instructor: true,
+      Price: true,
+      TotalHours: true,
+    },
+    req
+  );
+  if (!inputValid) {
+    res.status(400).json({message: 'Make sure all fields are here'});
   } else {
-    const newCourse = Course.create(req.body);
+    const newCourse = await Course.create(req.body);
     res.status(200).json(newCourse);
   }
 };
 
-export { getCourses, searchCourses, addCourse };
+export { getCourses, searchCourses, addCourse, hoverCourse };
