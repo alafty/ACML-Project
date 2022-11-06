@@ -1,4 +1,5 @@
-// External variablesconst express = require("express");
+// External variables
+const express = require("express");
 const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const connectDB = require('./db.js');
