@@ -4,8 +4,8 @@ import coursesModel from "../Models/course";
 const getBySubject= async (req: Request, res: Response) => {
     //used Acml as test name, replace to get the required name from the user
     // Courses should have attribute subject in them 
-    var factor = req.body.Name
-    const courses = await coursesModel.find({Subject:factor});
+    var factor = req.body.Subject
+    const courses = await coursesModel.find({Subject: factor});
     try {
         res.send(courses);
       } catch (error) {
@@ -17,7 +17,7 @@ const getBySubject= async (req: Request, res: Response) => {
 const getByRating = async (req: Request, res: Response) => {
     //used 3 as test rating, replace to get the required name from the user
     var factor = req.body.Rating
-    const courses = await coursesModel.find({ rating: { $gte: factor } });
+    const courses = await coursesModel.find({ Rating: { $gte: factor } });
     try {
         res.send(courses);
       } catch (error) {
