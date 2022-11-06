@@ -5,7 +5,7 @@ const Course = require("../Models/course");
 // @rout    GET /courses/
 // @access  private
 const getCourses = (req, res) => {
-    Course.find('Name Rating TotalHours', function(err, data) {
+    Course.find({}, 'Name Rating TotalHours', function(err, data) {
         if(err){
             console.log(err);
         }

@@ -5,7 +5,8 @@
   "main": "App.js",
   "scripts": {
     "server": "nodemon backend/App.js",
-    "client": "npm start --prefix frontend"
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\" "
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/Advanced-Computer-Lab-2022",
   "dependencies": {
+    "axios": "^1.1.3",
     "body-parser": "^1.20.1",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -26,5 +28,8 @@
     "node": "^19.0.0",
     "nodemon": "^2.0.20",
     "react-native": "^0.70.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.5.0"
   }
 }

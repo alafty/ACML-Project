@@ -2,7 +2,7 @@ import React from 'react'
 import {FaSignInAlt} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-function header() {
+function Header() {
   return (
     <div>
         <Link to='/Login'> Login </Link>
@@ -10,4 +10,4 @@ function header() {
   )
 }
 
-export default header
+export default Header
