@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Course = require('./course')
+import { Schema, model } from "mongoose";
 
 const indivTraineeSchema = new Schema({
   Username: {
@@ -21,5 +19,5 @@ const indivTraineeSchema = new Schema({
   }
 }, { timestamps: true });
 
-const inidvTrainee = mongoose.model('IndivTrainee', indivTraineeSchema);
-module.exports = inidvTrainee;
+const inidvTrainee = model('IndivTrainee', indivTraineeSchema);
+export default inidvTrainee;
