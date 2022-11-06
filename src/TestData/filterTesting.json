@@ -1,0 +1,18 @@
+[
+    {
+    "Name":"Intro to embedded thingies",
+
+    "Price":1500,
+    "Rating": 4
+
+    }
+    ,
+    {
+        "Name":"ACML",
+
+        "Price":1500,
+        "Rating": 4
+    }
+
+]
+    
