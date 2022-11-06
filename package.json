@@ -4,7 +4,7 @@
   "description": "",
   "main": "App.js",
   "scripts": {
-    "server": "nodemon backend/App.js"
+    "server": "nodemon backend/App.ts"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
     "node": "^19.0.0",
     "nodemon": "^2.0.20",
     "react-native": "^0.70.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14"
   }
 }
