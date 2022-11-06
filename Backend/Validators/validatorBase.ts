@@ -1,7 +1,7 @@
 import { Request } from "express";
 
 const validateRequest = (
-  checks: { id: boolean; [k: string]: boolean },
+  checks: { id : boolean | undefined ; [k: string]: boolean | undefined },
   req: Request
 ): boolean => {
   var valid: boolean = true;
