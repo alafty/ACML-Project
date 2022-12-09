@@ -2,7 +2,6 @@
 import React from 'react'
 //import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 // @ts-ignore
-import services from '../app/CoursesServices.ts'
 import {useEffect, useState} from 'react'
 import TextField from '@mui/material/TextField'
 

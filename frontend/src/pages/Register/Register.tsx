@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/header.tsx'
-import '../Styling/landing.css'
+import Header from '../../components/header.tsx'
+import '../../Styling/landing.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';

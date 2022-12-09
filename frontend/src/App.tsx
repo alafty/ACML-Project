@@ -1,11 +1,11 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Register from './pages/Register.tsx'
-import Login from './pages/Login.tsx'
+import Register from './pages/Register/Register.tsx'
+import Login from './pages/Login/Login.tsx'
 import Landing from './pages/Landing.tsx'
-import IndividualTrainee from './pages/IndividualTraineeRegister.tsx'
-import InstructorRegister from './pages/InstructorRegister.tsx'
-import CorporateTrainee from './pages/CorporateTraineeRegister.tsx'
+import IndividualTrainee from './pages/Register/IndividualTraineeRegister.tsx'
+import InstructorRegister from './pages/Register/InstructorRegister.tsx'
+import CorporateTrainee from './pages/Register/CorporateTraineeRegister.tsx'
 
 function app() {
   return (
