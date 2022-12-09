@@ -10,6 +10,6 @@ const adminRouter = Router();
 adminRouter.post("/admin", createAdmin);
 adminRouter.post("/instructor", createInstructor);
 adminRouter.post("/corporateTrainee", createCTrainee);
-// adminRouter.post("/indivTrainee", createITrainee);
+adminRouter.post("/individualTrainee", createITrainee);
 
 export default adminRouter;

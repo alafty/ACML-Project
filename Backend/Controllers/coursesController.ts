@@ -31,7 +31,7 @@ const hoverCourse = async (req: Request, res: Response) => {
 // @rout    POST /courses/search/:subje
 // @access  public
 const searchCourses = (req: Request, res: Response) => {
-  Course.find({$or: [{Subject: req.body.searchTerm}, {Instructor: req.body.searchTerm}, {Name: req.body.searchTerm}]} , function(err, data) {
+  Course.find({$or: [{Subject: req.body.searchTerm}, {Instructor: req.body.searchTerm}, {Name: req.body.searchTerm}]} , function(err: any, data: any) {
       if(err){
           console.log(err);
       }

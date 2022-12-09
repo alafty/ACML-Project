@@ -13,6 +13,8 @@ export const getAllCourses = async () => {
     return response.data
 } 
 
+
+
 export const searchCourseBySubject = async (searchTerm: String) => {
     
     var data = qs.stringify({
@@ -45,7 +47,7 @@ export const searchCourseBySubject = async (searchTerm: String) => {
 
 const services = {
     getAllCourses,
-    searchCourseBySubject
+    searchCourseBySubject,
 }
 
 export default services;

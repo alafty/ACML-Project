@@ -17,7 +17,7 @@ const corpTraineeSchema = new Schema(
     },
     PurchasedCourses: {
       type: String,
-      required: true,
+      required: false,
     },
     Corporate: {
       type: String,
@@ -25,7 +25,7 @@ const corpTraineeSchema = new Schema(
     },
     Country: {
       type: String,
-      required: true,
+      required: false,
       default: "Egypt",
     },
   },
