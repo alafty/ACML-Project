@@ -123,10 +123,8 @@ type State = {
         render() {
             return (
                 <div style={{marginTop: 20}}>
-                    <h3>Create New User</h3>
-                    <a href = "/">
-                <button type="button">Show Users</button>
-                     </a>
+                    <h3>Create New Questiom</h3>
+      
                     <form onSubmit={this.onSubmit}>
                         <div className="form-group">
                             <label>Question: </label>
@@ -199,7 +197,7 @@ type State = {
                       
                       
                         <div className="form-group">
-                            <input type="submit" value="Create Todo" className="btn btn-primary" />
+                            <input type="submit" value="Add Question" className="btn btn-primary" />
                         </div>
                     </form>
                 </div>
