@@ -15,10 +15,7 @@ const courseSchema = new Schema(
       type: [Subtitle.schema],
       default: [],
     },
-    Exercises: {
-      type: [String],
-      required: true,
-    },
+
     Instructor: {
       type: String,
       required: true,
