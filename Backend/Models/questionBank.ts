@@ -6,19 +6,19 @@ const questionBankSchema = new Schema(
       type: String,
       required: true,
     },
-    Choices1: {
+    Choice1: {
       type: String,
       required: true,
     },
-    Choices2: {
+    Choice2: {
       type: String,
       required: true,
     },
-    Choices3: {
+    Choice3: {
       type: String,
       required: true,
     },
-    Choices4: {
+    Choice4: {
       type: String,
       required: true,
     },
@@ -32,7 +32,7 @@ const questionBankSchema = new Schema(
     //   required: true,
     },
     QuizID: {
-      type: Number,
+      type: String,
       required: true,
     },
   },

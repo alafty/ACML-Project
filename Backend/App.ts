@@ -20,7 +20,7 @@ import { getGuestCookie } from "./Controllers/guestController";
 //App variables
 const app: Application = express();
 const port = process.env.PORT || "8000";
-
+app.use(express.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,

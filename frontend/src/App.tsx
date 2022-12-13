@@ -6,6 +6,8 @@ import Landing from './pages/Landing.tsx'
 import IndividualTrainee from './pages/Register/IndividualTraineeRegister.tsx'
 import InstructorRegister from './pages/Register/InstructorRegister.tsx'
 import CorporateTrainee from './pages/Register/CorporateTraineeRegister.tsx'
+import CreateQuiz from './pages/Instructor/CreateQuiz.tsx'
+
 
 function app() {
   return (
@@ -19,6 +21,8 @@ function app() {
             <Route path='/indivTraineeRegister' element={<IndividualTrainee/>} />
             <Route path='/instructorRegister' element={<InstructorRegister/>} />
             <Route path='/corpTraineeRegister' element={<CorporateTrainee/>} />
+            <Route path='/createquiz' element={<CreateQuiz/>} />
+
           </Routes>
         </div>
       </Router>

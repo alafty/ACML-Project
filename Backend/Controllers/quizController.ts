@@ -14,6 +14,7 @@ const getQuiz= async (req: Request, res: Response) => {
     // filter specific subjects
 }
 const createQuestion = async (req: Request, res: Response) => {
+    console.log (req.body);
     questionBankModel.create(req.body);
     res.status(200).json({ message: "QuestionCreate" });
     
