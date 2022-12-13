@@ -5,6 +5,7 @@ import {
   addCourse,
   hoverCourse,
   deleteCourse,
+  putCourseSubtitle
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
@@ -12,6 +13,8 @@ const coursesRouter = Router();
 coursesRouter.route("/").get(getCourses).post(addCourse);
 
 coursesRouter.post("/search", searchCourses);
+
+coursesRouter.put('/subtitle', putCourseSubtitle);
 
 coursesRouter.delete('/courses', deleteCourse);
 

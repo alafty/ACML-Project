@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
+import Subtitle from "../Models/subtitle";
+import coursesRouter from "../Routes/coursesRoutes";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -31,15 +33,23 @@ const hoverCourse = async (req: Request, res: Response) => {
 // @rout    POST /courses/search/:subje
 // @access  public
 const searchCourses = (req: Request, res: Response) => {
-  Course.find({$or: [{Subject: req.body.searchTerm}, {Instructor: req.body.searchTerm}, {Name: req.body.searchTerm}]} , function(err: any, data: any) {
-      if(err){
-          console.log(err);
+  Course.find(
+    {
+      $or: [
+        { Subject: req.body.searchTerm },
+        { Instructor: req.body.searchTerm },
+        { Name: req.body.searchTerm },
+      ],
+    },
+    function (err: any, data: any) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(data);
       }
-      else{
-          res.send(data);
-      }
-  });
-}
+    }
+  );
+};
 
 // @desc    Add a New Course
 // @rout    POST /courses
@@ -51,7 +61,6 @@ const addCourse = async (req: Request, res: Response) => {
       Name: true,
       Subject: true,
       Subtitle: true,
-
       Instructor: true,
       Price: true,
       TotalHours: true,
@@ -59,7 +68,7 @@ const addCourse = async (req: Request, res: Response) => {
     req
   );
   if (!inputValid) {
-    res.status(400).json({message: 'Make sure all fields are here'});
+    res.status(400).json({ message: "Make sure all fields are here" });
   } else {
     const newCourse = await Course.create(req.body);
     res.status(200).json(newCourse);
@@ -70,11 +79,80 @@ const addCourse = async (req: Request, res: Response) => {
 // @rout    POST /courses/:id
 // @access  private
 const deleteCourse = (req: Request, res: Response) => {
-  if(!req.body){
-      res.status(400);
-  }  else {
-      Course.findByIdAndDelete(req.params.id)
+  if (!req.body) {
+    res.status(400);
+  } else {
+    Course.findByIdAndDelete(req.params.id);
   }
-}
+};
 
-export { getCourses, searchCourses, addCourse, hoverCourse, deleteCourse };
+// @desc    Add a Course Subtitle or Modify one
+// @rout    Put /course-subtitle
+// @access  private
+/// @body    {id, {[id], VideoLink, Description}}
+const putCourseSubtitle = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true }, req)) {
+    var course = await Course.findById(req.body.id);
+    var sub = req.body.Subtitle;
+    if (!sub) {
+      res
+        .status(400)
+        .json({
+          message:
+            'Subtitle not found in request. Make sure body has "Subtitle" key',
+        });
+    }
+    if (course) {
+      if (sub.Id) {
+        var subToModify = course.Subtitles.id(sub.Id);
+        if (subToModify) {
+          var tempSub = {
+            Description: subToModify.Description,
+            ...(subToModify.VideoId ? {VideoId: subToModify.VideoId}: {}),
+          };
+          if (sub.Description) {
+            tempSub.Description = sub.Description;
+          }
+          if (sub.VideoId) {
+            tempSub.VideoId = sub.VideoId;
+          }
+          console.log(tempSub);
+          console.log(subToModify);
+          
+          var newSub = subToModify.set(tempSub);
+          course.save(function (err) {
+            if (err) res.status(400).json({message: err})
+            res.status(200).json(newSub);
+          });
+        } else {
+          res.status(400).json("Subtitle not found. Make sure the id is valid");
+        }
+      } else {
+        var newSub = course.Subtitles.create({
+          VideoId: sub.VideoId,
+          Description: sub.Description,
+        });
+        course.Subtitles.push(newSub);
+        course.save(function (err) {
+          if (err) res.status(400).json({message: err})
+          res.status(200).json(newSub);
+        });        
+      }
+    } else {
+      res
+        .status(400)
+        .json({ message: "Course not found. Make sure course id is valid" });
+    }
+  } else {
+    res.status(400).json({ message: "Need to specify id for course" });
+  }
+};
+
+export {
+  getCourses,
+  searchCourses,
+  addCourse,
+  hoverCourse,
+  deleteCourse,
+  putCourseSubtitle,
+};

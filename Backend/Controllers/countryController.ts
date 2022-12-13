@@ -24,7 +24,7 @@ const setCorporateTraineeCountry = async (req: Request, res: Response) => {
       res.status(200).json(await cTrainee.findById(req.body.id));
     }
   } else {
-    res.status(400).json({ message: "Make usre all fields are valid" });
+    res.status(400).json({ message: "Make sure all fields are valid" });
   }
 };
 
