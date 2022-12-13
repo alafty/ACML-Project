@@ -13,6 +13,7 @@ import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
 import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
+import quizRouter  from "./Routes/quizRoute";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
 
@@ -61,3 +62,4 @@ app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
+app.use("/quiz",quizRouter)

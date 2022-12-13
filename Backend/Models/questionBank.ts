@@ -1,37 +1,37 @@
 import { Schema, model } from "mongoose";
 
-const courseSchema = new Schema(
+const questionBankSchema = new Schema(
   {
-    Name: {
+    Question: {
       type: String,
       required: true,
     },
-    Subject: {
+    Choices1: {
       type: String,
       required: true,
     },
-    Subtitle: {
+    Choices2: {
+      type: String,
+      required: true,
+    },
+    Choices3: {
+      type: String,
+      required: true,
+    },
+    Choices4: {
+      type: String,
+      required: true,
+    },
+    Answer: {
       type: String,
       required: true,
     },
 
-    Instructor: {
+    Course: {
       type: String,
-      required: true,
+    //   required: true,
     },
-    Price: {
-      type: Number,
-      required: true,
-    },
-    Rating: {
-      type: Number,
-      required: false,
-    },
-    Discount: {
-      type: [{ Country: String, Percentage: Number }],
-      required: false,
-    },
-    TotalHours: {
+    QuizID: {
       type: Number,
       required: true,
     },
@@ -39,5 +39,5 @@ const courseSchema = new Schema(
   { timestamps: true }
 );
 
-const course = model("Course", courseSchema);
+const course = model("QuestionBank", questionBankSchema);
 export default course;
