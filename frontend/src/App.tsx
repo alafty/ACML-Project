@@ -6,6 +6,7 @@ import Landing from './pages/Landing.tsx'
 import IndividualTrainee from './pages/Register/IndividualTraineeRegister.tsx'
 import InstructorRegister from './pages/Register/InstructorRegister.tsx'
 import CorporateTrainee from './pages/Register/CorporateTraineeRegister.tsx'
+import CreateQuiz from './pages/Instructor/CreateQuiz.tsx'
 import InstructorDetails from './pages/Instructor/InstructorDetails.tsx'
 import Home from './pages/Home.tsx'
 import Legal from './pages/Legal/Legal.tsx'
@@ -37,6 +38,7 @@ export const useGlobalState = () => [
   React.useContext(dispatchStateContext)
 ];
 
+
 function app() {
   
   return (
@@ -49,11 +51,14 @@ function app() {
             <Route path='/login' element={<Login/>} />
             <Route path='/indivTraineeRegister' element={<IndividualTrainee/>} />
             <Route path='/instructorRegister' element={<InstructorRegister/>} />
-            <Route path='/corpTraineeRegister' element={<CorporateTrainee/>} />
+            <Route path='/corpTraineeRegister' element={<CorporateTrainee/>} 
             <Route path='/home' element={<Home/>} />
             <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
+
+            <Route path='/createquiz' element={<CreateQuiz/>} />
+
           </Routes>
         </div>
       </Router>
