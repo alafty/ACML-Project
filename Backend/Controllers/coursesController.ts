@@ -149,12 +149,12 @@ const putCourseVideo = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true, VideoId: true }, req)) {
     var c = await Course.findByIdAndUpdate(req.body.id, {
       VideoId: req.body.VideoId,
-    });
+    });    
     if (!c) {
       res.status(400).json({ message: "Course not found. Make sure course id is valid" });
       return;
     }
-    res.status(200).json(c);
+    res.status(200).json(await Course.findById(req.body.id));
   } else {
     res.status(400).json({message: "Make sure all fields are valid"});
   }
