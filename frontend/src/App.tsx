@@ -13,7 +13,7 @@ import Legal from './pages/Legal/Legal'
 import LegalInstructor from './pages/Legal/LegalInstructor'
 
 const defaultGlobalState = {
-  loggedInUser: {}
+  loggedInUser: {user: String, instructor: String}
 };
 
 const globalStateContext = React.createContext(defaultGlobalState);
@@ -51,7 +51,7 @@ function app() {
             <Route path='/login' element={<Login/>} />
             <Route path='/indivTraineeRegister' element={<IndividualTrainee/>} />
             <Route path='/instructorRegister' element={<InstructorRegister/>} />
-            <Route path='/corpTraineeRegister' element={<CorporateTrainee/>} 
+            <Route path='/corpTraineeRegister' element={<CorporateTrainee/>} />
             <Route path='/home' element={<Home/>} />
             <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />

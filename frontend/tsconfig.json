@@ -3,7 +3,7 @@
       "jsx": "react-jsx",
       "target": "ES2015",
       "module": "commonjs",
-      "strict": true,
+      "strict": false,
       "esModuleInterop": true,
       "skipLibCheck": true,
       "forceConsistentCasingInFileNames": true

@@ -4,10 +4,9 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import Header from '../../components/header';
-import services from '../../app/UsersServices';
+import userServices from '../../app/UsersServices';
 import { useGlobalState } from '../../App';
-import { stat } from 'fs';
-import services from "../../app/CoursesServices";
+import courseServices from "../../app/CoursesServices";
 
 function Login() {
   const navigation = useNavigate();
@@ -15,14 +14,14 @@ function Login() {
   const [password, setPassword] = React.useState('');
   const [state, dispatch] = useGlobalState();
   const [errorMessage, setErrorMesssage] = React.useState('yaaaay');
-  services.createGuestCookie();
+  userServices.createGuestCookie();
 
-  const setUserData = async callback =>{
-    state.loggedInUser = callback;
+  const setUserData = async (callback: any) =>{
+    state!.loggedInUser = callback;
     //console.log(state.loggedInUser);
     try {
-      if (state.loggedInUser.user) {
-        if (state.loggedInUser.type === "instructor") {
+      if (state!.loggedInUser.user) {
+        if (state!.loggedInUser.type === "instructor") {
           navigation('/instructorHome');
         } else {
           navigation('/home');
@@ -59,7 +58,7 @@ function Login() {
           style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
           onClick={
             async () => {
-            await services.login(username, password, setUserData);
+            await userServices.login(username, password, setUserData);
             }
           }
         > Login </Button>

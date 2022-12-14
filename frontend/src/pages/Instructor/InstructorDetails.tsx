@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../../components/header.tsx'
+import Header from '../../components/header'
 import Button from '@mui/material/Button'
 import { TextField } from '@mui/material';
-import {useGlobalState} from '../../App.tsx'
-import services from '../../app/UsersServices.ts';
+import {useGlobalState} from '../../App'
+import services from '../../app/UsersServices';
 
 
 function InstructorDetails() {
@@ -43,7 +43,7 @@ function InstructorDetails() {
         <Button variant='outlined' id='outlined' 
         onClick={() =>{
           if(isEditing){
-            services.editInstructorDetails(state.loggedInUser.user.Username, email, bio, handleChanges);
+            services.editInstructorDetails(state.loggedInUser.user.Username, handleChanges, email, bio);
           }
           setIsEditing(!isEditing);
         }}> {isEditing ? 'Confirm Changes' : 'Edit Personal Details'}</Button>
