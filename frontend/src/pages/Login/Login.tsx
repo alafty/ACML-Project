@@ -1,54 +1,73 @@
-//import { createAsyncThunk } from '@reduxjs/toolkit'
-import React from 'react'
-//import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-// @ts-ignore
-import {useEffect, useState} from 'react'
-import TextField from '@mui/material/TextField'
+import React from 'react';
+import '../../Styling/mainLayout.css';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { TextField } from '@mui/material';
+import Header from '../../components/header';
+import services from '../../app/UsersServices';
+import { useGlobalState } from '../../App';
+import { stat } from 'fs';
 import services from "../../app/CoursesServices";
 
 function Login() {
-  var [message, setMessage] = useState('firstMessage');
-  var [search, setSearch] = useState('search here');
+  const navigation = useNavigate();
+  const [username, setUsername] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [state, dispatch] = useGlobalState();
+  const [errorMessage, setErrorMesssage] = React.useState('yaaaay');
+  services.createGuestCookie();
 
-  useEffect(() => {
-  }, [ message, search])
-  
-  return (
-    <>
-      <h1> Login </h1>
-      <button 
-      onClick={async () => {
-        if (await services.getAllCourses()){
-          setMessage(JSON.stringify(localStorage.getItem('AllCourses')));
+  const setUserData = async callback =>{
+    state.loggedInUser = callback;
+    //console.log(state.loggedInUser);
+    try {
+      if (state.loggedInUser.user) {
+        if (state.loggedInUser.type === "instructor") {
+          navigation('/instructorHome');
+        } else {
+          navigation('/home');
         }
-      }}> Get All Courses </button>
-      <TextField
-        value={search}
-        label="Enter Search Term"
-        onChange={(e) => {
-          setSearch(e.target.value);
-          setMessage(search);
-        }} />
-      <button 
-      onClick={async () => {
-        services.searchCourseBySubject(search);
-        setMessage(JSON.stringify(localStorage.getItem('SearchResults')));
-        
-      }}> Search </button>
-      <h2>{message}</h2>
-    </>
+      } else {
+        setErrorMesssage("incorrect username or password!")
+      }
+    } catch (error) {
+      console.log(error);
+    }
     
+  }
+
+  return (
+    <div className="container">
+      <Header />
+      <div className='body'>
+        <h2 style={{ marginTop: "250px" }} className='title'> Jump back to where  you left off</h2>
+        <div style={{ display: "flex", flexDirection: "row", marginLeft: "150px" }}>
+          <TextField style={{ marginRight: "30px" }} label="Username" variant="standard" className='search-bar' required={true}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          <TextField label="Password" variant="standard" className='search-bar' required={true}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+        </div>
+        <Button
+          variant="contained"
+          id="filled-button"
+          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
+          onClick={
+            async () => {
+            await services.login(username, password, setUserData);
+            }
+          }
+        > Login </Button>
+        <h4>{errorMessage}</h4>
+      </div>
+    </div>
+
   )
 }
 
-// const getCourses = createAsyncThunk('/courses', async () => {
-//   try {
-//     return await services.getAllCourses();
-//   } catch (error) {
-//     const message = (error.response && error.response.data.message && error.response.data) ||
-//     error.message || error.toString()
-//     console.log(message)
-//   }
-// })
-
-export default Login
+export default Login;

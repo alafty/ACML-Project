@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../components/header'
-import '../../Styling/landing.css'
+import '../../Styling/mainLayout.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
@@ -14,6 +14,7 @@ function InstructorRegister() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [shortBio, setShortBio] = React.useState('');
   const [error, setError] = React.useState('');
 
 
@@ -47,6 +48,11 @@ function InstructorRegister() {
             setConfirmPassword(e.target.value);
           }}
           />
+          <TextField style={{marginBottom: "30px"}} label="Short Bio" variant="standard" className='search-bar' required={true}
+          onChange={(e) => {
+            setShortBio(e.target.value);
+          }}
+          />
           <Select
             className='selector'
             style={{marginLeft: "0px"}}
@@ -71,7 +77,7 @@ function InstructorRegister() {
             setPassword('');
             setConfirmPassword('');
           } else{
-            services.register('instructor', username, password, email, country);
+            services.registerInstructor(username, password, email, country, shortBio);
           }
           
           
@@ -80,7 +86,7 @@ function InstructorRegister() {
 
         <div style={{display: "flex", flexDirection: "row", marginLeft: "70vw"}}>
           <p>by clicking sign up you agree to our </p>
-          <Link to={'/landing'}>
+          <Link to={'/legalinstructor'}>
             <p> terms and conditions</p>
           </Link>
         </div>

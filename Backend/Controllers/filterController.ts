@@ -46,7 +46,7 @@ const getByPrice = async (req: Request, res: Response) => {
    var factorSmaller  = req.body.PriceLow;
    var factorGreater = req.body.PriceHigh;
    const courses = await coursesModel.find({
-    Price: { $gt: factorGreater,$lt: factorSmaller }
+    Price: { $lt: factorGreater,$gt: factorSmaller }
   });
    try {
        res.send(courses);
