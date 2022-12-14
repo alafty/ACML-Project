@@ -36,6 +36,10 @@ const courseSchema = new Schema(
       type: Number,
       required: true,
     },
+    VideoId: {
+      type: String,
+      required: false
+    }
   },
   { timestamps: true }
 );

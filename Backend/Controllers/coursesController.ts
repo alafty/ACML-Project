@@ -60,7 +60,6 @@ const addCourse = async (req: Request, res: Response) => {
       id: false,
       Name: true,
       Subject: true,
-      Subtitle: true,
       Instructor: true,
       Price: true,
       TotalHours: true,
@@ -95,12 +94,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
     var course = await Course.findById(req.body.id);
     var sub = req.body.Subtitle;
     if (!sub) {
-      res
-        .status(400)
-        .json({
-          message:
-            'Subtitle not found in request. Make sure body has "Subtitle" key',
-        });
+      res.status(400).json({
+        message:
+          'Subtitle not found in request. Make sure body has "Subtitle" key',
+      });
     }
     if (course) {
       if (sub.Id) {
@@ -108,7 +105,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         if (subToModify) {
           var tempSub = {
             Description: subToModify.Description,
-            ...(subToModify.VideoId ? {VideoId: subToModify.VideoId}: {}),
+            ...(subToModify.VideoId ? { VideoId: subToModify.VideoId } : {}),
           };
           if (sub.Description) {
             tempSub.Description = sub.Description;
@@ -118,10 +115,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
           }
           console.log(tempSub);
           console.log(subToModify);
-          
+
           var newSub = subToModify.set(tempSub);
           course.save(function (err) {
-            if (err) res.status(400).json({message: err})
+            if (err) res.status(400).json({ message: err });
             res.status(200).json(newSub);
           });
         } else {
@@ -134,9 +131,9 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {
-          if (err) res.status(400).json({message: err})
+          if (err) res.status(400).json({ message: err });
           res.status(200).json(newSub);
-        });        
+        });
       }
     } else {
       res
@@ -148,6 +145,21 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
   }
 };
 
+const putCourseVideo = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true, VideoId: true }, req)) {
+    var c = await Course.findByIdAndUpdate(req.body.id, {
+      VideoId: req.body.VideoId,
+    });
+    if (!c) {
+      res.status(400).json({ message: "Course not found. Make sure course id is valid" });
+      return;
+    }
+    res.status(200).json(c);
+  } else {
+    res.status(400).json({message: "Make sure all fields are valid"});
+  }
+};
+
 export {
   getCourses,
   searchCourses,
@@ -155,4 +167,5 @@ export {
   hoverCourse,
   deleteCourse,
   putCourseSubtitle,
+  putCourseVideo,
 };
