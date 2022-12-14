@@ -5,6 +5,7 @@ import { getCookie } from "./cookieController";
 // @desc    Get Guest country
 // @access  private
 const getGuestCookie = (req: Request, res: Response) => {
+  
   const cookie = getCookie(req);
   res.status(200).json(cookie.userData);
 };

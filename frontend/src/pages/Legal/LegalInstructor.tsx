@@ -3,7 +3,7 @@ import Header from '../../components/header.tsx'
 import {Link} from 'react-router-dom'
 import Button from '@mui/material/Button'
 
-function Legal() {
+function LegalInstructor() {
   return (
     <div className= "container">
       <Header/>
@@ -27,14 +27,14 @@ function Legal() {
             Provided that you are eligible to use the Site, you are granted a limited license to access and use the Site and to download or print a copy of any portion of the Content to which you have pronerlv dained access solelv for vour personal. non-commercial use. We reserve all riahts not expressiv aranted to vou in and to the Site. the Content and the Marks
             </p>
 
-            <h4> 3. User Representations </h4>
+            <h4> 3. Instructor Representations </h4>
             <p>
             By using the Site, vou represent and warrant that: (1) all registration intormation you submit will be true, accurate, current, and complete; (2) you will maintain the accuracy ot such information and promptlv update such reaistration information as necessarv: (3) vou have the leaal capacitv and vou aaree to combl with these Terms of Use: (4) vou are not a minor in the jurisdiction in which vou reside. or if a minor. vou have received parental permission to use the Site: (5) vou will not access the Site through automated or non-human
             means, whether through a bot, script, or otherwise; (6) you will not use the Site for any illegal or unauthorized purpose; and (7) your use of the Site will not violate any applicable law or regulation.
             If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any and all current or future use of the Site (or any portion thereof)
             </p>
 
-            <h4> 4. User Regesteration </h4>
+            <h4> 4. Instructor Regesteration </h4>
             <p>
             You may be required to register with the Site. You agree to keep your password confidential and will be responsible for all use of your account and password. We reserve the right
             to remove, reclaim, or change a username you select if we determine, in our sole discretion, that such username is inappropriate, obscene, or otherwise objectionable.
@@ -67,7 +67,7 @@ function Legal() {
             recourse against us for anv aleded or actual intrIngement or misappropriation or any proprietary right in vour submissions
             </p>
             </div>
-            <Link to={'/register'} style={{textDecoration: 'none'}}>
+            <Link to={'/instructorRegister'} style={{textDecoration: 'none'}}>
               <Button style={{ marginLeft: '75%'}}variant="contained" id='filled-button'>
                 Back to Registeration
               </Button>
@@ -77,4 +77,4 @@ function Legal() {
   )
 }
 
-export default Legal;
+export default LegalInstructor;

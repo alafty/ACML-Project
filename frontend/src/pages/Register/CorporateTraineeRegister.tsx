@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../components/header.tsx'
-import '../../Styling/landing.css'
+import '../../Styling/mainLayout.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
@@ -95,7 +95,7 @@ function CorporateTrainee() {
 
         <div style={{display: "flex", flexDirection: "row", marginLeft: "70vw"}}>
           <p>by clicking sign up you agree to our </p>
-          <Link to={'/landing'}>
+          <Link to={'/legal'}>
             <p> terms and conditions</p>
           </Link>
         </div>
