@@ -1,12 +1,12 @@
 import React from 'react'
-import Header from '../../components/header.tsx'
+import Header from '../../components/header'
 import '../../Styling/landing.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
 import {TextField} from '@mui/material';
 import { Link } from 'react-router-dom';
-import services from '../../app/UsersServices.ts';
+import services from '../../app/UsersServices';
 
 function InstructorRegister() {
   const [country, setCountry] = React.useState('Egypt');

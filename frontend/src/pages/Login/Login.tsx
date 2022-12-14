@@ -4,6 +4,7 @@ import React from 'react'
 // @ts-ignore
 import {useEffect, useState} from 'react'
 import TextField from '@mui/material/TextField'
+import services from "../../app/CoursesServices";
 
 function Login() {
   var [message, setMessage] = useState('firstMessage');
@@ -17,7 +18,7 @@ function Login() {
       <h1> Login </h1>
       <button 
       onClick={async () => {
-        if (services.getAllCourses()){
+        if (await services.getAllCourses()){
           setMessage(JSON.stringify(localStorage.getItem('AllCourses')));
         }
       }}> Get All Courses </button>
