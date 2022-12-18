@@ -5,23 +5,14 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import CourseVideo from "../../components/Course/CourseVideo";
-import { extractIdFromVideoUrl } from "../../utils/video_utils";
 function Register() {
   const [type, setType] = React.useState("");
-  const [videoId, setVideoId] = React.useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
   };
 
-  const verifyVideo = () => {
-    var id = extractIdFromVideoUrl(
-      "https://www.youtube.com/watch?v=k6rl9UA26-0"
-    );
-    setVideoId(id);
-  };
-
+  
   return (
     <div className="container">
       <Header />
@@ -43,7 +34,6 @@ function Register() {
           <Button
             variant="contained"
             id="filled-button"
-            onClick={verifyVideo}
             style={{ width: "400px", marginTop: "50px", marginLeft: "70vw" }}
           >
             {" "}
@@ -51,8 +41,7 @@ function Register() {
           </Button>
         </Link>
       </div>
-      <p> {videoId} </p>
-      {videoId !== '' ? <CourseVideo embedId={videoId} /> : <div/>}
+      
     </div>
   );
 }
