@@ -11,15 +11,15 @@ import {
 
 const coursesRouter = Router();
 
-coursesRouter.route("/").get(getCourses).post(addCourse);
+coursesRouter.route("/").get(getCourses).post(addCourse).delete(deleteCourse);
 
 coursesRouter.post("/search", searchCourses);
+
+coursesRouter.route("/id").post(getCourses);
 
 coursesRouter.put("/subtitle", putCourseSubtitle);
 
 coursesRouter.put("/videoId", putCourseVideo);
-
-coursesRouter.delete("/courses", deleteCourse);
 
 coursesRouter.post("/hover", hoverCourse);
 

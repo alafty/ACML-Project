@@ -17,7 +17,7 @@ function Register() {
 
   const verifyVideo = () => {
     var id = extractIdFromVideoUrl(
-      "https://youtu.be/-EhDlXx3okU"
+      "https://www.youtube.com/watch?v=k6rl9UA26-0"
     );
     setVideoId(id);
   };

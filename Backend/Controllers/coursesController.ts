@@ -8,9 +8,18 @@ import coursesRouter from "../Routes/coursesRoutes";
 // @rout    GET /courses/
 // @access  private
 const getCourses = async (req: Request, res: Response) => {
-  const result = await Course.find();
-  console.log(result);
-  res.send(result);
+  if (courseInputValidate({ id: true }, req)) {
+    const result = await Course.findById(req.body.id);
+    if (!result) {
+      res.status(400).json({ message: "Please enter a valid course id" });
+      return;
+    }
+    res.status(200).json(result);
+  } else if (courseInputValidate({ id: false }, req)) {
+    const result = await Course.find();
+    console.log(result);
+    res.send(result);
+  }
 };
 
 const hoverCourse = async (req: Request, res: Response) => {
@@ -149,14 +158,16 @@ const putCourseVideo = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true, VideoId: true }, req)) {
     var c = await Course.findByIdAndUpdate(req.body.id, {
       VideoId: req.body.VideoId,
-    });    
+    });
     if (!c) {
-      res.status(400).json({ message: "Course not found. Make sure course id is valid" });
+      res
+        .status(400)
+        .json({ message: "Course not found. Make sure course id is valid" });
       return;
     }
     res.status(200).json(await Course.findById(req.body.id));
   } else {
-    res.status(400).json({message: "Make sure all fields are valid"});
+    res.status(400).json({ message: "Make sure all fields are valid" });
   }
 };
 
