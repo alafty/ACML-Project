@@ -5,6 +5,7 @@ import {
   addCourse,
   hoverCourse,
   deleteCourse,
+  addRating,
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
@@ -16,5 +17,7 @@ coursesRouter.post("/search", searchCourses);
 coursesRouter.delete('/courses', deleteCourse);
 
 coursesRouter.post("/hover", hoverCourse);
+
+coursesRouter.post("/rate", addRating);
 
 export default coursesRouter;
