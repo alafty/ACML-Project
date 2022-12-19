@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Backend",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\pages",
+    "\\frontend\\src\\pages\\Login"
+  ],
+  "SelectedNode": "\\frontend\\src\\pages\\Login\\Login.tsx",
+  "PreviewInSolutionExplorer": false
+}
