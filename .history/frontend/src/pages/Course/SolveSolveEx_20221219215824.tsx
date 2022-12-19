@@ -47,48 +47,25 @@ type State = {
      
      currentQuestion=0;
      newscore=0
-     showscore = false
-     showquestions = true
-     totalscore=0
-     //showAnswers=false
-   /* showAnswer (){
-        console.log("hiiiiiiiiii")
-        this.showAnswers=true
-        this.showscore=false
-       
-
-    }*/
     checkAnswer (selected : string ,theQuestion : questionBankModel) {
         console.log(selected);
         console.log(theQuestion.Answer)
         const rightAnswer= theQuestion.Answer
-        this.totalscore+=theQuestion.Grade
-        
 
         if (selected==rightAnswer) {
-            this.newscore+=theQuestion.Grade
+            this.newscore++
             this.setState({
                 score: this.newscore
                 
               });
         }
         console.log(this.state.score);
-        if (this.currentQuestion<this.state.Question.length-1) {
+        if (this.currentQuestion<this.state.Question.length) {
             this.currentQuestion++
             this.setState({
                 currentQuestion: this.currentQuestion
                 
               });
-             
-        }
-        else {
-            this.showscore=true;
-            this.showquestions=false
-            this.setState({
-                showScore: true
-                
-              });
-                
         }
            
 
@@ -96,34 +73,12 @@ type State = {
         render() {
           
             return (
-                
-                    
-                
              
                 <div style={{marginTop: 20}}>
-                   
-                     <div className="showResult" style={{ display: this.showscore? "block" : "none"}}>
-                        <h1>you scored {this.newscore} out of {this.totalscore}</h1>
-                        <h2>Exercise solution :</h2>
-                        {this.state.Question.map((question) => (
-                            <h1>Question : {question.Question} <br />
-                            Choices : <br />
-                            -{question.Choice1} <br />
-                            -{question.Choice2} <br />
-                            -{question.Choice3} <br />
-                            -{question.Choice4} <br />
-                            Correct Answer : {question.Answer}</h1>
-                            
-                        
-                        )
-
-                        )
-
-                        }
                     
-                   </div>
-                      
-                             <div className="showQuestions" style={{ display: this.showquestions? "block" : "none"}}>    
+                    
+                        
+                             <div>    
                              <h1> Question {this.currentQuestion+1} :</h1>
                              <h2>{this.state.Question[this.currentQuestion].Question}</h2>
                              

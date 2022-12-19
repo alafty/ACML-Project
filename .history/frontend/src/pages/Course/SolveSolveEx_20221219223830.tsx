@@ -50,14 +50,7 @@ type State = {
      showscore = false
      showquestions = true
      totalscore=0
-     //showAnswers=false
-   /* showAnswer (){
-        console.log("hiiiiiiiiii")
-        this.showAnswers=true
-        this.showscore=false
-       
 
-    }*/
     checkAnswer (selected : string ,theQuestion : questionBankModel) {
         console.log(selected);
         console.log(theQuestion.Answer)
@@ -101,25 +94,10 @@ type State = {
                 
              
                 <div style={{marginTop: 20}}>
-                   
+                    
                      <div className="showResult" style={{ display: this.showscore? "block" : "none"}}>
                         <h1>you scored {this.newscore} out of {this.totalscore}</h1>
-                        <h2>Exercise solution :</h2>
-                        {this.state.Question.map((question) => (
-                            <h1>Question : {question.Question} <br />
-                            Choices : <br />
-                            -{question.Choice1} <br />
-                            -{question.Choice2} <br />
-                            -{question.Choice3} <br />
-                            -{question.Choice4} <br />
-                            Correct Answer : {question.Answer}</h1>
-                            
-                        
-                        )
-
-                        )
-
-                        }
+                        <button>show correct answers </button>
                     
                    </div>
                       

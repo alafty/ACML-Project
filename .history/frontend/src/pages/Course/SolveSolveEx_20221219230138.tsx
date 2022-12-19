@@ -107,11 +107,6 @@ type State = {
                         <h2>Exercise solution :</h2>
                         {this.state.Question.map((question) => (
                             <h1>Question : {question.Question} <br />
-                            Choices : <br />
-                            -{question.Choice1} <br />
-                            -{question.Choice2} <br />
-                            -{question.Choice3} <br />
-                            -{question.Choice4} <br />
                             Correct Answer : {question.Answer}</h1>
                             
                         
