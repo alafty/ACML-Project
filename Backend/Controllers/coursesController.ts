@@ -64,6 +64,8 @@ const addCourse = async (req: Request, res: Response) => {
       Instructor: true,
       Price: true,
       TotalHours: true,
+      RatingAvg: true,
+      RatingCount: true,
     },
     req
   );
@@ -85,6 +87,31 @@ const deleteCourse = (req: Request, res: Response) => {
     Course.findByIdAndDelete(req.params.id);
   }
 };
+
+
+  const addRating = async (req: Request, res: Response) => { 
+    if(!req.body){
+      res.status(400);
+    }
+    else {
+      var mult =0;
+      const user_id= req.body.id;
+      const ratingResult = await Course.findById(user_id);
+      if(ratingResult!= null)
+      {
+      mult = ratingResult.RatingCount * ratingResult.RatingAvg;
+      ratingResult.RatingAvg = (( mult + parseFloat(req.body.rate)) / (ratingResult.RatingCount+1));
+      ratingResult.RatingCount ++;
+      await Course.findByIdAndUpdate(user_id, {RatingAvg: ratingResult.RatingAvg});
+      await Course.findByIdAndUpdate(user_id, {RatingCount: ratingResult.RatingCount});
+
+      }
+       res.status(200).json({message: 'rating added'})
+      }
+  }
+
+  
+
 
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
@@ -155,4 +182,7 @@ export {
   hoverCourse,
   deleteCourse,
   putCourseSubtitle,
+  addRating
+  
 };
+
