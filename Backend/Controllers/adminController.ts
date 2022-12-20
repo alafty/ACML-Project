@@ -46,4 +46,42 @@ const createITrainee = async (req: Request, res: Response) => {
   }
 };
 
-export { createAdmin, createInstructor, createCTrainee, createITrainee};
+const login = async (req: Request, res: Response) => {
+  let existUsername = await iTrainee.findOne({ Username: req.body.Username });
+  let type = 'individualTrainee';
+  if (!existUsername) {
+    existUsername = await cTrainee.findOne({ Username: req.body.Username });
+    type = 'corporateTrainee';
+    if (!existUsername) {
+      existUsername = await instructor.findOne({ Username: req.body.Username });
+      type = 'instructor';
+    }
+  }
+  if (existUsername) {
+    if (existUsername.Password == req.body.Password) {
+      const cookie = req.cookies.userData;
+      cookie.id = existUsername.id;
+      cookie.type = type;
+      res.cookie("userData", cookie).status(200).json({user: existUsername, type: type});
+    } else {
+      res.json({ message: "incorrect password" });
+    }
+  } else {
+    res.json({ message: "oops! this username does not exist" });
+  }
+};
+
+const editInstructorDetails = async (req: Request, res: Response) => {
+  
+  if(req.body.email){
+    await instructor.findOneAndUpdate({ Username: req.body.username }, {Email: req.body.email});
+  }
+  if(req.body.bio){
+    await instructor.findOneAndUpdate({ Username: req.body.username }, {ShortBio: req.body.bio});
+  }
+  
+  res.status(200).json('changes done');
+
+}
+
+export { createAdmin, createInstructor, createCTrainee, createITrainee, login, editInstructorDetails };

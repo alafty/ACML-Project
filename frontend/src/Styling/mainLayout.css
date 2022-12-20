@@ -1,3 +1,12 @@
+
+:root {
+    --primaryLight: #dbe1f8;
+    --primary: #829df7;
+    --secondary: #e66bba;
+    --text: #3b3086;
+    --white: #d9ebf9;
+}
+
 html, body {
     height: 100%;
     width: 100%;
@@ -13,7 +22,7 @@ html, body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #829df7;
+    background-color: var(--primary);
     height: 8vh;
     align-items: center;
     padding: 15px;
@@ -27,35 +36,28 @@ html, body {
 }
 .search-bar {
     width: 400px;
-    background-color: #FFFFFF;
+    background-color: var(--white);
     border-radius: 10px;
 }
 
 .selector {
     width: 400px;
     margin-left: 160px;
+    background-color: var(--white);
 }
 
 #button-search {
     margin-left: 20px;
     padding: 10px;
     padding-inline: 20px;
-    color: #ffffff;
-    background-color: #e66bba;
+    color: var(--white);
+    background-color: var(--secondary);
 }
 
 .body {
-        background-color: #dbe1f8;
-        height: 92vh;
+        background-color: var(--primaryLight);
+        height: 90vh;
         background-size: cover;
-}
-
-#landing-footer {
-    display: flex;
-    flex-direction: row;
-    background-color: #829df7;
-    height: 6vh;
-    width: 100vw;
 }
 
 .title {
@@ -63,7 +65,7 @@ html, body {
     font-size: 64px;
     margin-top: 250px;
     padding-inline: 150px;
-    color: #3b3086;
+    color: var(--text);
 }
 
 .landing-subtitle {
@@ -72,22 +74,23 @@ html, body {
     margin-top: -40px;
     font-size: 24px;
     padding-inline: 160px;
-    color: #3b3086;
+    color: var(--text);
 }
 
 #filled-button {
     padding-inline: 50px;
     padding-block: 10px;
-    background-color: #e66bba;
+    background-color: var(--secondary);
     margin: 20px;
     margin-left: 160px;
     font-size: 24px;
 }
+
 #outlined {
     padding-inline: 50px;
     padding-block: 10px;
-    border-color: #e66bba;
-    color: #e66bba;
+    border-color: var(--secondary);
+    color: var(--secondary);
     margin: 20px;
     font-size: 24px;
 }
@@ -105,4 +108,37 @@ html, body {
     display: flex;
     flex-direction: column;
     margin-left: 150px;
+}
+
+.legal-border{
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 20px;
+}
+
+.courses-panel-bg{
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--white);
+    width: 75%;
+    height: 40%;
+    margin-left: 150px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+}
+
+.course-card{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    width: 17%;
+    height: 90%;
+    margin-inline: 20px;
+    margin-block: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
