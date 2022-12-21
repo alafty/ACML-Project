@@ -26,9 +26,15 @@ const instructorSchema = new Schema(
       type: [String],
       required: false,
     },
-    Rating: {
+    RatingCount: {
       type: Number,
       required: false,
+      default : 0,
+    },
+    RatingAvg: {
+      type: Number,
+      required: false,
+      default : 0,
     },
     Country: {
       type: String,
