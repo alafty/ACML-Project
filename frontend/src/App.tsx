@@ -60,7 +60,7 @@ function app() {
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
 
             <Route path='/createquiz' element={<CreateQuiz/>} />
-            <Route path='/getQuiz' element={<SolveSolveEx QuizID= {1}/>} />
+            <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
 
 
           </Routes>
