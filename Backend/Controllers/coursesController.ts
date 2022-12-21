@@ -60,7 +60,7 @@ const addCourse = async (req: Request, res: Response) => {
       id: false,
       Name: true,
       Subject: true,
-      Subtitle: true,
+      Subtitles: true,
       Instructor: true,
       Price: true,
       TotalHours: true,
