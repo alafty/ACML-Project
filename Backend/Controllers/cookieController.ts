@@ -4,7 +4,7 @@ const createCookie = (req: Request, res: Response, next: NextFunction) => {
   // by using cookie-parser
 
   if (!req.cookies.myCookie) {
-    res.cookie("userData", { Country: "Egypt" });
+    res.cookie("userData", {id: '', type: '', Country: "Egypt" });
   }
 
   next();

@@ -14,6 +14,10 @@ const instructorSchema = new Schema(
       type: String,
       required: true,
     },
+    ShortBio: {
+      type: String,
+      required: true
+    },
     NumberOfCourses: {
       type: Number,
       required: false,

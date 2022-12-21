@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Subtitle from "./subtitle";
 
 const courseSchema = new Schema(
   {
@@ -10,25 +11,28 @@ const courseSchema = new Schema(
       type: String,
       required: true,
     },
-    Subtitle: {
-      type: String,
-      required: true,
+    Subtitles: {
+      type: [Subtitle.schema],
+      default: [],
     },
-    Exercises: {
-      type: [String],
-      required: true,
-    },
+
     Instructor: {
-      type: String,
+      type: [String],
       required: true,
     },
     Price: {
       type: Number,
       required: true,
     },
-    Rating: {
+    RatingCount: {
       type: Number,
       required: false,
+      default : 0,
+    },
+    RatingAvg: {
+      type: Number,
+      required: false,
+      default : 0,
     },
     Discount: {
       type: [{ Country: String, Percentage: Number }],

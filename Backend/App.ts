@@ -13,6 +13,7 @@ import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
 import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
+import quizRouter  from "./Routes/quizRoute";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
 import instructorRouter from "./Routes/instructorRoutes";
@@ -20,7 +21,7 @@ import instructorRouter from "./Routes/instructorRoutes";
 //App variables
 const app: Application = express();
 const port = process.env.PORT || "8000";
-
+app.use(express.json());
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -31,8 +32,11 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept, Cookie",
+    
   );
+  res.header("Access-Control-Allow-Credentials", "true");
+
   next();
 });
 
@@ -62,4 +66,5 @@ app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
+app.use("/quiz",quizRouter)
 app.use("/instructor", instructorRouter);
