@@ -1,5 +1,5 @@
 import { Router } from "express";
-/*import {
+import {
   getCourses,
   searchCourses,
   addCourse,
@@ -8,7 +8,7 @@ import { Router } from "express";
 
   addRating,
 
-  putCourseSubtitle
+  //putCourseSubtitle
 
 } from "../Controllers/coursesController";
 
@@ -18,7 +18,7 @@ coursesRouter.route("/").get(getCourses).post(addCourse);
 
 coursesRouter.post("/search", searchCourses);
 
-coursesRouter.put('/subtitle', putCourseSubtitle);
+//coursesRouter.put('/subtitle', putCourseSubtitle);
 
 coursesRouter.delete('/courses', deleteCourse);
 
@@ -26,4 +26,4 @@ coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", addRating);
 
-export default coursesRouter;*/
+export default coursesRouter;

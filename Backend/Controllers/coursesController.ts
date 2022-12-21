@@ -1,8 +1,7 @@
-/*import { Request, Response } from "express";
+import { Request, Response } from "express";
 import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
-import coursesRouter from "../Routes/coursesRoutes";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -90,24 +89,28 @@ const deleteCourse = (req: Request, res: Response) => {
 
 
   const addRating = async (req: Request, res: Response) => { 
-    if(!req.body){
+    if(!req.body.id || !req.body.rating){
       res.status(400);
     }
     else {
       var mult =0;
-      const user_id= req.body.id;
-      const ratingResult = await Course.findById(user_id);
-   /*   if(ratingResult!= null)
+      const courseID= req.body.id;
+      const ratingResult = await Course.findById(courseID);
+      console.log("we reached here");
+      
+      if(ratingResult!= null)
       {
       mult = ratingResult.RatingCount * ratingResult.RatingAvg;
-      ratingResult.RatingAvg = (( mult + parseFloat(req.body.rate)) / (ratingResult.RatingCount+1));
+      ratingResult.RatingAvg = (( mult + parseFloat(req.body.rating)) / (ratingResult.RatingCount+1));
       ratingResult.RatingCount ++;
-      await Course.findByIdAndUpdate(user_id, {RatingAvg: ratingResult.RatingAvg});
-      await Course.findByIdAndUpdate(user_id, {RatingCount: ratingResult.RatingCount});
-
+      await Course.findByIdAndUpdate(courseID, {RatingAvg: ratingResult.RatingAvg});
+      await Course.findByIdAndUpdate(courseID, {RatingCount: ratingResult.RatingCount});
+      
+      res.status(200).json({message: 'rating added'});
+      }else{
+        res.status(404).json({message: 'no such course exists'});
       }
-       res.status(200).json({message: 'rating added'})
-      }*/
+      }
   
 
   
@@ -117,7 +120,7 @@ const deleteCourse = (req: Request, res: Response) => {
 // @rout    Put /course-subtitle
 // @access  private
 /// @body    {id, {[id], VideoLink, Description}}
-/*
+
 const putCourseSubtitle = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
     var course = await Course.findById(req.body.id);
@@ -176,7 +179,6 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
   }
 };
 
- 
-};
+}
 
-*/
+export {getCourses, addRating, hoverCourse, deleteCourse, searchCourses, addCourse};
