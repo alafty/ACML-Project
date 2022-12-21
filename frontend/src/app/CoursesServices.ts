@@ -45,6 +45,7 @@ export const searchCourseBySubject = async (searchTerm: String) => {
     // return response.data
 }
 
+
 export const rateCourses = async (searchTerm: String) => {
   var data = qs.stringify({
   searchTerm: searchTerm
@@ -74,10 +75,10 @@ axios(config)
 
 }
 
-const services = {
+const Services = {
     getAllCourses,
     searchCourseBySubject,
     rateCourses,
 }
 
-export default services;
+export default Services;

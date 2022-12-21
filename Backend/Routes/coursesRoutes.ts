@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {
+/*import {
   getCourses,
   searchCourses,
   addCourse,
@@ -26,4 +26,4 @@ coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", addRating);
 
-export default coursesRouter;
+export default coursesRouter;*/

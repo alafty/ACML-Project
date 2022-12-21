@@ -18,6 +18,8 @@ import InstructorDetails from './pages/Instructor/InstructorDetails.tsx'
 import Home from './pages/Home.tsx'
 import Legal from './pages/Legal/Legal.tsx'
 import LegalInstructor from './pages/Legal/LegalInstructor.tsx'
+import SolveSolveEx from './pages/Course/SolveSolveEx.tsx'
+
 
 const defaultGlobalState = {
   loggedInUser: {}
@@ -71,6 +73,8 @@ function app() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/createquiz' element={<CreateQuiz/>} />
+            <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
+
 
           </Routes>
         </div>

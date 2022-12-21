@@ -5,14 +5,15 @@ import {Link} from 'react-router-dom';
 import {TextField} from '@mui/material';
 import Header from '../components/header.tsx';
 import CourseCard from '../components/courseCard.tsx';
-
+import Services from '../app/CoursesServices';
 function Home() {
+  
   
   return (
     <div className= "container">
       <Header/>
         <div className= "body">
-            <h3 style= {{marginTop: '100px'}} className='title'> Featued Courses </h3>
+            <h3 style= {{marginTop: '100px'}} className='title'> Featured Courses </h3>
             <div className='courses-panel-bg'>
                 <CourseCard />
                 <CourseCard />
