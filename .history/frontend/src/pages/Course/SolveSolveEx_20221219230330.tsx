@@ -7,6 +7,10 @@ type State = {
     score : Number
     currentQuestion : Number
     showScore : boolean
+    
+
+   
+
 }
 
 
