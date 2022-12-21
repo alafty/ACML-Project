@@ -15,6 +15,7 @@ import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
+import instructorRouter from "./Routes/instructorRoutes";
 
 //App variables
 const app: Application = express();
@@ -61,3 +62,4 @@ app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
+app.use("/instructor", instructorRouter);
