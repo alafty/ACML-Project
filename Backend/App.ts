@@ -16,6 +16,7 @@ import countryRouter from "./Routes/countryRoutes";
 import quizRouter  from "./Routes/quizRoute";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
+import instructorRouter from "./Routes/instructorRoutes";
 
 //App variables
 const app: Application = express();
@@ -66,3 +67,4 @@ app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
 app.use("/quiz",quizRouter)
+app.use("/instructor", instructorRouter);
