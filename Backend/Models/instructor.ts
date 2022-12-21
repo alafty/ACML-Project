@@ -23,7 +23,7 @@ const instructorSchema = new Schema(
       required: false,
     },
     Courses: {
-      type: String,
+      type: [String],
       required: false,
     },
     Rating: {
