@@ -1,6 +1,7 @@
 import React,{ChangeEvent, Component, useState} from "react";
 import axios from 'axios';
-import questionBankModel from '../../../../Backend/Models/questionBank.ts'
+import questionBankModel from "../Models/questionBank.tsx";
+
 type State = {
     Question: [questionBankModel]
     score : Number

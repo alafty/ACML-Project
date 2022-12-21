@@ -34,7 +34,7 @@ const questionBankSchema = new Schema(
 
     Course: {
       type: String,
-    //   required: true,
+       required: true,
     },
     QuizID: {
       type: String,

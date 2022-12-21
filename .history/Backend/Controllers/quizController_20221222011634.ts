@@ -13,19 +13,6 @@ const getQuiz= async (req: Request, res: Response) => {
       }
     // filter specific subjects
 }
-const getCourseQuizzes= async (req: Request, res: Response) => {
-    //used Acml as test name, replace to get the required name from the user
-    // Courses should have attribute subject in them 
-    var CourseID = req.body.CourseID
-    console.log(CourseID)
-    const Questions = await questionBankModel.findOne({Course:CourseID}).distinct('QuizID');
-    try {
-        res.send(Questions);
-      } catch (error) {
-        res.status(500).send(error);
-      }
-    // filter specific subjects
-}
 const createQuestion = async (req: Request, res: Response) => {
     console.log (req.body);
     questionBankModel.create(req.body);
@@ -47,4 +34,4 @@ const setAnswer = async (req: Request, res: Response) => {
 };
 
 
-export {setAnswer,createQuestion, getQuiz,getCourseQuizzes};
+export {setAnswer,createQuestion, getQuiz};

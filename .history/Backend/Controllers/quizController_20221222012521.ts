@@ -47,4 +47,4 @@ const setAnswer = async (req: Request, res: Response) => {
 };
 
 
-export {setAnswer,createQuestion, getQuiz,getCourseQuizzes};
+export {setAnswer,createQuestion, getQuiz};
