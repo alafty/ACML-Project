@@ -19,6 +19,7 @@ import passwordResetRouter  from "./Routes/passwordResetRoute";
 
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
+import instructorRouter from "./Routes/instructorRoutes";
 
 //App variables
 const app: Application = express();
@@ -72,3 +73,4 @@ app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
 app.use("/quiz",quizRouter);
 app.use("/passwordreset",passwordResetRouter);
+app.use("/instructor", instructorRouter);

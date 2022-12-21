@@ -5,7 +5,11 @@ import {
   addCourse,
   hoverCourse,
   deleteCourse,
+
+  addRating,
+
   putCourseSubtitle
+
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
@@ -19,5 +23,7 @@ coursesRouter.put('/subtitle', putCourseSubtitle);
 coursesRouter.delete('/courses', deleteCourse);
 
 coursesRouter.post("/hover", hoverCourse);
+
+coursesRouter.post("/rate", addRating);
 
 export default coursesRouter;
