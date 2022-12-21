@@ -1,4 +1,4 @@
-/*import { Request, Response } from "express";
+import { Request, Response } from "express";
 import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
@@ -64,8 +64,8 @@ const addCourse = async (req: Request, res: Response) => {
       Instructor: true,
       Price: true,
       TotalHours: true,
-      RatingAvg: true,
-      RatingCount: true,
+     // RatingAvg: true,
+     // RatingCount: true,
     },
     req
   );
@@ -108,7 +108,7 @@ const deleteCourse = (req: Request, res: Response) => {
       }
        res.status(200).json({message: 'rating added'})
       }*/
-  
+  }
 
   
 
@@ -117,7 +117,6 @@ const deleteCourse = (req: Request, res: Response) => {
 // @rout    Put /course-subtitle
 // @access  private
 /// @body    {id, {[id], VideoLink, Description}}
-/*
 const putCourseSubtitle = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
     var course = await Course.findById(req.body.id);
@@ -179,4 +178,3 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
  
 };
 
-*/
