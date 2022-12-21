@@ -5,7 +5,7 @@ import axios from "axios";
 import React from "react";
 
 const PasswordReset = () => {
-	const [validUrl, setValidUrl] = useState(true);
+	const [validUrl, setValidUrl] = useState(false);
 	const [password, setPassword] = useState("");
 	const [msg, setMsg] = useState("");
 	const [error, setError] = useState("");
