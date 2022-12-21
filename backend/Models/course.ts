@@ -19,22 +19,16 @@ const courseSchema = new Schema(
       required: true,
     },
     Instructor: {
-      type: [String],
+      type: String,
       required: true,
     },
     Price: {
       type: Number,
       required: true,
     },
-    RatingCount: {
+    Rating: {
       type: Number,
       required: false,
-      default :0,
-    },
-    RatingAvg: {
-        type: Number,
-        required: false,
-        default:0,
     },
     Discount: {
       type: [{ Country: String, Percentage: Number }],
