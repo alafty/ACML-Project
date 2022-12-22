@@ -1,6 +1,6 @@
 import React,{ChangeEvent, Component, useState} from "react";
 import axios from 'axios';
-import questionBankModel from "../Models/questionBank.tsx";
+import questionBankModel from '../../../../Backend/Models/questionBank.ts'
 
 type State = {
     Question: [questionBankModel]
@@ -15,8 +15,6 @@ type State = {
          
     constructor(props: any) {
         super(props);
-
-
         this.state = {
             Question: [''],
             score :0,
@@ -26,12 +24,7 @@ type State = {
             
             
         }
-   
-     
-
-
     }
-   
     componentDidMount(){
         const newQuery ={
             Subject:this.props.QuizID

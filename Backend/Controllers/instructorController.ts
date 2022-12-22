@@ -9,15 +9,20 @@ const viewCourseRatings= async(req: Request, res: Response) => {
       else
       {
         const viewInstructor = await instructor.findById(req.body.id);
+        var coursesRatings: any[] = [];
         if(viewInstructor!=null)
         {      
             for(let i = 0 ; i< viewInstructor.Courses.length; i++)
             {
                 var ratingResultofCourse = await course.findById(viewInstructor.Courses[i]);
-                console.log(ratingResultofCourse?.RatingAvg);
+                if(ratingResultofCourse){
+                  var name = ratingResultofCourse.Name;
+                  coursesRatings.push({ [name]: ratingResultofCourse.RatingAvg});
+                }
+                
             }
             }
-        res.status(200).json({message: 'rating printed'})
+        res.status(200).json({coursesRatings})
       }
   }
 
@@ -50,8 +55,12 @@ const viewCourseRatings= async(req: Request, res: Response) => {
       else
       {
         const viewInstructor = await instructor.findById(req.body.id);
-        console.log(viewInstructor?.RatingAvg);
-        res.status(200).json({rating: viewInstructor?.RatingAvg})
+        if(viewInstructor){
+          res.status(200).json({rating: viewInstructor.RatingAvg})
+        } else {
+          res.status(400).json({message: "no instructor found"});
+        }
+        
       }
   }
 

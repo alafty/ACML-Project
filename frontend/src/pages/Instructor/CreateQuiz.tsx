@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import axios from 'axios';
+import Header from '../../components/header.tsx'
 
 type State = {
     Question: string,
@@ -133,7 +134,9 @@ type State = {
 
         render() {
             return (
-                <div style={{marginTop: 20}}>
+                <div className="container">
+                    <Header/>
+                    <div className="body">
                     <h3>Create New Questiom</h3>
       
                     <form onSubmit={this.onSubmit}>
@@ -219,6 +222,7 @@ type State = {
                             <input type="submit" value="Add Question" className="btn btn-primary" />
                         </div>
                     </form>
+                    </div>
                 </div>
             )
         }
