@@ -108,19 +108,20 @@ const addCourseDiscount = async (
   return response.data;
 };
 
-export const rateCourses = async (searchTerm: String) => {
+export const rateCourses = async (courseID: String, rating: String) => {
   var data = qs.stringify({
-    searchTerm: searchTerm,
-  });
+  id: courseID,
+  rating: rating
+});
   var config = {
-    method: "post",
-    url: "http://localhost:8000/courses/search",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Cookie: "userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D",
-    },
-    data: data,
-  };
+  method: 'post',
+  url: 'http://localhost:8000/courses/rate',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded', 
+    'Cookie': 'userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D'
+  },
+  data : data
+};
 
   axios(config)
     .then(function (response) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../Styling/mainLayout.css';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
 import Header from '../../components/header';
 import services from '../../app/UsersServices';
@@ -13,7 +13,7 @@ function Login() {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [state, dispatch] = useGlobalState();
-  const [errorMessage, setErrorMesssage] = React.useState('yaaaay');
+  const [errorMessage, setErrorMesssage] = React.useState('');
   services.createGuestCookie();
 
   const setUserData = async callback =>{
@@ -62,7 +62,12 @@ function Login() {
             }
           }
         > Login </Button>
+        <div style={{marginLeft: "70vw"}}>
+        <Link to={'/forgot-password'}>
+            <p>Forgot password?</p>
+          </Link>
         <h4>{errorMessage}</h4>
+        </div>
       </div>
     </div>
 

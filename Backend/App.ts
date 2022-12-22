@@ -10,7 +10,6 @@ require("dotenv").config({ path: `EnvFiles/.env.${process.env.NODE_ENV}` });
 const cors = require('cors');
 
 import connectDB from "./db";
-//import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
 import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
@@ -68,7 +67,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.get("/cookie", getGuestCookie);
 //Routing to different functionalities
-//app.use("/courses", coursesRouter);
+app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
