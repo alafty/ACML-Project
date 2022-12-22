@@ -4,7 +4,7 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import services from '../app/CoursesServices.ts';
+import services from '../app/CoursesServices';
 
 
 
@@ -65,7 +65,7 @@ import services from '../app/CoursesServices.ts';
         id="filled-button"
         style={{"width": "400px", "marginTop": "50px", "marginLeft": "70vw"}}
         onClick={async () => {
-          await services.rateCourses();
+          await services.rateCourses('');
           setRateField(localStorage.getItem("rateCourse")!);
          }}
         > Confirm </Button>
