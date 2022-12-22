@@ -55,63 +55,78 @@ const getCourseDetails = async (id: string) => {
   return response.data;
 };
 const getCourseQuizzes = async (Course: string) => {
-  
   const Body = {
-    Course: Course,
-    
-}
-const data:[String] = [''];
-axios.post('http://localhost:8000/quiz/getCourseQuizzes',Body)
-.then(res=>console.log(res.data = data)); 
-
-return data;
-
- 
-
-
+    CourseID: Course,
+  };
+  const data: [String] = [""];
+  await axios.post("http://localhost:8000/quiz/getCourseQuizzes", Body);
+  return data;
 };
 
+const updateSubtitle = async (
+  courseId: string,
+  subId: string,
+  options: { videoId?: string; description?: string }
+) => {
+  var data = qs.stringify({
+    id: courseId,
+    Subtitle: {
+      Id: subId,
+      ...(options.videoId ? { VideoId: options.videoId } : {}),
+      ...(options.description ? { Description: options.description } : {}),
+    },
+  });
+  var response = await httpClient.put(`${COURSES_URL}/subtitle`, data);
 
-// const uploadCourseVideo = (id: string, ) => {
+  return response.data;
+};
 
-// }
+const uploadCourseVideo = async (id: string, videoId: string) => {
+  var data = qs.stringify({
+    id: id,
+    VideoId: videoId,
+  });
+  var response = await httpClient.put(`${COURSES_URL}/videoId`, data);
 
+  return response.data;
+};
 
 export const rateCourses = async (searchTerm: String) => {
   var data = qs.stringify({
-  searchTerm: searchTerm
-});
+    searchTerm: searchTerm,
+  });
   var config = {
-  method: 'post',
-  url: 'http://localhost:8000/courses/search',
-  headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded', 
-    'Cookie': 'userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D'
-  },
-  data : data
+    method: "post",
+    url: "http://localhost:8000/courses/search",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Cookie: "userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+      if (response.data) {
+        localStorage.setItem("rateCourse", JSON.stringify(response.data));
+      } else {
+        localStorage.setItem("rateCourse", "Nothing Found");
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 };
-
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-  if(response.data){
-    localStorage.setItem('rateCourse', JSON.stringify(response.data));
-}else{
-    localStorage.setItem('rateCourse', "Nothing Found");
-}
-})
-.catch(function (error) {
-  console.log(error);
-});
-
-}
 
 const Services = {
   getAllCourses,
   searchCourseBySubject,
-    rateCourses,
+  rateCourses,
   getCourseDetails,
-  getCourseQuizzes
+  getCourseQuizzes,
+  updateSubtitle,
+  uploadCourseVideo,
 };
 
 export default Services;

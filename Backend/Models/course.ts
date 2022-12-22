@@ -37,6 +37,7 @@ const courseSchema = new Schema(
     Discount: {
       type: [{ Country: String, Percentage: Number }],
       required: false,
+      default: [],
     },
     TotalHours: {
       type: Number,

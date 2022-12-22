@@ -16,6 +16,7 @@ import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
+import SubtitleDetail from "./pages/Course/SubtitleDetail";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -76,6 +77,7 @@ function app() {
             <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
+            <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
             {/* <Route path="/forgot-password" element={<ForgotPassword />} /> */}
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             {/* <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} /> */}
