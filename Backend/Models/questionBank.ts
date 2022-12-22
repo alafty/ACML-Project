@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { number } from "zod";
 
 const questionBankSchema = new Schema(
   {
@@ -24,6 +25,10 @@ const questionBankSchema = new Schema(
     },
     Answer: {
       type: String,
+      required: true,
+    },
+    Grade: {
+      type: Number,
       required: true,
     },
 

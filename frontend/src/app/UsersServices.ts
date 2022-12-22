@@ -137,7 +137,7 @@ export const createGuestCookie = async () => {
 
 }
 
-export const editInstructorDetails = async (username: String, callback: Function, email?: String, bio?: String ) => {
+export const editInstructorDetails = async (username: String, email?: String, bio?: String, callback: Function) => {
   var data = qs.stringify({
     'username': username,
     'email': email,

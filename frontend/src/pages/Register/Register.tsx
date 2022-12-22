@@ -1,10 +1,10 @@
-import React from "react";
-import Header from "../../components/header";
-import "../../Styling/mainLayout.css";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import React from 'react'
+import Header from '../../components/header'
+import '../../Styling/mainLayout.css'
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 function Register() {
   const [type, setType] = React.useState("");
 

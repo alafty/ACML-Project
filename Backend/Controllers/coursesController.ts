@@ -25,7 +25,7 @@ const getCourses = async (req: Request, res: Response) => {
 const hoverCourse = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
     const result = await Course.findById(req.body.id, {
-      Subtitle: 1,
+      Subtitles: 1,
       Name: 1,
       Subject: 1,
       Exercises: 1,
@@ -72,6 +72,8 @@ const addCourse = async (req: Request, res: Response) => {
       Instructor: true,
       Price: true,
       TotalHours: true,
+      RatingAvg: true,
+      RatingCount: true,
     },
     req
   );

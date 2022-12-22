@@ -43,7 +43,7 @@ function InstructorDetails() {
         <Button variant='outlined' id='outlined' 
         onClick={() =>{
           if(isEditing){
-            services.editInstructorDetails(state.loggedInUser.user.Username, handleChanges, email, bio);
+            services.editInstructorDetails(state.loggedInUser.user.Username, email, bio, handleChanges);
           }
           setIsEditing(!isEditing);
         }}> {isEditing ? 'Confirm Changes' : 'Edit Personal Details'}</Button>

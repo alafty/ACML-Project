@@ -7,6 +7,7 @@ type State = {
     Choice3: string,
     Choice4: string,
     Answer: string,
+    Grade : number,
     Course: string,
     QuizID: string 
 }
@@ -22,6 +23,7 @@ type State = {
         this.onChangeChoice3 = this.onChangeChoice3.bind(this);
         this.onChangeChoice4 = this.onChangeChoice4.bind(this);
         this.onChangeAnswer = this.onChangeAnswer.bind(this);
+        this.onChangeGrade = this.onChangeGrade.bind(this);
         this.onChangeCourse = this.onChangeCourse.bind(this);
         this.onChangeQuizID = this.onChangeQuizID.bind(this);
 
@@ -35,6 +37,7 @@ type State = {
             Choice3: '',
             Choice4: '',
             Answer:  '',
+            Grade : 0,
             Course:  '',
             QuizID:  ''
             
@@ -72,6 +75,11 @@ type State = {
             Answer: e.target.value
         });
     }
+    onChangeGrade(e) {
+        this.setState({
+            Grade: e.target.value
+        });
+    }
     onChangeCourse(e) {
         this.setState({
             Course: e.target.value
@@ -96,6 +104,7 @@ type State = {
             Choice3:  this.state.Choice3 ,
             Choice4:  this.state.Choice4 ,
             Answer:   this.state.Answer ,
+            Grade :   this.state.Grade,
             Course:   this.state.Course  ,
             QuizID:   this.state.QuizID  
             
@@ -114,6 +123,7 @@ type State = {
             Choice3: '',
             Choice4: '',
             Answer:  '',
+            Grade : 0,
             Course:  '',
             QuizID:  ''
 
@@ -173,6 +183,14 @@ type State = {
                                     className="form-control"
                                     value={this.state.Answer}
                                     onChange={this.onChangeAnswer}
+                                    />
+                        </div>
+                        <div className="form-group">
+                            <label>Grade: </label>
+                            <input  type="number"
+                                    className="form-control"
+                                    value={this.state.Grade}
+                                    onChange={this.onChangeGrade}
                                     />
                         </div>
                         <div className="form-group">

@@ -5,6 +5,8 @@ import {
   addCourse,
   hoverCourse,
   deleteCourse,
+
+  addRating,
   putCourseSubtitle,
   putCourseVideo,
 } from "../Controllers/coursesController";
@@ -22,5 +24,7 @@ coursesRouter.put("/subtitle", putCourseSubtitle);
 coursesRouter.put("/videoId", putCourseVideo);
 
 coursesRouter.post("/hover", hoverCourse);
+
+coursesRouter.post("/rate", addRating);
 
 export default coursesRouter;
