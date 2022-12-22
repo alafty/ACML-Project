@@ -10,6 +10,9 @@ export default function CourseDetails() {
   const [courseDetails, setCourseDetails] = useState(null);
   const [videoStatusText, setVideoStatusText] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
+  const [discountStatusText, setDiscountStatusText] = useState("");
+  const [discountDuration, setDiscountDuration] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState("");
 
   useEffect(() => {
     courseServices.getCourseDetails(id).then((data) => {
@@ -37,6 +40,29 @@ export default function CourseDetails() {
     }
   };
 
+  const handleDurationAdding = async () => {
+    try {
+      const duration = Number.parseInt(discountDuration);
+      const percentage = Number.parseInt(discountPercentage);
+      console.log('wee');
+      
+      courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
+        if (data) {
+          var newCourse = courseDetails;
+          newCourse.Discounts.push(data);
+          setDiscountStatusText("Success!");
+          setCourseDetails(newCourse);
+          setDiscountDuration('');
+          setDiscountPercentage('')
+        } else {
+          setDiscountStatusText("Try again");
+        }
+      });
+    } catch {
+      setDiscountStatusText("Make sure discount is valid");
+    }
+  };
+
   ///TODOLIST
   //Course name
   //Course subject
@@ -59,7 +85,7 @@ export default function CourseDetails() {
       <p>{courseDetails?.Price}</p>
       <p>{courseDetails?.Instructor}</p>
       <p>{courseDetails?.TotalHours}</p>
-      <p>{courseDetails?.Discount}</p>
+      <p>{JSON.stringify(courseDetails?.Discounts)}</p>
       <p>{[...(courseDetails?.Subtitles ?? [])]?.map((e) => `${e?._id} `)}</p>
       <p>{JSON.stringify(courseDetails?.Subtitles)}</p>
       <p>{JSON.stringify(quizzes)}</p>
@@ -73,6 +99,27 @@ export default function CourseDetails() {
       />
       <button type="submit" onClick={handleUrlUpload}>
         Upload url
+      </button>
+      <p>{videoStatusText}</p>
+      <input
+        type="text"
+        placeholder="Specify Discount Duration"
+        name="Discount Duration"
+        onChange={(e) => setDiscountDuration(e.target.value)}
+        value={discountDuration}
+        required
+      />
+
+      <input
+        type="text"
+        placeholder="Specify Discount Percentage"
+        name="Discount Percentage"
+        onChange={(e) => setDiscountPercentage(e.target.value)}
+        value={discountPercentage}
+        required
+      />  
+      <button type="submit" onClick={handleDurationAdding}>
+        Add Discount
       </button>
       <p>{videoStatusText}</p>
     </div>

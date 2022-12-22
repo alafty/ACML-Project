@@ -91,6 +91,23 @@ const uploadCourseVideo = async (id: string, videoId: string) => {
   return response.data;
 };
 
+const addCourseDiscount = async (
+  courseId: string,
+  duration: Number,
+  percentage: Number
+) => {
+  var data = qs.stringify({
+    id: courseId,
+    Discount: {
+      Duration: duration,
+      Percentage: percentage,
+    },
+  });
+
+  const response = await httpClient.put(`${COURSES_URL}/discount`, data);
+  return response.data;
+};
+
 export const rateCourses = async (searchTerm: String) => {
   var data = qs.stringify({
     searchTerm: searchTerm,
@@ -127,6 +144,7 @@ const Services = {
   getCourseQuizzes,
   updateSubtitle,
   uploadCourseVideo,
+  addCourseDiscount
 };
 
 export default Services;

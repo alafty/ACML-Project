@@ -163,7 +163,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {
-          if (err) res.status(400).json({ message: err });
+          if (err) {
+            res.status(400).json({ message: err });
+            return;
+          }
           res.status(200).json(newSub);
         });
       }
@@ -209,6 +212,12 @@ const putDiscount = async (req: Request, res: Response) => {
         .json({ message: "Make sure Discount is present in the body" });
       return;
     }
+    if (!discountInputValidate({Duration: true, Percentage: true}, discount)) {
+      res
+        .status(400)
+        .json({ message: "Make sure Discount duration and percentage are properly specified in body" });
+        return;
+    }
     var newDiscount = c.Discounts.create({
       Duration: discount?.Duration,
       Percentage: discount?.Percentage,
@@ -216,7 +225,10 @@ const putDiscount = async (req: Request, res: Response) => {
 
     c.Discounts.push(newDiscount);
     c.save(function (err) {
-      if (err) res.status(400).json({ message: err });
+      if (err) {
+        res.status(400).json({ message: err });
+        return;
+      }
       res.status(200).json(newDiscount);
     });
   } else {
@@ -233,5 +245,5 @@ export {
   deleteCourse,
   putCourseSubtitle,
   putCourseVideo,
-  putDiscount
+  putDiscount,
 };
