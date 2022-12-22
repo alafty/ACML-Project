@@ -9,6 +9,7 @@ import coursesRouter from "../Routes/coursesRoutes";
 // @access  private
 const getCourses = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
+    
     const result = await Course.findById(req.body.id);
     if (!result) {
       res.status(400).json({ message: "Please enter a valid course id" });
@@ -96,6 +97,27 @@ const deleteCourse = (req: Request, res: Response) => {
   }
 };
 
+const addRating = async (req: Request, res: Response) => { 
+  if(!req.body){
+    res.status(400);
+  }
+  else {
+    var mult =0;
+    const user_id= req.body.id;
+    const ratingResult = await Course.findById(user_id);
+ /*   if(ratingResult!= null)
+    {
+    mult = ratingResult.RatingCount * ratingResult.RatingAvg;
+    ratingResult.RatingAvg = (( mult + parseFloat(req.body.rate)) / (ratingResult.RatingCount+1));
+    ratingResult.RatingCount ++;
+    await Course.findByIdAndUpdate(user_id, {RatingAvg: ratingResult.RatingAvg});
+    await Course.findByIdAndUpdate(user_id, {RatingCount: ratingResult.RatingCount});
+    }
+     res.status(200).json({message: 'rating added'})
+    }*/
+  }
+}
+
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
 // @access  private
@@ -178,6 +200,7 @@ export {
   searchCourses,
   addCourse,
   hoverCourse,
+  addRating,
   deleteCourse,
   putCourseSubtitle,
   putCourseVideo,

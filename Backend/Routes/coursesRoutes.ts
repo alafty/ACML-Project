@@ -5,7 +5,6 @@ import {
   addCourse,
   hoverCourse,
   deleteCourse,
-
   addRating,
   putCourseSubtitle,
   putCourseVideo,

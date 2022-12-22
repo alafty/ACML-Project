@@ -20,6 +20,7 @@ import passwordResetRouter  from "./Routes/passwordResetRoute";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
 import instructorRouter from "./Routes/instructorRoutes";
+import coursesRouter from "./Routes/coursesRoutes";
 
 //App variables
 const app: Application = express();
@@ -71,6 +72,7 @@ app.get("/cookie", getGuestCookie);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
+app.use('/courses', coursesRouter);
 app.use("/quiz",quizRouter);
 app.use("/passwordreset",passwordResetRouter);
 app.use("/instructor", instructorRouter);

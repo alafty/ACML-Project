@@ -9,6 +9,8 @@ export default function CourseDetails() {
   const [courseDetails, setCourseDetails] = useState(null);
   useEffect(() => {
     courseServices.getCourseDetails(id).then((data) => {
+      console.log(data);
+      
       setCourseDetails(data);
     });
   });
