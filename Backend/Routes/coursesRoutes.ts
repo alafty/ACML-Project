@@ -8,6 +8,7 @@ import {
   addRating,
   putCourseSubtitle,
   putCourseVideo,
+  putDiscount,
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
@@ -21,6 +22,8 @@ coursesRouter.route("/id").post(getCourses);
 coursesRouter.put("/subtitle", putCourseSubtitle);
 
 coursesRouter.put("/videoId", putCourseVideo);
+
+coursesRouter.put("/discount", putDiscount);
 
 coursesRouter.post("/hover", hoverCourse);
 

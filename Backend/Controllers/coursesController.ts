@@ -3,13 +3,13 @@ import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
 import coursesRouter from "../Routes/coursesRoutes";
+import discountInputValidate from "../Validators/discountValidator";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
 // @access  private
 const getCourses = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
-    
     const result = await Course.findById(req.body.id);
     if (!result) {
       res.status(400).json({ message: "Please enter a valid course id" });
@@ -97,15 +97,14 @@ const deleteCourse = (req: Request, res: Response) => {
   }
 };
 
-const addRating = async (req: Request, res: Response) => { 
-  if(!req.body){
+const addRating = async (req: Request, res: Response) => {
+  if (!req.body) {
     res.status(400);
-  }
-  else {
-    var mult =0;
-    const user_id= req.body.id;
+  } else {
+    var mult = 0;
+    const user_id = req.body.id;
     const ratingResult = await Course.findById(user_id);
- /*   if(ratingResult!= null)
+    /*   if(ratingResult!= null)
     {
     mult = ratingResult.RatingCount * ratingResult.RatingAvg;
     ratingResult.RatingAvg = (( mult + parseFloat(req.body.rate)) / (ratingResult.RatingCount+1));
@@ -116,7 +115,7 @@ const addRating = async (req: Request, res: Response) => {
      res.status(200).json({message: 'rating added'})
     }*/
   }
-}
+};
 
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
@@ -194,6 +193,36 @@ const putCourseVideo = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Make sure all fields are valid" });
   }
 };
+const putDiscount = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true }, req)) {
+    var c = await Course.findById(req.body.id);
+    if (!c) {
+      res
+        .status(400)
+        .json({ message: "Course not found. Make sure course id is valid" });
+      return;
+    }
+    var discount = req.body.Discount;
+    if (!discount) {
+      res
+        .status(400)
+        .json({ message: "Make sure Discount is present in the body" });
+      return;
+    }
+    var newDiscount = c.Discounts.create({
+      Duration: discount?.Duration,
+      Percentage: discount?.Percentage,
+    });
+
+    c.Discounts.push(newDiscount);
+    c.save(function (err) {
+      if (err) res.status(400).json({ message: err });
+      res.status(200).json(newDiscount);
+    });
+  } else {
+    res.status(400).json({ message: "Make sure all fields are valid" });
+  }
+};
 
 export {
   getCourses,
@@ -204,4 +233,5 @@ export {
   deleteCourse,
   putCourseSubtitle,
   putCourseVideo,
+  putDiscount
 };
