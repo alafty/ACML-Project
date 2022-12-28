@@ -22,3 +22,8 @@
   3. .
 
 ~THIS PR INCLUDES BREAKING CHANGES~
+
+---
+Additional info about PR
+
+@mentions
