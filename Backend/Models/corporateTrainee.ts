@@ -16,18 +16,18 @@ const corpTraineeSchema = new Schema(
       required: true,
     },
     PurchasedCourses: {
-      type: String,
+      type: [Object],
       required: false,
     },
     Corporate: {
       type: String,
       required: true,
     },
-    Country: {
-      type: String,
+    Wallet: {
+      type: Number,
       required: false,
-      default: "Egypt",
-    },
+      default: 0
+    }
   },
   { timestamps: true }
 );
