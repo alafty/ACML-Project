@@ -1,7 +1,7 @@
 import React,{Component} from "react";
 import axios from 'axios';
 import '../../Styling/mainLayout.css';
-import Header from '../../components/header.tsx';
+import Header from '../../components/header';
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 
@@ -12,7 +12,7 @@ type State = {
     Msg:string
   }
 
-    export default class Create extends Component<{Email}, State> {
+    export default class Create extends Component<{}, State> {
    
     constructor(props: any) {
         super(props);
@@ -21,7 +21,7 @@ type State = {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            Email: props.Email,
+            Email: '',
             Error: '',
             Msg : ''
       

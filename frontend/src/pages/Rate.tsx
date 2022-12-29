@@ -4,8 +4,8 @@ import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 import { Button, TextField } from '@mui/material';
-import Header from '../components/header.tsx';
-import services from '../app/RatingsServices.ts';
+import Header from '../components/header';
+import services from '../app/RatingsServices';
 
 
 
@@ -89,7 +89,7 @@ import services from '../app/RatingsServices.ts';
             setError("No instructor ID detected");
           }
           else{
-            await services.rateInstructor(instructorID, instructorRating);
+            await services.rateInstructor(instructorID, instructorRating.toString());
           }
           ;
          }}

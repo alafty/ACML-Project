@@ -10,7 +10,6 @@ require("dotenv").config({ path: `EnvFiles/.env.${process.env.NODE_ENV}` });
 const cors = require('cors');
 
 import connectDB from "./db";
-import coursesRouter from "./Routes/coursesRoutes";
 import adminRouter from "./Routes/adminRoutes";
 import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
@@ -20,6 +19,7 @@ import passwordResetRouter  from "./Routes/passwordResetRoute";
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
 import instructorRouter from "./Routes/instructorRoutes";
+import coursesRouter from "./Routes/coursesRoutes";
 
 //App variables
 const app: Application = express();
@@ -34,7 +34,7 @@ app.use(cors())
 
 app.options('/passwordreset/setPassword', cors())
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept, Cookie",
@@ -71,6 +71,7 @@ app.use("/courses", coursesRouter);
 app.use("/create", adminRouter);
 app.use("/filter", filterRoute);
 app.use("/country", countryRouter);
+app.use('/courses', coursesRouter);
 app.use("/quiz",quizRouter);
 app.use("/passwordreset",passwordResetRouter);
 app.use("/instructor", instructorRouter);

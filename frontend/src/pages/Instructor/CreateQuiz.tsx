@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import axios from 'axios';
-import Header from '../../components/header.tsx'
+import Header from '../../components/header'
 
 type State = {
     Question: string,

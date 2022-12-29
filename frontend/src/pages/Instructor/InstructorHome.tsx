@@ -3,7 +3,7 @@ import '../../Styling/mainLayout.css';
 import { Button } from '@mui/material';
 import {Link} from 'react-router-dom';
 import {TextField} from '@mui/material';
-import Header from '../../components/header.tsx';
+import Header from '../../components/header';
 
 function InstructorHome() {
   

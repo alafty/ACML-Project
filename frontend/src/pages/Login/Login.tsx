@@ -3,9 +3,9 @@ import '../../Styling/mainLayout.css';
 import { Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { TextField } from '@mui/material';
-import Header from '../../components/header.tsx';
-import services from '../../app/UsersServices.ts';
-import { useGlobalState } from '../../App.tsx';
+import Header from '../../components/header';
+import services from '../../app/UsersServices';
+import { useGlobalState } from '../../App';
 import { stat } from 'fs';
 
 function Login() {

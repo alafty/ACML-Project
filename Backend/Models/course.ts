@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import Discount from "./discount";
 import Subtitle from "./subtitle";
 
 const courseSchema = new Schema(
@@ -34,14 +35,19 @@ const courseSchema = new Schema(
       required: false,
       default : 0,
     },
-    Discount: {
-      type: [{ Country: String, Percentage: Number }],
+    Discounts: {
+      type: [Discount.schema],
       required: false,
+      default: [],
     },
     TotalHours: {
       type: Number,
       required: true,
     },
+    VideoId: {
+      type: String,
+      required: false
+    }
   },
   { timestamps: true }
 );

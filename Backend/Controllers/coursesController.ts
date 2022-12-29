@@ -2,14 +2,25 @@ import { Request, Response } from "express";
 import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
+import coursesRouter from "../Routes/coursesRoutes";
+import discountInputValidate from "../Validators/discountValidator";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
 // @access  private
 const getCourses = async (req: Request, res: Response) => {
-  const result = await Course.find();
-  console.log(result);
-  res.send(result);
+  if (courseInputValidate({ id: true }, req)) {
+    const result = await Course.findById(req.body.id);
+    if (!result) {
+      res.status(400).json({ message: "Please enter a valid course id" });
+      return;
+    }
+    res.status(200).json(result);
+  } else if (courseInputValidate({ id: false }, req)) {
+    const result = await Course.find();
+    console.log(result);
+    res.send(result);
+  }
 };
 
 const hoverCourse = async (req: Request, res: Response) => {
@@ -59,7 +70,6 @@ const addCourse = async (req: Request, res: Response) => {
       id: false,
       Name: true,
       Subject: true,
-      Subtitles: true,
       Instructor: true,
       Price: true,
       TotalHours: true,
@@ -87,34 +97,33 @@ const deleteCourse = (req: Request, res: Response) => {
   }
 };
 
+const addRating = async (req: Request, res: Response) => {
+  if (!req.body.id || !req.body.rating) {
+    res.status(400);
+  } else {
+    var mult = 0;
+    const courseID = req.body.id;
+    const ratingResult = await Course.findById(courseID);
+    console.log("we reached here");
 
-  const addRating = async (req: Request, res: Response) => { 
-    if(!req.body.id || !req.body.rating){
-      res.status(400);
-    }
-    else {
-      var mult =0;
-      const courseID= req.body.id;
-      const ratingResult = await Course.findById(courseID);
-      console.log("we reached here");
-      
-      if(ratingResult!= null)
-      {
+    if (ratingResult != null) {
       mult = ratingResult.RatingCount * ratingResult.RatingAvg;
-      ratingResult.RatingAvg = (( mult + parseFloat(req.body.rating)) / (ratingResult.RatingCount+1));
-      ratingResult.RatingCount ++;
-      await Course.findByIdAndUpdate(courseID, {RatingAvg: ratingResult.RatingAvg});
-      await Course.findByIdAndUpdate(courseID, {RatingCount: ratingResult.RatingCount});
-      
-      res.status(200).json({message: 'rating added'});
-      }else{
-        res.status(404).json({message: 'no such course exists'});
-      }
-      }
-  
+      ratingResult.RatingAvg =
+        (mult + parseFloat(req.body.rating)) / (ratingResult.RatingCount + 1);
+      ratingResult.RatingCount++;
+      await Course.findByIdAndUpdate(courseID, {
+        RatingAvg: ratingResult.RatingAvg,
+      });
+      await Course.findByIdAndUpdate(courseID, {
+        RatingCount: ratingResult.RatingCount,
+      });
 
-  
-
+      res.status(200).json({ message: "rating added" });
+    } else {
+      res.status(404).json({ message: "no such course exists" });
+    }
+  }
+};
 
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
@@ -126,12 +135,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
     var course = await Course.findById(req.body.id);
     var sub = req.body.Subtitle;
     if (!sub) {
-      res
-        .status(400)
-        .json({
-          message:
-            'Subtitle not found in request. Make sure body has "Subtitle" key',
-        });
+      res.status(400).json({
+        message:
+          'Subtitle not found in request. Make sure body has "Subtitle" key',
+      });
     }
     if (course) {
       if (sub.Id) {
@@ -139,7 +146,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         if (subToModify) {
           var tempSub = {
             Description: subToModify.Description,
-            ...(subToModify.VideoId ? {VideoId: subToModify.VideoId}: {}),
+            ...(subToModify.VideoId ? { VideoId: subToModify.VideoId } : {}),
           };
           if (sub.Description) {
             tempSub.Description = sub.Description;
@@ -149,10 +156,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
           }
           console.log(tempSub);
           console.log(subToModify);
-          
+
           var newSub = subToModify.set(tempSub);
           course.save(function (err) {
-            if (err) res.status(400).json({message: err})
+            if (err) res.status(400).json({ message: err });
             res.status(200).json(newSub);
           });
         } else {
@@ -165,9 +172,12 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {
-          if (err) res.status(400).json({message: err})
+          if (err) {
+            res.status(400).json({ message: err });
+            return;
+          }
           res.status(200).json(newSub);
-        });        
+        });
       }
     } else {
       res
@@ -179,6 +189,75 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
   }
 };
 
-}
+const putCourseVideo = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true, VideoId: true }, req)) {
+    var c = await Course.findByIdAndUpdate(req.body.id, {
+      VideoId: req.body.VideoId,
+    });
+    if (!c) {
+      res
+        .status(400)
+        .json({ message: "Course not found. Make sure course id is valid" });
+      return;
+    }
+    res.status(200).json(await Course.findById(req.body.id));
+  } else {
+    res.status(400).json({ message: "Make sure all fields are valid" });
+  }
+};
+const putDiscount = async (req: Request, res: Response) => {
+  if (courseInputValidate({ id: true }, req)) {
+    var c = await Course.findById(req.body.id);
+    if (!c) {
+      res
+        .status(400)
+        .json({ message: "Course not found. Make sure course id is valid" });
+      return;
+    }
+    var discount = req.body.Discount;
+    if (!discount) {
+      res
+        .status(400)
+        .json({ message: "Make sure Discount is present in the body" });
+      return;
+    }
+    if (
+      !discountInputValidate({ Duration: true, Percentage: true }, discount)
+    ) {
+      res
+        .status(400)
+        .json({
+          message:
+            "Make sure Discount duration and percentage are properly specified in body",
+        });
+      return;
+    }
+    var newDiscount = c.Discounts.create({
+      Duration: discount?.Duration,
+      Percentage: discount?.Percentage,
+    });
 
-export {getCourses, addRating, hoverCourse, deleteCourse, searchCourses, addCourse};
+    c.Discounts.push(newDiscount);
+    c.save(function (err) {
+      if (err) {
+        res.status(400).json({ message: err });
+        return;
+      }
+      res.status(200).json(newDiscount);
+    });
+  } else {
+    res.status(400).json({ message: "Make sure all fields are valid" });
+  }
+};
+
+export {
+  getCourses,
+  searchCourses,
+  addCourse,
+  hoverCourse,
+  addRating,
+  deleteCourse,
+  putCourseSubtitle,
+  putCourseVideo,
+  putDiscount,
+};
