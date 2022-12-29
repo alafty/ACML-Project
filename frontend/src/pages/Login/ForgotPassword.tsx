@@ -1,12 +1,18 @@
 import React,{Component} from "react";
 import axios from 'axios';
+import '../../Styling/mainLayout.css';
+import Header from '../../components/header';
+import Button from "@mui/material/Button";
+import { TextField } from "@mui/material";
+
+
 type State = {
     Email: string,
     Error: string,
     Msg:string
   }
 
-    export default class Create extends Component<{Email}, State> {
+    export default class Create extends Component<{}, State> {
    
     constructor(props: any) {
         super(props);
@@ -15,7 +21,7 @@ type State = {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            Email: props.Email,
+            Email: '',
             Error: '',
             Msg : ''
       
@@ -66,25 +72,34 @@ type State = {
 
         render() {
           return (
-            <div >
-              <form  onSubmit={this.onSubmit}>
-                <h1>Forgot Password</h1>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={this.onChangeEmail}
-                  value={this.state.Email}
-                  required
-                  
-                />
-                {this.state.Error && <div>{this.state.Error}</div>}
-                {this.state.Msg && <div>{this.state.Msg}</div>}
-                <button type="submit" onClick={this.onSubmit} >
-                  Submit
-                </button>
-              </form>
-            </div>
+              <div className="container">
+                <Header />
+                  <div className='body'>
+                        <h2 
+                        style={{ marginTop: "200px" }} 
+                        className='title'>
+                          Forgot Password</h2>
+                        <TextField 
+                        style={{marginLeft: "150px"}}
+                        label="Email"
+                        variant="standard"
+                        className='search-bar'
+                        onChange={this.onChangeEmail}
+                        value={this.state.Email}
+                        required={true}
+                          />
+          
+                          <Button
+                          variant="contained"
+                          id="filled-button"
+                          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
+                          onClick={this.onSubmit}
+                          > Login </Button>
+                          {this.state.Error && <p style={{marginLeft: "70vw"}}>{this.state.Error}</p>}
+                          {this.state.Msg && <p style={{marginLeft: "70vw"}}>{this.state.Msg}</p>}
+                        </div>
+                        
+                    </div>
           );
 }
 

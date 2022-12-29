@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "jsx": "react-jsx",
+      "target": "ES2015",
+      "module": "commonjs",
+      "strict": false,
+      "esModuleInterop": true,
+      "checkJs": false,
+      "allowJs": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true
+
+    },
+    "include": ["**/*.ts", "**/*.tsx", "src/pages/Course/SolveSolveEx.jsx"],
+    "exclude": ["node_modules"],
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Recommended"
+  }

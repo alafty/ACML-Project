@@ -1,29 +1,32 @@
 import { Router } from "express";
-/*import {
+import {
   getCourses,
   searchCourses,
   addCourse,
   hoverCourse,
   deleteCourse,
-
   addRating,
-
-  putCourseSubtitle
-
+  putCourseSubtitle,
+  putCourseVideo,
+  putDiscount,
 } from "../Controllers/coursesController";
 
 const coursesRouter = Router();
 
-coursesRouter.route("/").get(getCourses).post(addCourse);
+coursesRouter.route("/").get(getCourses).post(addCourse).delete(deleteCourse);
 
 coursesRouter.post("/search", searchCourses);
 
-coursesRouter.put('/subtitle', putCourseSubtitle);
+coursesRouter.route("/id").post(getCourses);
 
-coursesRouter.delete('/courses', deleteCourse);
+coursesRouter.put("/subtitle", putCourseSubtitle);
+
+coursesRouter.put("/videoId", putCourseVideo);
+
+coursesRouter.put("/discount", putDiscount);
 
 coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", addRating);
 
-export default coursesRouter;*/
+export default coursesRouter;

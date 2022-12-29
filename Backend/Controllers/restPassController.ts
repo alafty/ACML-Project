@@ -32,7 +32,7 @@ const sendLink =  async (req: Request, res: Response) => {
 		}
 
 		const url = `http://localhost:3000/password-reset/${token.userId}/${token.token}/`;
-		await sendEmail('EasyML22@aol.com', "Password Reset", url);
+		await sendEmail(req.body.Email, "Password Reset", url);
 
 		res
 			.status(200)

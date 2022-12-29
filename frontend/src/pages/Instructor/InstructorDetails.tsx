@@ -1,18 +1,19 @@
 import React from 'react'
-import Header from '../../components/header.tsx'
+import Header from '../../components/header'
 import Button from '@mui/material/Button'
 import { TextField } from '@mui/material';
-import {useGlobalState} from '../../App.tsx'
-import services from '../../app/UsersServices.ts';
+import {useGlobalState} from '../../App'
+import services from '../../app/UsersServices';
 
 
 function InstructorDetails() {
   const [state, dispatch] = useGlobalState();
   //console.log(state.loggedInUser.user.Email);
   const [isEditing, setIsEditing] = React.useState(false);
+  const [avgRating, setAvgRating] = React.useState(state.loggedInUser.user.RatingAvg);
   const [email, setEmail] = React.useState(state.loggedInUser.user.Email);
   const [bio, setBio] = React.useState(state.loggedInUser.user.ShortBio);
-  
+  console.log(avgRating);
   const handleChanges = callback => {
     if(callback === "200"){
       let tempUser = state.loggedInUser.user;
@@ -35,7 +36,7 @@ function InstructorDetails() {
             }}
           /> : <p> {bio} </p>}
           
-        <h2> Average Rating: </h2>
+        <h2> Average Rating: {avgRating}</h2>
         {isEditing ? <TextField label="Edit E-Mail" variant="standard" placeholder={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -43,7 +44,7 @@ function InstructorDetails() {
         <Button variant='outlined' id='outlined' 
         onClick={() =>{
           if(isEditing){
-            services.editInstructorDetails(state.loggedInUser.user.Username, email, bio, handleChanges);
+            services.editInstructorDetails(state.loggedInUser.user.Username, handleChanges, email, bio);
           }
           setIsEditing(!isEditing);
         }}> {isEditing ? 'Confirm Changes' : 'Edit Personal Details'}</Button>
