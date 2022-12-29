@@ -5,7 +5,7 @@ const getQuiz= async (req: Request, res: Response) => {
     //used Acml as test name, replace to get the required name from the user
     // Courses should have attribute subject in them 
     var QuizID = req.body.Subject
-    const Questions = await questionBankModel.findOne({QuizID: QuizID});
+    const Questions = await questionBankModel.find({QuizID: QuizID});
     try {
         res.send(Questions);
       } catch (error) {
