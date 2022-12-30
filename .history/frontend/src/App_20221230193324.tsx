@@ -18,7 +18,6 @@ import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
-import CheckoutPage from "./pages/Payment/checkoutPage";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -82,8 +81,6 @@ function app() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
-            <Route path="/checkoutPage" element={<CheckoutPage />} />
-
 
 
           </Routes>
