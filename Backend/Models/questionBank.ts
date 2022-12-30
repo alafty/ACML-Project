@@ -44,5 +44,5 @@ const questionBankSchema = new Schema(
   { timestamps: true }
 );
 
-const course = model("QuestionBank", questionBankSchema);
-export default course;
+const question = model("QuestionBank", questionBankSchema);
+export default question;

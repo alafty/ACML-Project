@@ -14,14 +14,14 @@ const indivTraineeSchema = new Schema({
     required: true,
   },
   PurchasedCourses: {
-    type: String,
+    type: [Object],
     required: false
   },
-  Country: {
-    type: String,
+  Wallet: {
+    type: Number,
     required: false,
-    default: "Egypt",
-  },
+    default: 0
+  }
 }, { timestamps: true });
 
 const inidvTrainee = model('IndivTrainee', indivTraineeSchema);
