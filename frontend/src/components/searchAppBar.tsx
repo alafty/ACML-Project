@@ -114,11 +114,11 @@ export default function SearchAppBar(props) {
           </Search>
           <Button 
           variant="contained" 
-          id='small-button-secondary'
+          id='small-button-primary'
           >Search</Button>
            <Button 
           variant="contained" 
-          id='small-button-secondary'
+          id='small-button-primary'
           style={{width: '150px', marginLeft: '50%'}}
           >Login</Button>
         </Toolbar>
