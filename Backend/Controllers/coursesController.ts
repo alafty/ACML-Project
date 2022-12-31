@@ -73,8 +73,6 @@ const addCourse = async (req: Request, res: Response) => {
       Instructor: true,
       Price: true,
       TotalHours: true,
-      RatingAvg: true,
-      RatingCount: true,
     },
     req
   );
@@ -154,8 +152,6 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
           if (sub.VideoId) {
             tempSub.VideoId = sub.VideoId;
           }
-          console.log(tempSub);
-          console.log(subToModify);
 
           var newSub = subToModify.set(tempSub);
           course.save(function (err) {

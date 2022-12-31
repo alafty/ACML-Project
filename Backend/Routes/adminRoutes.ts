@@ -4,7 +4,8 @@ import {
   createCTrainee,
   createITrainee,
   login,
-  editInstructorDetails
+  editInstructorDetails,
+  createCorporate
 } from "../Controllers/adminController";
 import { Router } from "express";
 const adminRouter = Router();
@@ -12,6 +13,7 @@ const adminRouter = Router();
 adminRouter.post("/admin", createAdmin);
 adminRouter.post("/instructor", createInstructor);
 adminRouter.post("/corporateTrainee", createCTrainee);
+adminRouter.post("/corporate", createCorporate);
 adminRouter.post("/individualTrainee", createITrainee);
 adminRouter.post("/login", login);
 adminRouter.post("/editInstructor", editInstructorDetails)

@@ -12,7 +12,7 @@ const setCorporateTraineeCountry = async (req: Request, res: Response) => {
   const inputValid = corporateTraineeValidator(
     {
       id: true,
-      Country: true,
+      //Country: true,
     },
     req
   );
@@ -32,7 +32,7 @@ const setIndividualTraineeCountry = async (req: Request, res: Response) => {
   const inputValid = individualTraineeValidator(
     {
       id: true,
-      Country: true,
+      //Country: true,
     },
     req
   );

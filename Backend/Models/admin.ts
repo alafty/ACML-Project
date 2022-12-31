@@ -12,10 +12,6 @@ const adminSchema = new Schema({
   Password: {
     type: String,
     required: true,
-  },
-  PreferenceLevel: {
-    type: Number,
-    required: true
   }
 }, { timestamps: true });
 

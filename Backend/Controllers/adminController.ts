@@ -3,6 +3,9 @@ import admin from "../Models/admin";
 import instructor from "../Models/instructor";
 import cTrainee from "../Models/corporateTrainee";
 import iTrainee from '../Models/individualTrainee';
+import corporate from '../Models/corporate';
+import Package from "../Models/package";
+
 
 const createAdmin = async (req: Request, res: Response) => {
   const existUsername = await admin.findOne({ Username: req.body.Username });
@@ -11,6 +14,16 @@ const createAdmin = async (req: Request, res: Response) => {
   } else {
     admin.create(req.body);
     res.status(200).json({ message: "admin created" });
+  }
+};
+
+const createCorporate = async (req: Request, res: Response) => {
+  const existUsername = await admin.findOne({ Username: req.body.Username });
+  if (existUsername) {
+    console.log("username taken");
+  } else {
+    corporate.create(req.body);
+    res.status(200).json({ message: "corporate created" });
   }
 };
 
@@ -84,4 +97,4 @@ const editInstructorDetails = async (req: Request, res: Response) => {
 
 }
 
-export { createAdmin, createInstructor, createCTrainee, createITrainee, login, editInstructorDetails };
+export { createAdmin, createCorporate, createInstructor, createCTrainee, createITrainee, login, editInstructorDetails };
