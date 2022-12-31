@@ -241,7 +241,7 @@ const me = async (req: Request, res: Response) => {
       break;
   }
 
-  res.status(200).json(user);
+  res.status(200).json({...user, type: req.type});
 };
 
 const generateToken = (id: string, type: string) => {
