@@ -1,7 +1,6 @@
 import {
   createAdmin,
   createInstructor,
-  createCTrainee,
   createITrainee,
   login,
   editInstructorDetails,
@@ -12,7 +11,6 @@ const adminRouter = Router();
 
 adminRouter.post("/admin", createAdmin);
 adminRouter.post("/instructor", createInstructor);
-adminRouter.post("/corporateTrainee", createCTrainee);
 adminRouter.post("/corporate", createCorporate);
 adminRouter.post("/individualTrainee", createITrainee);
 adminRouter.post("/login", login);

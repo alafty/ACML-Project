@@ -39,15 +39,15 @@ const createInstructor = async (req: Request, res: Response) => {
   }
 };
 
-const createCTrainee = async (req: Request, res: Response) => {
-  const existUsername = await cTrainee.findOne({ Username: req.body.Username });
-  if (existUsername) {
-    console.log("username taken");
-  } else {
-    cTrainee.create(req.body);
-    res.json({ message: "corporate trainee created" });
-  }
-};
+// const createCTrainee = async (req: Request, res: Response) => {
+//   const existUsername = await cTrainee.findOne({ Username: req.body.Username });
+//   if (existUsername) {
+//     console.log("username taken");
+//   } else {
+//     cTrainee.create(req.body);
+//     res.json({ message: "corporate trainee created" });
+//   }
+// };
 
 const createITrainee = async (req: Request, res: Response) => {
   const existUsername = await iTrainee.findOne({ Username: req.body.Username });
@@ -97,4 +97,4 @@ const editInstructorDetails = async (req: Request, res: Response) => {
 
 }
 
-export { createAdmin, createCorporate, createInstructor, createCTrainee, createITrainee, login, editInstructorDetails };
+export { createAdmin, createCorporate, createInstructor, createITrainee, login, editInstructorDetails };
