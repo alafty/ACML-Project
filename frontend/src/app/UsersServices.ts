@@ -61,12 +61,11 @@ export const register = async (username: String, email: String, password: String
 
 }
 
-export const registerInstructor = async (username: String, email: String, password: String, country: String, shortBio: String) => {
+export const registerInstructor = async (username: String, email: String, password: String, shortBio: String) => {
   var data = qs.stringify({
     'Username': username,
     'Email': email,
     'Password': password,
-    'Country': country,
     'ShortBio': shortBio
   });
   var config = {

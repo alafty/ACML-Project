@@ -89,7 +89,7 @@ export default function SearchAppBar(props) {
           </MenuItem>
           <MenuItem value={1}>
           <div style={{backgroundColor: '#293237' }}>
-          <Link to={'/instructorHome'}>
+          <Link to={'/instructor'}>
           <img src={require('../assets/Logo-White-Instructor.png')} height={70} width={220}/>
           </Link>
           </div>
@@ -116,11 +116,13 @@ export default function SearchAppBar(props) {
           variant="contained" 
           id='small-button-primary'
           >Search</Button>
+          <Link to={'/login'} style={{marginLeft: '50%' ,textDecoration: 'none'}}>
            <Button 
           variant="contained" 
           id='small-button-primary'
-          style={{width: '150px', marginLeft: '50%'}}
+          style={{width: '150px'}}
           >Login</Button>
+          </Link>
         </Toolbar>
       </AppBar>
     </Box>

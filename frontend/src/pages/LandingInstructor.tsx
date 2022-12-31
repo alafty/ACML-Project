@@ -6,7 +6,7 @@ import SearchAppBar from '../components/searchAppBar';
 import CoursesSector from '../components/coursesSector';
 import Divider from '@mui/material/Divider';
 
-function Landing() {
+function LandingInstructor() {
   const dummycourses = [{
     name: "Introduction to Some Stuff",
     desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
@@ -36,19 +36,19 @@ function Landing() {
   
   return (
     <div className= "container">
-      <SearchAppBar page='0'/>
-        <div className= "body">
-            <div className='landing-card'>
+      <SearchAppBar page='1'/>
+        <div className= "body" style={{backgroundColor: '#bae7e4'}}>
+            <div className='landing-card' style={{backgroundColor: '#fcfcfc'}}>
               <div>
-                <h1 className='landing-header'>Online courses for</h1>
-                <h1 className='landing-header' style={{color: '#52adcc', paddingTop: '0%'}}>creative minds</h1>
-                <p className='landing-subtitle'>Learn with top professionals in various creative and innovative industries</p>
+                <h1 className='landing-header'>Leave a mark</h1>
+                <h1 className='landing-header' style={{color: '#52adcc', paddingTop: '0%'}}>in the world</h1>
+                <p className='landing-subtitle'>Start teaching at the #1 platform for instructos in 2022 as by Forbes </p>
                 <p className='landing-subtitle'> </p>
                 <div style={{flexDirection: 'row'}}>
                 <Link  to= '/login' style={{textDecoration: 'none'}}> 
                   <Button variant="contained" id="big-button-primary"> Login </Button>
                 </Link>
-                <Link to={'/register'} style= {{textDecoration: 'none'}}>
+                <Link to={'/instructorRegister'} style= {{textDecoration: 'none'}}>
                   <Button variant="outlined" id="big-button-primary-outlined">
                   Register
                   </Button>
@@ -56,10 +56,6 @@ function Landing() {
                 </div>
               </div>
             </div>
-            <CoursesSector dummycourses={dummycourses} title="Featured Courses"/>
-            <CoursesSector dummycourses={dummycourses} title="Engineering"/>
-            <CoursesSector dummycourses={dummycourses} title="Politics"/>
-            <CoursesSector dummycourses={dummycourses} title="Business"/>
 
 
         </div>
@@ -68,4 +64,4 @@ function Landing() {
   )
 }
 
-export default Landing;
+export default LandingInstructor;

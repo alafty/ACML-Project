@@ -24,9 +24,10 @@ html, body {
     width: 300px;
     height: 80px;
 }
+
 .search-bar {
-    width: 400px;
-    background-color: var(--white);
+    width: 100%;
+    background-color: var(--primaryLight);
     border-radius: 10px;
 }
 
@@ -60,10 +61,19 @@ html, body {
     margin-left: 7.5%;
     margin-top: 5%;
 }
+.register-card {
+    background-color: var(--primaryLight);
+    flex-direction: 'row';
+    width: 60vw;
+    height: 80vh;
+    border-radius: 20px;
+    margin-left: 20%;
+    margin-top: 5%;
+}
 
 .body {
         background-color: var(--white);
-        height: 90vh;
+        height: 100vh;
         background-size: cover;
 }
 
@@ -101,19 +111,13 @@ html, body {
     font-size: 24px;
 }
 
-.hat {
-    background-image: url('../assets/hat.png');
-    background-size: cover;
-    height: 500px;
-    width: 500px;
-    margin-top: -150px;
-    margin-right: 150px;
-}
-
 .form{
     display: flex;
     flex-direction: column;
-    margin-left: 150px;
+    justify-content: center;
+    align-items: center;
+    margin-inline: 5%;
+    margin-top: 5%;
 }
 
 .legal-border{
