@@ -52,6 +52,119 @@ html, body {
     color: var(--text);
     margin-bottom: -2%;
 }
+.course-details-title {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 48px;
+    padding-left: 20px;
+    margin-bottom: -5px;
+    color: var(--text);
+}
+
+.course-details-description {
+    font-family:'Times New Roman', Times, serif;
+    font-weight:lighter;
+    font-size: 18px;
+    padding-left: 20px;
+    color: var(--text);
+}
+
+.course-details-rating {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight:600;
+    font-size: 24px;
+    padding-left: 20px;
+    color: var(--text);
+}
+
+.course-details-rating-count {
+    font-family:'Times New Roman', Times, serif;
+    font-weight:lighter;
+    font-size: 20px;
+    padding-left: 20px;
+    color: var(--secondary);
+}
+
+.course-details-instructor-info{
+    width: 100%;
+    height: 55%;
+    background-color: var(--text);
+}
+.course-details-instructor-header{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 38px;
+    font-weight: bolder;
+    padding-left: 6%;
+    margin-top: 0;
+    margin-bottom: -5px;
+    color: var(--primary);
+}
+.course-details-instructor-name{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 38px;
+    padding-left: 6%;
+    margin-top: -1%;
+    margin-bottom: -5px;
+    color: var(--white);
+}
+
+.course-details-instructor-bio{
+    font-family:'Times New Roman', Times, serif;
+    font-weight:lighter;
+    font-size: 22px;
+    padding-left: 6%;
+    padding-right: 8%;
+    color: var(--primaryLight);
+}
+
+.course-details-instructor-rating {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight:600;
+    font-size: 28px;
+    padding-left: 6%;
+    color: var(--white);
+}
+
+.course-details-instructor-rating-count {
+    font-family:'Times New Roman', Times, serif;
+    font-weight:lighter;
+    font-size: 20px;
+    padding-left: 6%;
+    color: var(--primaryLight);
+}
+
+.course-details-price {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight:bolder;
+    font-size: 42px;
+    margin-bottom: 0%;
+    color: var(--text);
+}
+
+.course-details-subtitle{
+    padding-left: 1%;
+    margin-top: 1%;
+    margin-Inline: 2%;
+    height: 100px;
+    border: 1px solid var(--primary);
+    border-radius: 10px;
+    border-bottom: 0;
+    background-color: var(--primary);
+    
+}
+.course-details-subtitle-header{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.course-details-subtitle-description{
+    font-family:'Times New Roman', Times, serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 10px;
+}
+
 .landing-card {
     background-color: var(--primaryLight);
     flex-direction: 'row';
