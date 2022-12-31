@@ -9,9 +9,13 @@ const quizSchema = new Schema(
       required: true,
     },
     Questions: {
-      type: [question],
-      required: true,
-    }
+      type: [question.schema.obj],
+     // required: true,
+    },
+    Course: {
+      type: String,
+    //   required: true,
+    },
   },
   { timestamps: true }
 );
