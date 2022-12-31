@@ -7,9 +7,9 @@ import '../Styling/mainLayout.css'
 import CourseCard from './courseCard'
 
 function CoursesSector(props) {
-  const renderCard =  ({name, desc}) => {
+  const renderCard =  ({name, desc, course}) => {
     return(
-      <CourseCard name={name} desc={desc}/>
+      <CourseCard name={name} desc={desc} course={course}/>
     );
   }
   return (

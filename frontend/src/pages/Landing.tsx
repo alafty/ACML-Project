@@ -10,12 +10,12 @@ function Landing() {
   const dummycourses = [{
     name: "Introduction to Some Stuff",
     desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63964a000947174879e5bc7d"
+    course: "63af6fa0e9791cccf40fb018"
   }, 
   {
     name: "Intermediate Logics",
     desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63964a000947174879e5bc7d"
+    course: "63b038dba2777c7c4f6811a8"
   },
   {
     name: "Amends for Dummies",
