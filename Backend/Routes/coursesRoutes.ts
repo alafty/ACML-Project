@@ -13,20 +13,24 @@ import {
 
 const coursesRouter = Router();
 
-coursesRouter.route("/").get(getCourses).post(addCourse).delete(deleteCourse);
+coursesRouter
+  .route("/")
+  .get(getCourses)
+  .post(addCourse) // Protect. Type = instructor. Post by id
+  .delete(deleteCourse); // Protect. Type = instructor. Course creator == id
 
 coursesRouter.post("/search", searchCourses);
 
 coursesRouter.route("/id").post(getCourses);
 
-coursesRouter.put("/subtitle", putCourseSubtitle);
+coursesRouter.put("/subtitle", putCourseSubtitle); // Protect. Type = instructor. Course creator == id
 
-coursesRouter.put("/videoId", putCourseVideo);
+coursesRouter.put("/videoId", putCourseVideo); // Protect. Type = instructor. Course creator == id
 
-coursesRouter.put("/discount", putDiscount);
+coursesRouter.put("/discount", putDiscount); // Protect. Type = instructor. Course creator == id
 
 coursesRouter.post("/hover", hoverCourse);
 
-coursesRouter.post("/rate", addRating);
+coursesRouter.post("/rate", addRating); // Protect. Type == indivTrainee || corpTrainee
 
 export default coursesRouter;

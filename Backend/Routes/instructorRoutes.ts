@@ -8,7 +8,7 @@ import {
 
 const instructorRouter = Router();
 
-instructorRouter.post("/rate", addRating); // Protect. Type = indivTrainee or 
+instructorRouter.post("/rate", addRating); // Protect. Type == indivTrainee || corpTrainee
 instructorRouter.post("/coursesRate", viewCourseRatings);
 instructorRouter.post("/instructorRate", viewInstructorRatings);
 instructorRouter.post("/edit", editInstructorDetails); //Protect. Type = instructor. Edit bearer of token

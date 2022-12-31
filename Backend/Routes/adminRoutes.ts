@@ -15,6 +15,6 @@ adminRouter.post("/instructor", createInstructor);
 adminRouter.post("/corporateTrainee", createCTrainee);
 adminRouter.post("/individualTrainee", createITrainee);
 adminRouter.post("/login", login);
-adminRouter.get("/me", protect ,me);
+adminRouter.get("/me", protect ,me); // Protect. Return only user
 
 export default adminRouter;
