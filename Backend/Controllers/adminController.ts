@@ -15,15 +15,23 @@ import inidvTrainee from "../Models/individualTrainee";
 import userTypes from "../Constants/userTypes";
 
 const createAdmin = async (req: Request, res: Response) => {
-  const existUser = await admin.findOne({ Email: req.body.Email });
-  if (existUser) {
-    console.log("username taken");
-  } else if (
+  if (
     adminInputValidate(
       { id: false, Username: true, Email: true, Password: true },
-      req.body
+      req
     )
   ) {
+    const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
+    if (existUser) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
+
+    if (!protectAdminCreation(req)) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
+    }
+
     var newBody = req.body;
 
     // Hash Password
@@ -36,7 +44,7 @@ const createAdmin = async (req: Request, res: Response) => {
     if (a) {
       res
         .status(200)
-        .json({ ...a, token: generateToken(a.id, userTypes.admin) });
+        .json({ ...a.toJSON(), token: generateToken(a.id, userTypes.admin) });
     } else {
       res.status(500).json({ message: "An error occured. Try again" });
     }
@@ -45,13 +53,12 @@ const createAdmin = async (req: Request, res: Response) => {
   }
 };
 
+const protectAdminCreation = (req: Request): boolean => {
+  return req.type == userTypes.admin;
+};
+
 const createInstructor = async (req: Request, res: Response) => {
-  const existUser = await instructor.findOne({
-    Email: req.body.Email,
-  });
-  if (existUser) {
-    console.log("username taken");
-  } else if (
+  if (
     instructorInputValidate(
       {
         id: false,
@@ -63,6 +70,11 @@ const createInstructor = async (req: Request, res: Response) => {
       req
     )
   ) {
+    const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
+    if (existUser) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
     var newBody = req.body;
 
     // Hash Password
@@ -75,7 +87,7 @@ const createInstructor = async (req: Request, res: Response) => {
     if (i) {
       res
         .status(200)
-        .json({ ...i, token: generateToken(i.id, userTypes.instructor) });
+        .json({ ...i.toJSON(), token: generateToken(i.id, userTypes.instructor) });
     } else {
       res.status(500).json({ message: "An error occured. Try again" });
     }
@@ -85,28 +97,32 @@ const createInstructor = async (req: Request, res: Response) => {
 };
 
 const createCTrainee = async (req: Request, res: Response) => {
-  const existUser = await cTrainee.findOne({ Email: req.body.Email });
-  if (existUser) {
-    console.log("username taken");
-  } else if (
+  if (
     corpTraineeInputValidate(
-      { id: false, Username: true, Email: true, Password: true },
+      { id: false, Username: true, Email: true, Password: true, Corporate: true },
       req
     )
   ) {
+    const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
+    if (existUser) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
+
+
+
     var newBody = req.body;
 
     // Hash Password
     var salt = await bcrypt.genSalt();
     var hashedPass = await bcrypt.hash(newBody.Password, salt);
     newBody.Password = hashedPass;
-
     // Create
     var c = await cTrainee.create(newBody);
     if (c) {
       res
         .status(200)
-        .json({ ...c, token: generateToken(c.id, userTypes.corporateTrainee) });
+        .json({ ...c.toJSON(), token: generateToken(c.id, userTypes.corporateTrainee) });
     } else {
       res.status(500).json({ message: "An error occured. Try again" });
     }
@@ -116,15 +132,17 @@ const createCTrainee = async (req: Request, res: Response) => {
 };
 
 const createITrainee = async (req: Request, res: Response) => {
-  const existUser = await iTrainee.findOne({ Email: req.body.Email });
-  if (existUser) {
-    console.log("username taken");
-  } else if (
+  if (
     indivTraineeInputValidate(
       { id: false, Username: true, Email: true, Password: true },
       req
     )
   ) {
+    const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
+    if (existUser) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
     var newBody = req.body;
 
     // Hash Password
@@ -137,7 +155,7 @@ const createITrainee = async (req: Request, res: Response) => {
     if (t) {
       res
         .status(200)
-        .json({ t, token: generateToken(t.id, userTypes.individualTrainee) });
+        .json({ ...t.toJSON(), token: generateToken(t.id, userTypes.individualTrainee) });
     } else {
       res.status(500).json({ message: "An error occured. Try again" });
     }
@@ -207,23 +225,23 @@ const me = async (req: Request, res: Response) => {
   switch (req.type) {
     case userTypes.admin:
       user = await admin.findOne(id);
-    break;
-  
+      break;
+
     case userTypes.corporate:
       user = await corporate.findOne(id);
-    break;
+      break;
 
     case userTypes.corporateTrainee:
       user = await corpTrainee.findOne(id);
-    break;
+      break;
 
     case userTypes.individualTrainee:
       user = await inidvTrainee.findOne(id);
-    break;
+      break;
 
     case userTypes.instructor:
       user = await instructor.findOne(id);
-    break; 
+      break;
   }
 
   res.status(200).json(user);
@@ -234,7 +252,6 @@ const generateToken = (id: string, type: string) => {
     expiresIn: "30d",
   });
 };
-
 
 export {
   createAdmin,
