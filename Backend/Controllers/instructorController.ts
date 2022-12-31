@@ -64,4 +64,21 @@ const viewCourseRatings= async(req: Request, res: Response) => {
       }
   }
 
-  export {addRating , viewCourseRatings , viewInstructorRatings};
+  const editInstructorDetails = async (req: Request, res: Response) => {
+    if (req.body.email) {
+      await instructor.findOneAndUpdate(
+        { Username: req.body.username },
+        { Email: req.body.email }
+      );
+    }
+    if (req.body.bio) {
+      await instructor.findOneAndUpdate(
+        { Username: req.body.username },
+        { ShortBio: req.body.bio }
+      );
+    }
+  
+    res.status(200).json("changes done");
+  };
+
+  export {addRating , viewCourseRatings , viewInstructorRatings, editInstructorDetails};

@@ -117,7 +117,6 @@ const addRating = async (req: Request, res: Response) => {
       await Course.findByIdAndUpdate(courseID, {
         RatingCount: ratingResult.RatingCount,
       });
-
       res.status(200).json({ message: "rating added" });
     } else {
       res.status(404).json({ message: "no such course exists" });
