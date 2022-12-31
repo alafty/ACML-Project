@@ -18,7 +18,7 @@ import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
-
+import LandingInstructor from "./pages/LandingInstructor";
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -71,7 +71,7 @@ function app() {
             <Route path="/corpTraineeRegister" element={<CorporateTrainee />} />
             <Route path="/home" element={<Home />} />
             <Route path="/instructorHome" element={<InstructorDetails />} />
-
+            <Route path="/instructor" element={<LandingInstructor/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/instructorHome' element={<InstructorDetails/>} />
