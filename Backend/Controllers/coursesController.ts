@@ -153,6 +153,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
             tempSub.VideoId = sub.VideoId;
           }
 
+
           var newSub = subToModify.set(tempSub);
           course.save(function (err) {
             if (err) res.status(400).json({ message: err });
