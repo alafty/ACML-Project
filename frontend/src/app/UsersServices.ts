@@ -170,11 +170,16 @@ const testFunciton = async () => {
     });
 };
 
+const logout = async () => {
+  localStorage.removeItem('token');
+}
+
 const services = {
   register,
   registerCorporate,
   registerInstructor,
   login,
+  logout,
   createGuestCookie,
   editInstructorDetails,
 };
