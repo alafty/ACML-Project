@@ -16,7 +16,7 @@ function Landing() {
     const fetchCourses = async () => {
       const data = await Services.getAllCourses();
       let filteredCourses = [];
-      for (let index = 0; index < data.length; index++) {
+      for (let index = 0; index < 10; index++) {
         const {Name, Description, _id, Price} = data[index];
         filteredCourses.push({Name, Description, _id, Price});
       }
