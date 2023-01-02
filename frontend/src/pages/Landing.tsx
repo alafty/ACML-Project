@@ -1,12 +1,36 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import '../Styling/mainLayout.css';
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import {Link} from 'react-router-dom';
 import SearchAppBar from '../components/searchAppBar';
 import CoursesSector from '../components/coursesSector';
-import Divider from '@mui/material/Divider';
+import Services from '../app/CoursesServices';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function Landing() {
+  const [courses, setCourses] = useState(null);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const data = await Services.getAllCourses();
+      let filteredCourses = [];
+      for (let index = 0; index < data.length; index++) {
+        const {Name, Description, _id, Price} = data[index];
+        filteredCourses.push({Name, Description, _id, Price});
+      }
+      setCourses(filteredCourses);
+    }
+    fetchCourses();
+    console.log(courses);
+  }, []);
+  
+
+  
+
+  
+  
+  
   const dummycourses = [{
     name: "Introduction to Some Stuff",
     desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
@@ -56,10 +80,26 @@ function Landing() {
                 </div>
               </div>
             </div>
-            <CoursesSector dummycourses={dummycourses} title="Featured Courses"/>
-            <CoursesSector dummycourses={dummycourses} title="Engineering"/>
-            <CoursesSector dummycourses={dummycourses} title="Politics"/>
-            <CoursesSector dummycourses={dummycourses} title="Business"/>
+            {
+            courses ? 
+            <>
+            <CoursesSector coursesList={courses} title="Featured Courses"/> 
+            <Divider />
+            <CoursesSector coursesList={courses} title="Engineering"/>
+            <Divider />
+            <CoursesSector coursesList={courses} title="Politics"/>
+            <Divider />
+            <CoursesSector coursesList={courses} title="Business"/>
+            </>
+            :
+            <> 
+            <LinearProgress className='landing-progress' />
+            <LinearProgress className='landing-progress' />
+            <LinearProgress className='landing-progress' />
+            <LinearProgress className='landing-progress' />
+            </>
+            }
+            
 
 
         </div>
