@@ -7,6 +7,7 @@ import SearchAppBar from '../components/searchAppBar';
 import CoursesSector from '../components/coursesSector';
 import Services from '../app/CoursesServices';
 import LinearProgress from '@mui/material/LinearProgress';
+import { width } from '@mui/system';
 
 function Landing() {
   const [courses, setCourses] = useState(null);
@@ -22,40 +23,7 @@ function Landing() {
       setCourses(filteredCourses);
     }
     fetchCourses();
-    console.log(courses);
   }, []);
-  
-
-  
-
-  
-  
-  
-  const dummycourses = [{
-    name: "Introduction to Some Stuff",
-    desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63af6fa0e9791cccf40fb018"
-  }, 
-  {
-    name: "Intermediate Logics",
-    desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63b038dba2777c7c4f6811a8"
-  },
-  {
-    name: "Amends for Dummies",
-    desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63964a000947174879e5bc7d"
-  },
-  {
-    name: "Politics in Folitics",
-    desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63964a000947174879e5bc7d"
-  },
-  {
-    name: "Brazil and World Economy",
-    desc: "description from can this be the most thing ever in this world and here and there from all the people that can see through this stuff",
-    course: "63964a000947174879e5bc7d"
-  } ];
 
   
   return (
@@ -65,20 +33,21 @@ function Landing() {
             <div className='landing-card'>
               <div>
                 <h1 className='landing-header'>Online courses for</h1>
-                <h1 className='landing-header' style={{color: '#52adcc', paddingTop: '0%'}}>creative minds</h1>
+                <h1 className='landing-header' style={{color: '#293237', paddingTop: '0%'}}>creative minds</h1>
                 <p className='landing-subtitle'>Learn with top professionals in various creative and innovative industries</p>
                 <p className='landing-subtitle'> </p>
                 <div style={{flexDirection: 'row'}}>
                 <Link  to= '/login' style={{textDecoration: 'none'}}> 
-                  <Button variant="contained" id="big-button-primary"> Login </Button>
+                  <Button variant="contained" id="big-button-secondary"> Login </Button>
                 </Link>
                 <Link to={'/register'} style= {{textDecoration: 'none'}}>
-                  <Button variant="outlined" id="big-button-primary-outlined">
+                  <Button variant="outlined" id="big-button-secondary-outlined">
                   Register
                   </Button>
                 </Link>
                 </div>
               </div>
+              <img src={require('../assets/Tree-Man.png')} height={300} className='landing-tree-man' />
             </div>
             {
             courses ? 

@@ -4,9 +4,9 @@ import CourseVideo from './CourseVideo'
 import Divider from '@mui/material/Divider'
 
 function CourseDetailsCenter(props) {
-  const path = `/course=${props.id}`;
+  
   return (
-    <div style={{width: '70%'}}>
+    <div style={{width: '97%'}}>
         <CourseVideo embedId={props.courseDetails?.VideoId} />
         <div className='course-details-card'>
           <p className="course-details-title">{props.courseDetails?.Name}</p>

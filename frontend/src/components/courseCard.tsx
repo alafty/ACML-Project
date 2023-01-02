@@ -18,7 +18,7 @@ function CourseCard(props) {
         <Link to={path} style={{ textDecoration: 'none'}}>
         <Button 
         variant='contained' 
-        id='big-button-secondary'
+        id='big-button-primary'
         style={{width: '390px', justifySelf: 'flex-end'}}
         > View Course </Button>   
         </Link>         

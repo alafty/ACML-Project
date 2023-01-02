@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../../app/CoursesServices";
-import CourseVideo from "../../components/Course/CourseVideo";
 import SearchAppBar from "../../components/searchAppBar";
 import { extractIdFromVideoUrl } from "../../utils/video_utils";
 import  Divider  from "@mui/material/Divider";
-import { width } from "@mui/system";
-import { Button } from "@mui/material";
-import e from "express";
 import CourseDetailsCenter from "../../components/Course/CourseDetailsCenter";
 import instructorServices from '../../app/InstructorServices'
 import InstructorCard from "../../components/InstructorCard";
 import PriceCard from "../../components/PriceCard";
+import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -38,9 +35,12 @@ export default function CourseDetails() {
       })
     }
     fetchCourseDetails();
+    console.log(courseDetails);
     fetchInstructorDetails();
+    console.log(instructorDetails);
     
-  }, [courseDetails]);
+    
+  }, [courseDetails, id, instructorDetails]);
 
   const handleUrlUpload = async () => {
     try {
@@ -83,14 +83,7 @@ export default function CourseDetails() {
     }
   };
 
-  const handleSubtitle = ({_id, Description}) =>{
-    return(
-      <div className='course-details-subtitle'>
-        <p className="course-details-subtitle-header"> Subsection {_id}</p>
-        <p className="course-details-subtitle-description">{Description}</p>
-      </div>
-    )
-  };
+  
 
   ///TODOLIST
   //Course name
@@ -110,17 +103,15 @@ export default function CourseDetails() {
       <SearchAppBar page={0}/>
       <div className="course-details-body" style={{display: 'flex', flexDirection: 'row'}}>
       {/* {id} */}
-      <CourseDetailsCenter courseDetails={courseDetails} />
-      <div style={{width: '30%'}}>
-        <InstructorCard instructorDetails={instructorDetails}/>
-        <PriceCard courseDetails={courseDetails}/>
-        <PriceCard courseDetails={courseDetails} />
-        <Divider variant= "fullWidth"/>
-      </div>
-      </div>
-      <div style={{marginBottom: '40px'}}>
-        <p className="course-details-title" style={{marginTop: '0px'}}> Course Details </p>
-        {courseDetails?.Subtitles.map(handleSubtitle)}
+        <div style={{width: '30%'}}>
+            <InstructorCard instructorDetails={instructorDetails}/>
+            <PriceCard courseDetails={courseDetails}/>
+            <Divider variant= "fullWidth"/>
+        </div>
+        <div>
+          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsSubtitles courseDetails={courseDetails} />
+        </div>
       </div>
     </div>
   );
