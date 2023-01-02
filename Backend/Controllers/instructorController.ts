@@ -64,4 +64,17 @@ const viewCourseRatings= async(req: Request, res: Response) => {
       }
   }
 
-  export {addRating , viewCourseRatings , viewInstructorRatings};
+  const getInstructorData = async(req: Request, res: Response) => {
+    if(!req.body.id){
+      res.status(400).json({message: "please enter an instructor id"})
+    } else {
+      const instructorToGet = await instructor.findById(req.body.id);
+      if (instructorToGet) {
+        res.status(200).json(instructorToGet);
+      } else {
+        res.status(400).json({message: "please enter a valid id"});
+      }
+    }
+  }
+
+  export {addRating , viewCourseRatings , viewInstructorRatings, getInstructorData};
