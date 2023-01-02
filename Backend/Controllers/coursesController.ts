@@ -167,6 +167,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         var newSub = course.Subtitles.create({
           VideoId: sub.VideoId,
           Description: sub.Description,
+          Order: sub.Order
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {
