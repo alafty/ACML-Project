@@ -52,7 +52,7 @@ const setInstructorCountry = async (req: Request, res: Response) => {
   const inputValid = instructorValidator(
     {
       id: true,
-      Country: true,
+      //Country: true,
     },
     req
   );

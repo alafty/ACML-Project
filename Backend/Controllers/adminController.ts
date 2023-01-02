@@ -197,11 +197,8 @@ const login = async (req: Request, res: Response) => {
 
     if (user) {
       if (await bcrypt.compare(req.body.Password, user.Password)) {
-        const cookie = req.cookies.userData;
-        cookie.id = user.id;
-        cookie.type = type;
+
         res
-          .cookie("userData", cookie)
           .status(200)
           .json({
             ...user.toJSON(),
@@ -212,7 +209,7 @@ const login = async (req: Request, res: Response) => {
         res.status(401).json({ message: "incorrect password" });
       }
     } else {
-      res.status(401).json({ message: "oops! this user does not exist" });
+      res.status(400).json({ message: "oops! this user does not exist" });
     }
   } else {
     res.status(400).json({ message: "Make sure all fields are valid" });
@@ -244,7 +241,7 @@ const me = async (req: Request, res: Response) => {
       break;
   }
 
-  res.status(200).json(user);
+  res.status(200).json({...user, type: req.type});
 };
 
 const generateToken = (id: string, type: string) => {

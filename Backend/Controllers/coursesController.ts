@@ -166,7 +166,7 @@ const addRating = async (req: Request, res: Response) => {
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
 // @access  private
-/// @body    {id, {[id], VideoLink, Description}}
+/// @body   {id, {[id], VideoLink, Description}}
 
 const putCourseSubtitle = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
