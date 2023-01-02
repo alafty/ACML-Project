@@ -19,7 +19,6 @@ const Header = ()=> {
   const onClick =()=>{
     console.log(query)
     console.log(Services.searchCourseBySubject(query));
-    
   }
   
 

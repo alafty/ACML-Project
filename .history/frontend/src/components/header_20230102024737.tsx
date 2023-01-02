@@ -19,14 +19,21 @@ const Header = ()=> {
   const onClick =()=>{
     console.log(query)
     console.log(Services.searchCourseBySubject(query));
-    
   }
-  
-
+  /*const { search } = window.location;
+  const query = new URLSearchParams(search).get('searchTerm');
+  const handleChange = () => {
+    if (!query) {
+        console.log(Services.searchCourseBySubject(query))
+        return Services.searchCourseBySubject(query);
+    }
+    else {
+      console.log("no results found")
+    }
     
    
    
-
+};*/
   return (
     <div className= "landing-header">
       <Link to={'/'}>

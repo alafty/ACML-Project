@@ -11,32 +11,31 @@ const Header = ()=> {
   const [searchResults,setsearchResults] = useState([]);
   const handleChange = event => {
    
-    const courses = Services.searchCourseBySubject(event.target.value);
-   //console.log(courses);
+   const courses = Services.searchCourseBySubject(event.target.value);
+   console.log(courses);
   };
-  const { search } = window.location;
+  /*const { search } = window.location;
   const query = new URLSearchParams(search).get('searchTerm');
-  const onClick =()=>{
-    console.log(query)
-    console.log(Services.searchCourseBySubject(query));
-    
-  }
-  
+  const handleChange = () => {
+    if (!query) {
+        console.log(Services.searchCourseBySubject(query))
+        return Services.searchCourseBySubject(query);
+    }
+    else {
+      console.log("no results found")
+    }
 
-    
    
    
-
+};*/
   return (
     <div className= "landing-header">
       <Link to={'/'}>
         <div className='logo'/>
       </Link>
       <div className='search-tab'>
-        <TextField label="Search our courses library" variant="standard" className='search-bar'  name="searchTerm" onChange={handleChange} />
-        <Link to={'/searchResults'}>
-        <Button variant="contained" id='button-search' onClick={onClick}> Search </Button>
-        </Link>
+        <TextField label="Search our courses library" variant="standard" className='search-bar' onInput={handleChange} name="searchTerm"  />
+        <Button variant="contained" id='button-search'> Search </Button>
       </div>
     </div>
           

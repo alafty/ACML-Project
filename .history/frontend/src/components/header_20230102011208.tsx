@@ -10,33 +10,18 @@ import { useState } from 'react'
 const Header = ()=> {
   const [searchResults,setsearchResults] = useState([]);
   const handleChange = event => {
-   
-    const courses = Services.searchCourseBySubject(event.target.value);
-   //console.log(courses);
+   const courses = Services.searchCourseBySubject(event.target.value);
+   //setsearchResults(courses)
+   console.log(courses);
   };
-  const { search } = window.location;
-  const query = new URLSearchParams(search).get('searchTerm');
-  const onClick =()=>{
-    console.log(query)
-    console.log(Services.searchCourseBySubject(query));
-    
-  }
-  
-
-    
-   
-   
-
   return (
     <div className= "landing-header">
       <Link to={'/'}>
         <div className='logo'/>
       </Link>
       <div className='search-tab'>
-        <TextField label="Search our courses library" variant="standard" className='search-bar'  name="searchTerm" onChange={handleChange} />
-        <Link to={'/searchResults'}>
-        <Button variant="contained" id='button-search' onClick={onClick}> Search </Button>
-        </Link>
+        <TextField label="Search our courses library" variant="standard" className='search-bar'  onChange={handleChange}/>
+        <Button variant="contained" id='button-search'> Search </Button>
       </div>
     </div>
           

@@ -40,13 +40,12 @@ export const searchCourseBySubject = async (searchTerm: String) => {
           `No search items found ${searchTerm}`
         );
       }
-     // console.log(localStorage.getItem("SearchResults"));
+      console.log(localStorage.getItem("SearchResults"));
       //return localStorage.getItem("SearchResults");
     })
     .catch(function (error) {
       console.log(error);
     });
-    return localStorage.getItem("SearchResults");
 };
 
 const getCourseDetails = async (id: string) => {

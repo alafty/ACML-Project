@@ -1,5 +1,6 @@
 import axios from "axios";
 import qs from "qs";
+import { useState } from "react";
 import httpClient from "../utils/httpClient";
 
 const COURSES_URL = "/courses";
@@ -14,6 +15,7 @@ export const getAllCourses = async () => {
   }
   return response.data;
 };
+const [searchResults,setsearchResults] = useState([]);
 
 export const searchCourseBySubject = async (searchTerm: String) => {
   var data = qs.stringify({
@@ -46,6 +48,8 @@ export const searchCourseBySubject = async (searchTerm: String) => {
     .catch(function (error) {
       console.log(error);
     });
+    const courses =localStorage.getItem("SearchResults")
+    setsearchResults(courses)
     return localStorage.getItem("SearchResults");
 };
 
