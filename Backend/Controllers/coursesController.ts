@@ -18,7 +18,6 @@ const getCourses = async (req: Request, res: Response) => {
     res.status(200).json(result);
   } else if (courseInputValidate({ id: false }, req)) {
     const result = await Course.find();
-    console.log(result);
     res.send(result);
   }
 };
