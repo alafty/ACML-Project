@@ -17,7 +17,10 @@ const courseSchema = new Schema(
       type: [Subtitle.schema],
       default: [],
     },
-
+    Description: {
+      type: String,
+      required: true
+    },
     Instructor: {
       type: Schema.Types.ObjectId,
       required: true,
@@ -49,6 +52,11 @@ const courseSchema = new Schema(
     VideoId: {
       type: String,
       required: false
+    },
+    PurchaseCount: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   { timestamps: true }
