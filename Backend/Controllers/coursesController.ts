@@ -73,8 +73,6 @@ const addCourse = async (req: Request, res: Response) => {
       Instructor: true,
       Price: true,
       TotalHours: true,
-      RatingAvg: true,
-      RatingCount: true,
     },
     req
   );

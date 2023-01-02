@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import Discount from "./discount";
 import Subtitle from "./subtitle";
+import instructor from "./instructor";
 
 const courseSchema = new Schema(
   {
@@ -18,8 +19,9 @@ const courseSchema = new Schema(
     },
 
     Instructor: {
-      type: [String],
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Instructor'
     },
     Price: {
       type: Number,
