@@ -1,6 +1,5 @@
 import axios from "axios";
 import qs from "qs";
-import { useState } from "react";
 import httpClient from "../utils/httpClient";
 
 const COURSES_URL = "/courses";
@@ -16,6 +15,39 @@ export const getAllCourses = async () => {
   return response.data;
 };
 
+export const searchCourseBySubject = async (searchTerm: String) => {
+  var data = qs.stringify({
+    searchTerm: searchTerm,
+  });
+  var config = {
+    method: "post",
+    url: `${COURSES_URL}/search`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: data,
+  };
+  axios(config)
+    .then(function (response) {
+     // console.log(JSON.stringify(response));
+
+      if (response.data) {
+        localStorage.setItem("SearchResults", JSON.stringify(response.data));
+        
+      }/* else {
+        localStorage.setItem(
+          "SearchResults",
+          `No search items found ${searchTerm}`
+        );
+      }*/
+     // console.log(localStorage.getItem("SearchResults"));
+      //return localStorage.getItem("SearchResults");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    return localStorage.getItem("SearchResults");
+};
 
 const getCourseDetails = async (id: string) => {
   var data = qs.stringify({
@@ -111,6 +143,7 @@ export const rateCourses = async (courseID: String, rating: String) => {
 
 const Services = {
   getAllCourses,
+  searchCourseBySubject,
   rateCourses,
   getCourseDetails,
   getCourseQuizzes,

@@ -111,6 +111,7 @@ export const rateCourses = async (courseID: String, rating: String) => {
 
 const Services = {
   getAllCourses,
+  searchCourseBySubject,
   rateCourses,
   getCourseDetails,
   getCourseQuizzes,

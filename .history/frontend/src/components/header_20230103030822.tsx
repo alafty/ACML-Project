@@ -15,12 +15,43 @@ const Header = ()=> {
 
   const [courses, setCourses] = useState(null);
 
-  useEffect(() => {
-  setCourses(onClick())
-  }, []);
+ /* useEffect(() => {
+    const fetchCourses = async () => {
+      const data = await onClick();
+    
+      setCourses(data);
+      console.log('i am in useEffect')
+      console.log(courses)
+    }
+    fetchCourses();
+  }, []);*/
 
 
-
+  const getusers = async (searchTerm: String)=> {
+    var fetchedUsers=[]
+    var data = qs.stringify({
+      searchTerm: searchTerm,
+    });
+    var config = {
+      method: "post",
+      url: `${COURSES_URL}/search`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: data,
+    };
+        await axios(config).then((res)=>{console.log(res.data)
+           fetchedUsers= res.data
+          
+        
+      }
+        
+        )
+        console.log('hiii')
+        console.log(fetchedUsers)
+        return fetchedUsers
+      }
+      ;
 /*
   const [searchResults,setsearchResults] = useState([]);
   const searchCourseBySubject = async (searchTerm: String) => {
@@ -53,7 +84,9 @@ const Header = ()=> {
       });
       
   };*/
-
+  //const value = (document.getElementById('searchTerm') as HTMLInputElement).value
+  //const results=searchCourseBySubject(value)
+ // useEffect(() => { setsearchResults(results) }, [])
    
   
   const onClick = async ()=>{

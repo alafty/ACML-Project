@@ -15,7 +15,31 @@ export const getAllCourses = async () => {
   }
   return response.data;
 };
-
+const [searchResults,setsearchResults] = useState([]);
+export const searchCourseBySubject = async (searchTerm: String) => {
+  var data = qs.stringify({
+    searchTerm: searchTerm,
+  });
+  var config = {
+    method: "post",
+    url: `${COURSES_URL}/search`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: data,
+  };
+  axios(config)
+  .then((res)=>{
+    const results= res.data
+    setsearchResults(results)
+    
+}
+  
+  )
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 const getCourseDetails = async (id: string) => {
   var data = qs.stringify({
@@ -111,6 +135,7 @@ export const rateCourses = async (courseID: String, rating: String) => {
 
 const Services = {
   getAllCourses,
+  searchCourseBySubject,
   rateCourses,
   getCourseDetails,
   getCourseQuizzes,

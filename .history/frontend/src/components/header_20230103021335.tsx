@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
+import {FaSignInAlt} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { TextField } from '@mui/material'
 import {Button} from '@mui/material'
 import '../Styling/mainLayout.css'
+//import Services from '../app/CoursesServices'
 import { useState } from 'react'
 import qs from 'qs'
 import axios from 'axios'
@@ -11,18 +13,30 @@ import axios from 'axios'
 const Header = ()=> {
   const COURSES_URL = "/courses";
 
-  
+
+    
 
   const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-  setCourses(onClick())
+    var value = (document.getElementById('searchTerm') as HTMLInputElement).value
+    const fetchCourses = async () => {
+      const data = await searchCourseBySubject(value);
+      setCourses(data)
+      console.log(value)
+      console.log(data)
+    }
+    fetchCourses();
   }, []);
 
 
 
-/*
+
   const [searchResults,setsearchResults] = useState([]);
+
+
+
+
   const searchCourseBySubject = async (searchTerm: String) => {
     var results=[]
     var data = qs.stringify({
@@ -39,54 +53,24 @@ const Header = ()=> {
     axios(config)
     .then((res)=>{
       results= res.data
+     
       console.log("hiiii")
       console.log(results)
-      setsearchResults(results)
-      console.log(searchResults)
-     
-     
+  
   }
     
     )
       .catch(function (error) {
         console.log(error);
       });
-      
-  };*/
+     return results
+  };
 
    
-  
-  const onClick = async ()=>{
+  const onClick =()=>{
     const value = (document.getElementById('searchTerm') as HTMLInputElement).value
 
     console.log(value)
-   // const array= searchCourseBySubject(value)
-    
-    //const array= getusers(value)
-    //console.log(array)
-    //return array
-    var fetchedUsers=[]
-    var data = qs.stringify({
-      searchTerm: value,
-    });
-    var config = {
-      method: "post",
-      url: `${COURSES_URL}/search`,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      data: data,
-    };
-        await axios(config).then((res)=>{//console.log(res.data)
-           fetchedUsers= res.data
-          
-        
-      }
-        
-        )
-        console.log('hiii')
-        console.log(fetchedUsers)
-        return fetchedUsers
     
   }
    
@@ -99,7 +83,7 @@ const Header = ()=> {
       <div className='search-tab'>
         <TextField label="Search our courses library" variant="standard" className='search-bar' id='searchTerm' name="searchTerm" />
         <Link to={'/searchResults'}>
-        <Button variant="contained" id='button-search' onClick={onClick}> Search </Button>
+        <Button variant="contained" id='button-search'  onChange={onClick}> Search </Button>
        
         </Link>
      

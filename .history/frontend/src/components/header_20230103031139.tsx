@@ -16,7 +16,14 @@ const Header = ()=> {
   const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-  setCourses(onClick())
+      const fetchCourses = async () => {
+      const data = await onClick();
+    
+      setCourses(data);
+      console.log('i am in useEffect')
+      console.log(courses)
+    }
+    fetchCourses();
   }, []);
 
 
@@ -99,7 +106,7 @@ const Header = ()=> {
       <div className='search-tab'>
         <TextField label="Search our courses library" variant="standard" className='search-bar' id='searchTerm' name="searchTerm" />
         <Link to={'/searchResults'}>
-        <Button variant="contained" id='button-search' onClick={onClick}> Search </Button>
+        <Button variant="contained" id='button-search' > Search </Button>
        
         </Link>
      

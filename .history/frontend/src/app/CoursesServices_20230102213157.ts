@@ -15,7 +15,38 @@ export const getAllCourses = async () => {
   }
   return response.data;
 };
+//const [searchResults,setsearchResults] = useState([]);
+export const searchCourseBySubject = async (searchTerm: String) => {
+  var data = qs.stringify({
+    searchTerm: searchTerm,
+  });
+  var config = {
+    method: "post",
+    url: `${COURSES_URL}/search`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: data,
+  };
+  axios(config)
+    .then(function (response) {
+     // console.log(JSON.stringify(response));
 
+      if (response.data) {
+        const results= response.data;
+        //setsearchResults(results);
+        return results
+        
+      }else {
+       return "no results found"
+      }
+     // console.log(localStorage.getItem("SearchResults"));
+      //return localStorage.getItem("SearchResults");
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 
 const getCourseDetails = async (id: string) => {
   var data = qs.stringify({
@@ -111,6 +142,7 @@ export const rateCourses = async (courseID: String, rating: String) => {
 
 const Services = {
   getAllCourses,
+  searchCourseBySubject,
   rateCourses,
   getCourseDetails,
   getCourseQuizzes,

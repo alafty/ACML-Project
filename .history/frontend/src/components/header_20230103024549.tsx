@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
+import {FaSignInAlt} from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { TextField } from '@mui/material'
 import {Button} from '@mui/material'
 import '../Styling/mainLayout.css'
+//import Services from '../app/CoursesServices'
 import { useState } from 'react'
 import qs from 'qs'
 import axios from 'axios'
@@ -16,11 +18,42 @@ const Header = ()=> {
   const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-  setCourses(onClick())
+    const fetchCourses = async () => {
+      const data = await onClick();
+    
+      setCourses(data);
+      console.log('i am in useEffect')
+      console.log(courses)
+    }
+    fetchCourses();
   }, []);
 
 
-
+  const getusers = async (searchTerm: String)=> {
+    var fetchedUsers=[]
+    var data = qs.stringify({
+      searchTerm: searchTerm,
+    });
+    var config = {
+      method: "post",
+      url: `${COURSES_URL}/search`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      data: data,
+    };
+        await axios(config).then((res)=>{console.log(res.data)
+           fetchedUsers= res.data
+          
+        
+      }
+        
+        )
+        console.log('hiii')
+        console.log(fetchedUsers)
+        return fetchedUsers
+      }
+      ;
 /*
   const [searchResults,setsearchResults] = useState([]);
   const searchCourseBySubject = async (searchTerm: String) => {
@@ -53,40 +86,20 @@ const Header = ()=> {
       });
       
   };*/
-
+  //const value = (document.getElementById('searchTerm') as HTMLInputElement).value
+  //const results=searchCourseBySubject(value)
+ // useEffect(() => { setsearchResults(results) }, [])
    
   
-  const onClick = async ()=>{
+  const onClick =()=>{
     const value = (document.getElementById('searchTerm') as HTMLInputElement).value
 
     console.log(value)
    // const array= searchCourseBySubject(value)
     
-    //const array= getusers(value)
-    //console.log(array)
-    //return array
-    var fetchedUsers=[]
-    var data = qs.stringify({
-      searchTerm: value,
-    });
-    var config = {
-      method: "post",
-      url: `${COURSES_URL}/search`,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      data: data,
-    };
-        await axios(config).then((res)=>{//console.log(res.data)
-           fetchedUsers= res.data
-          
-        
-      }
-        
-        )
-        console.log('hiii')
-        console.log(fetchedUsers)
-        return fetchedUsers
+    const array= getusers(value)
+    console.log(array)
+    return array
     
   }
    

@@ -16,7 +16,14 @@ const Header = ()=> {
   const [courses, setCourses] = useState(null);
 
   useEffect(() => {
-  setCourses(onClick())
+      const fetchCourses = async () => {
+      const data = await onClick();
+    
+      setCourses(data);
+      console.log('i am in useEffect')
+      console.log(courses)
+    }
+    fetchCourses();
   }, []);
 
 
