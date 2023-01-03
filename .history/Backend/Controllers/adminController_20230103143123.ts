@@ -103,8 +103,8 @@ const getInstructors = async (req, res) => {
 const deleteInstructor = async (req,res) => {
      const filter = req.body 
      console.log("hii")
-     console.log(req.body)
-     await instructor.findOneAndDelete(req.body)
+     console.log(filter)
+     await instructor.findOneAndDelete(filter)
      res.status(200).json('Instructor Deleted');
       }
  
