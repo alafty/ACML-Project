@@ -21,7 +21,6 @@ import SolveSolveEx from './pages/Course/SolveSolveEx';
 import LandingInstructor from "./pages/LandingInstructor";
 import AdminDashboard from "./pages/admin/adminDashboard";
 import CreateAdmin from "./pages/admin/createAdmin";
-import CreateInstructor from "./pages/admin/createInstructor";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -87,8 +86,6 @@ function app() {
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
             <Route path="/adminDashboard" element={<AdminDashboard />} />
             <Route path="/createAdmin" element={<CreateAdmin />} />
-            <Route path="/createInstructor" element={<CreateInstructor />} />
-
 
 
 

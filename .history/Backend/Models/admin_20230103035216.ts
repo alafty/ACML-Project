@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const adminSchema = new Schema({
   Username: {
     type: String,
-    required: true,
+    required: false,
   },
   Email: {
     type: String,

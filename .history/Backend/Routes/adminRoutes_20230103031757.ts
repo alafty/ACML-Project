@@ -10,7 +10,7 @@ import { Router } from "express";
 import { protect } from "../Middleware/authMiddleware";
 const adminRouter = Router();
 
-adminRouter.post("/admin", createAdmin); // Protect and make sure that the type is admin
+adminRouter.post("/admin", protect, createAdmin); // Protect and make sure that the type is admin
 adminRouter.post("/instructor", createInstructor);
 adminRouter.post("/corporateTrainee", createCTrainee); //Should protect. Type == admin || corp. Corp = user.name
 adminRouter.post("/individualTrainee", createITrainee);

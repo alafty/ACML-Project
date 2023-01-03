@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Advanced-Computer-Lab-2022",
   "dependencies": {
+    "@mui/icons-material": "^5.11.0",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.13",
     "@types/react": "^18.0.26",

@@ -17,7 +17,7 @@ import userTypes from "../Constants/userTypes";
 const createAdmin = async (req: Request, res: Response) => {
   if (
     adminInputValidate(
-      { id: false, Username: true, Email: true, Password: true },
+      { id: false, Username: false, Email: true, Password: true },
       req
     )
   ) {

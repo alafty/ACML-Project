@@ -17,7 +17,7 @@ import userTypes from "../Constants/userTypes";
 const createAdmin = async (req: Request, res: Response) => {
   if (
     adminInputValidate(
-      { id: false, Username: true, Email: true, Password: true },
+      { id: false, Username: false, Email: true, Password: true },
       req
     )
   ) {
@@ -27,10 +27,10 @@ const createAdmin = async (req: Request, res: Response) => {
       return;
     }
 
-   /* if (!protectAdminCreation(req)) {
+    if (!protectAdminCreation(req)) {
       res.status(401).json({ message: "Not authorized" });
       return;
-    }*/
+    }
 
     var newBody = req.body;
 
