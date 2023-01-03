@@ -263,7 +263,7 @@ const getProblems = async (req, res) => {
   res.status(200).json("Problem Resolved");
     }
     const holdProblems = async (req, res) => {
-      const filter = req.body 
+      const filter = { Type: req.body }
       const update = { Status: 'Pending' };  
       await problem.findOneAndUpdate(filter, update);
       res.status(200).json("Problem Pending");

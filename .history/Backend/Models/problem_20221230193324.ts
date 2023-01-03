@@ -20,13 +20,11 @@ const problemSchema = new Schema(
         required: true
     },
     Course: {
-        //type: course.schema,
-        type : String,
+        type: course.schema,
         required: true
     },
     Sender: {
-        //type: corpTrainee.schema || instructor.schema || inidvTrainee.schema,
-        type : String,
+        type: corpTrainee.schema || instructor.schema || inidvTrainee.schema,
         required: true
     }
   },

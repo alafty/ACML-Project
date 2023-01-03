@@ -255,20 +255,10 @@ const getProblems = async (req, res) => {
   const problems= await problem.find({});
   res.status(200).json(problems);
      }
-     
- const resolveProblems = async (req, res) => {
-  const filter = req.body 
-  const update = { Status: 'Resolved' };  
-  await problem.findOneAndUpdate(filter, update);
-  res.status(200).json("Problem Resolved");
+     const resolveProblems =(req, res) => {
+      problem.update( {Status:"Resolved"});
+      res.status(200).json("Problem Resolved");
     }
-    const holdProblems = async (req, res) => {
-      const filter = req.body 
-      const update = { Status: 'Pending' };  
-      await problem.findOneAndUpdate(filter, update);
-      res.status(200).json("Problem Pending");
-        }
-      
   
  ;
 export {
@@ -280,6 +270,5 @@ export {
   me,
   findUserType,
   getProblems,
-  resolveProblems,
-  holdProblems
+  resolveProblems
 };

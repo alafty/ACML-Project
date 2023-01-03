@@ -6,8 +6,7 @@ import {
   login,
   me,
   getProblems,
-  resolveProblems,
-  holdProblems
+  resolveProblems
 } from "../Controllers/adminController";
 import { Router } from "express";
 import { protect } from "../Middleware/authMiddleware";
@@ -21,7 +20,5 @@ adminRouter.post("/login", login);
 adminRouter.get("/me", protect, me); // Protect. Return only user
 adminRouter.get("/problem",getProblems);
 adminRouter.put("/resolveProblem",resolveProblems)
-adminRouter.put("/holdProblem",holdProblems)
-
 
 export default adminRouter;
