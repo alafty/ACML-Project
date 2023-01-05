@@ -4,32 +4,37 @@ import { getTokenHeader, setToken } from "../utils/authUtils";
 import httpClient from "../utils/httpClient";
 
 export const login = async (
-  username: String,
+  email: String,
   password: String,
   callback: Function
 ) => {
   var data = qs.stringify({
-    Email: username,
+    Email: email,
     Password: password,
   });
   var config = {
     method: "post",
-    url: "/create/login",
+    url: "create/login",
     data: data,
   };
 
+
   httpClient(config)
     .then(async function (response) {
-      if (response.data) {
+      if (response.data.message) {
+        callback(response.data.message, true);
+        
+      } else {
         setToken(response.data.token);
         await callback(response.data);
-      } else {
-        callback("NothingFound");
       }
     })
     .catch(function (error) {
       console.log(error);
+      callback(error.response.data.message, true);
     });
+    
+    
 };
 
 export const register = async (

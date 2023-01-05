@@ -194,7 +194,7 @@ const findUserType = async (key: string, value: string) => {
 const login = async (req: Request, res: Response) => {
   if (adminInputValidate({ Email: true, Password: true }, req)) {
     var { user, type } = await findUserType("Email", req.body.Email);
-
+    
     if (user) {
       if (await bcrypt.compare(req.body.Password, user.Password)) {
 

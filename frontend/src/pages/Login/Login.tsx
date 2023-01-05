@@ -10,26 +10,28 @@ import { useGlobalState } from '../../App';
 import SearchAppBar from '../../components/searchAppBar';
 
 function Login() {
+  
   const navigation = useNavigate();
-  const [username, setUsername] = React.useState('');
+  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [state, dispatch] = useGlobalState();
   const [errorMessage, setErrorMesssage] = React.useState('');
   services.createGuestCookie();
 
-  const setUserData = async (data: any) =>{
+  const setUserData = async (data: any, resError?: boolean) =>{
+    if(resError){
+      setErrorMesssage(data);
+      console.log(errorMessage);
+      return;
+    }
     state.loggedInUser = data;
-    //console.log(state.loggedInUser);
+    console.log(state.loggedInUser);
     try {
-      if (state.loggedInUser.user) {
         if (state.loggedInUser.type === "instructor") {
-          navigation('/instructorHome');
+          navigation('/instructor/home');
         } else {
           navigation('/home');
         }
-      } else {
-        setErrorMesssage("incorrect username or password!")
-      }
     } catch (error) {
       console.log(error);
     }
@@ -49,7 +51,7 @@ function Login() {
             className: 'text-field'
           }}
           onChange={(e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
             }}
           />
           <CssTextField
@@ -68,7 +70,7 @@ function Login() {
           id="big-button-primary"
           onClick={
             async () => {
-            await services.login(username, password, setUserData);
+            await services.login(email, password, setUserData);
             }
           }
         > Login </Button>

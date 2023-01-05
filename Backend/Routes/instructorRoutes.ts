@@ -1,7 +1,6 @@
 import { Router } from "express";
 import {
   addRating,
-  editInstructorDetails,
   viewCourseRatings,
   viewInstructorRatings,
   getInstructorData
@@ -14,7 +13,6 @@ instructorRouter.post("/rate", protect, addRating); // Protect. Type == indivTra
 instructorRouter.post("/coursesRate", viewCourseRatings);
 instructorRouter.post("/instructorRate", viewInstructorRatings);
 instructorRouter.post("/getData", getInstructorData);
-instructorRouter.post("/edit", protect, editInstructorDetails); //Protect. Type = instructor. Edit bearer of token
 
 
 export default instructorRouter;
