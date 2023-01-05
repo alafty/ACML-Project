@@ -19,6 +19,7 @@ import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
 import LandingInstructor from "./pages/LandingInstructor";
+import InstructorHome from "./pages/Instructor/InstructorHome";
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -55,26 +56,45 @@ function app() {
       <Router>
         <div>
           <Routes>
-            <Route path='/' element={<Landing/>} />
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path='/rate' element={<Rate/>} />
+            <Route 
+            path='/' 
+            element={<Landing/>} />
+
+            <Route 
+            path="/register" 
+            element={<Register />} />
+
             <Route
-              path="/indivTraineeRegister"
+              path="/register/indivTrainee"
               element={<IndividualTrainee />}
             />
+
+            <Route 
+            path="/register/corpTrainee" 
+            element={<CorporateTrainee />} />
+
             <Route
-              path="/instructorRegister"
+              path="/register/instructor"
               element={<InstructorRegister />}
             />
-            <Route path="/corpTraineeRegister" element={<CorporateTrainee />} />
+
+            <Route 
+            path="/login" 
+            element={<Login />} />
+
+            <Route 
+            path='/rate' 
+            element={<Rate/>} />
+            
+            <Route
+            path='/instructor/home'
+            element={<InstructorHome/>}/>
+
             <Route path="/home" element={<Home />} />
-            <Route path="/instructorHome" element={<InstructorDetails />} />
+            <Route path="/instructor/profile" element={<InstructorDetails />} />
             <Route path="/instructor" element={<LandingInstructor/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
-            <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
             <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
