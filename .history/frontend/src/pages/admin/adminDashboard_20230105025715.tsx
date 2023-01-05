@@ -7,7 +7,7 @@ function AdminDashboard () {
         <div>
         <h1>Admin dashboard</h1>
         <Link to="/viewAdmins">View Admin</Link> <br />
-        <Link to="/viewCorporates">View Corporates</Link> <br />
+        <Link to="/viewCorporates">View Corporate</Link> <br />
         <Link to="/viewInstructors">View Instructors</Link> <br />
         <Link to="/viewCorpTrainee">View Corporate Trainee</Link> <br />
         <Link to="/viewindivTrainee">View Individual Trainee</Link> <br />

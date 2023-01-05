@@ -22,7 +22,7 @@ const corporateSchema = new Schema(
     },
     Package: {
         type: Package.schema,
-        required: false
+        required: true
     }
   },
   { timestamps: true }

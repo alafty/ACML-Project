@@ -16,7 +16,6 @@ import userTypes from "../Constants/userTypes";
 import problem from "../Models/problem";
 
 const createAdmin = async (req: Request, res: Response) => {
-  try {
   if (
     adminInputValidate(
       { id: false, Username: true, Email: true, Password: true },
@@ -52,8 +51,6 @@ const createAdmin = async (req: Request, res: Response) => {
     }
   } else {
     res.status(400).json({ message: "Make sure fields are valid" });
-  }}catch (e) {
-    console.log(e)
   }
 };
 
@@ -62,7 +59,6 @@ const protectAdminCreation = (req: Request): boolean => {
 };
 
 const createInstructor = async (req: Request, res: Response) => {
-  try {
   if (
     instructorInputValidate(
       {
@@ -98,31 +94,12 @@ const createInstructor = async (req: Request, res: Response) => {
     }
   } else {
     res.status(400).json({ message: "Make sure fields are valid" });
-  }}
-  catch (e) {
-    console.log(e)
   }
 };
 const getInstructors = async (req, res) => {
   const instructors= await instructor.find({});
   res.status(200).json(instructors);
      }
-const getAdmins = async (req, res) => {
-      const admins= await admin.find({});
-      res.status(200).json(admins);
-         }
-const getCTrainees = async (req, res) => {
-          const cTrainees= await cTrainee.find({});
-          res.status(200).json(cTrainees);
-             }
-const getITrainees = async (req, res) => {
-              const iTrainees= await iTrainee.find({});
-              res.status(200).json(iTrainees);
-                 }
-const getCorps = async (req, res) => {
-                  const corps= await corporate.find({});
-                  res.status(200).json(corps);
-                     }
 const deleteInstructor = async (req,res) => {
      const filter = req.body 
      console.log("hii")
@@ -149,7 +126,6 @@ const deleteInstructor = async (req,res) => {
 
 
 const createCTrainee = async (req: Request, res: Response) => {
-  try {
   if (
     corpTraineeInputValidate(
       { id: false, Username: true, Email: true, Password: true, Corporate: true },
@@ -181,12 +157,10 @@ const createCTrainee = async (req: Request, res: Response) => {
     }
   } else {
     res.status(400).json({ message: "Make sure fields are valid" });
-  }}catch (e) {
-    console.log(e)
   }
 };
 const createCorp = async (req: Request, res: Response) => {
-  try {
+
     const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
     if (existUser) {
       res.status(400).json({ message: "Email already exists" });
@@ -208,13 +182,9 @@ const createCorp = async (req: Request, res: Response) => {
     } else {
       res.status(500).json({ message: "An error occured. Try again" });
     }
-  }
-  catch (e) {
-    console.log(e)
-  }
+
 };
 const createITrainee = async (req: Request, res: Response) => {
-  try {
   if (
     indivTraineeInputValidate(
       { id: false, Username: true, Email: true, Password: true },
@@ -244,9 +214,6 @@ const createITrainee = async (req: Request, res: Response) => {
     }
   } else {
     res.status(400).json({ message: "Make sure fields are valid" });
-  } }
-  catch (e) {
-    console.log(e)
   }
 };
 
@@ -369,10 +336,5 @@ export {
   holdProblems,
   getInstructors,
   deleteInstructor,
-  updateInstructor,
-  createCorp,
-  getCorps,
-  getAdmins,
-  getCTrainees,
-  getITrainees
+  updateInstructor
 };

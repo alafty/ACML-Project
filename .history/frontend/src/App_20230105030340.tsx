@@ -28,10 +28,6 @@ import ViewProblems from "./pages/admin/viewProblems";
 import ViewInstructors from "./pages/admin/viewInstructors";
 import UpdateInstructor from "./pages/admin/updateInstructor";
 import ViewAdmins from "./pages/admin/viewAdmins";
-import ViewCorps from "./pages/admin/viewCorps";
-import CreateCorporate from "./pages/admin/createCorporate";
-import ViewCTrainees from "./pages/admin/viewCTrainees";
-import ViewITrainees from "./pages/admin/viewITrainees";
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -99,16 +95,10 @@ function app() {
             <Route path="/viewAdmins" element={<ViewAdmins />} />
             <Route path="/createInstructor" element={<CreateInstructor />} />
             <Route path="/createCorpTrainee" element={<CreateCTrainee />} />
-            <Route path="/viewCorpTrainee" element={<ViewCTrainees />} />
             <Route path="/createindivTrainee" element={<CreateITrainee />} />
-            <Route path="/viewindivTrainee" element={<ViewITrainees />} />
             <Route path="/viewProblems" element={<ViewProblems />} />
             <Route path="/viewInstructors" element={<ViewInstructors />} />
             <Route path="/updateInstructor" element={<UpdateInstructor />} />
-            <Route path="/viewCorporates" element={<ViewCorps />} />
-            <Route path="/createCorporate" element={<CreateCorporate />} />
-
-
 
 
 

@@ -5,32 +5,31 @@ import httpClient from "../../utils/httpClient";
 import { setToken } from "../../utils/authUtils";
 import { Link } from "react-router-dom";
 
-
-const CreateITrainee = ()=> {
+const CreateCorporate = ()=> {
 
   
-        const [Username,setUsername] = useState('')
+        const [Name,setName] = useState('')
         const [Email,setEmail]=useState('')
         const [Password,setPassword]= useState('')
-    
+        const [Industry,setIndustry]=useState('')
         
-        const CreateInstructor = async (
-            username:String,
+        const createCorp = async (
+            name:String,
             email: String,
             password: String,
-        
+            industry: String
           
           ) => {
             var data = qs.stringify({
-              Username : username,
+              Name : name,
               Email: email,
               Password: password,
-        
+              Industry : industry
           
             });
             var config = {
               method: "post",
-              url: "/create/individualTrainee",
+              url: "/create/corporate",
               data: data,
             };
           
@@ -46,33 +45,44 @@ const CreateITrainee = ()=> {
             
 
              <div> 
-                 <TextField label="Username"  required={true}
+                 <TextField label="Name"  required={true}
           onChange={(e) => {
-            setUsername(e.target.value);
+            setName(e.target.value);
           }}
-          /> <br />
+          /> 
              <TextField label="Email"  required={true}
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          /> <br />
+          />
            <TextField label="Password"  required={true}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-          /> <br />
+          />
+           <TextField label="Industry"  required={true}
+          onChange={(e) => {
+            setIndustry(e.target.value);
+          }}
+          />
          
-        <Link to="/viewindivTrainee">   
-        <Button 
+         <Link to="/viewCorporates">    
+         <Button 
         variant="contained" 
+    
+       
         onClick={async () => {
-           CreateInstructor(Username,Email,Password);
+        
+           createCorp(Name,Email,Password,Industry);
+          
+          
+          
         }}
         > Create </Button>
-        </Link>   
+         </Link>
             </div>  
             
         )
       
     }
-    export default CreateITrainee
+    export default CreateCorporate
