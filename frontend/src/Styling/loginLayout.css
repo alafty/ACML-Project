@@ -1,0 +1,59 @@
+:root {
+    --primaryLight: #bae7e4;
+    --primary: #4b96a9;
+    --secondary: #52adcc;
+    --text: #293237;
+    --text-dark: #111516;
+    --white: #fcfcfc;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+html, body{
+    min-height: 100%;
+}
+.login-body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-dark);
+    height: 94vh;
+    flex-direction: row;
+}
+
+.login-header{
+    display: flex;
+    align-self: center;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 48px;
+    padding-inline: 20px;
+    color: var(--white);
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 80%;
+    height: 70%;
+    align-self: center;
+    justify-self: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.text-field {
+    background-color: var(--white);
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.forgot-password{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;    
+    font-family: var(--font);
+    padding-right: 20px;
+    color: var(--primaryLight);
+    border-color: var(--primary);
+}

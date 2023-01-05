@@ -1,12 +1,13 @@
 import React from 'react';
 import '../../Styling/mainLayout.css';
+import '../../Styling/loginLayout.css'
 import { Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { TextField } from '@mui/material';
-import Header from '../../components/header';
+import { CssTextField } from '../../components/TextField';
+import Alert from '@mui/material/Alert';
 import services from '../../app/UsersServices';
 import { useGlobalState } from '../../App';
-import { stat } from 'fs';
+import SearchAppBar from '../../components/searchAppBar';
 
 function Login() {
   const navigation = useNavigate();
@@ -37,36 +38,78 @@ function Login() {
 
   return (
     <div className="container">
-      <Header />
-      <div className='body'>
-        <h2 style={{ marginTop: "250px" }} className='title'> Jump back to where  you left off</h2>
-        <div style={{ display: "flex", flexDirection: "row", marginLeft: "150px" }}>
-          <TextField style={{ marginRight: "30px" }} label="Username" variant="standard" className='search-bar' required={true}
-            onChange={(e) => {
+      <SearchAppBar page={0} />
+      <div className='login-body'>
+        <div className='login-card'>
+          <h2 className='login-header'> Jump back and grow your tree</h2>
+          <CssTextField
+          id='text-field'
+          placeholder="E-Mail"
+          InputProps={{
+            className: 'text-field'
+          }}
+          onChange={(e) => {
               setUsername(e.target.value);
             }}
           />
-          <TextField label="Password" variant="standard" className='search-bar' required={true}
-            onChange={(e) => {
+          <CssTextField
+          id='text-field'
+          placeholder="Password"
+          InputProps={{
+            className: 'text-field'
+          }}
+          onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
-        </div>
+        
         <Button
           variant="contained"
-          id="filled-button"
-          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
+          id="big-button-primary"
           onClick={
             async () => {
             await services.login(username, password, setUserData);
             }
           }
         > Login </Button>
-        <div style={{marginLeft: "70vw"}}>
         <Link to={'/forgot-password'}>
-            <p>Forgot password?</p>
+            <p className='forgot-password'>Forgot password?</p>
           </Link>
-        <h4>{errorMessage}</h4>
+          {
+            errorMessage ?
+            <Alert severity="error">{errorMessage}</Alert> 
+            :
+            <></>
+          }
+        
+        </div>
+        <div className='login-card'>
+          <h2 className='login-header'> New here? Put your first seed</h2>
+          <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={ () =>{
+            navigation('/register');
+          }}
+        > Register </Button>
+
+        <h2 className='login-header'> Water others' trees as their instructor </h2>
+          <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={ () =>{
+            navigation('/instructor/home');
+          }}
+        > Register as an Instructor </Button>
+
+        <h2 className='login-header'> Grew a garden already? </h2>
+          <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={ () =>{
+            navigation('/register');
+          }}
+        > Induct your corporate </Button>
         </div>
       </div>
     </div>

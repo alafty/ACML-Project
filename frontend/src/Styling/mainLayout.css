@@ -6,10 +6,11 @@
     --text: #293237;
     --text-dark: #111516;
     --white: #fcfcfc;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 html, body {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     margin: 0px;
 }
@@ -46,7 +47,7 @@ html, body {
     background-color: var(--secondary);
 }
 .landing-header {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:var(--font);
     font-size: 64px;
     padding-left: 2%;
     padding-top: 5%;
@@ -67,7 +68,7 @@ html, body {
 
 
 .course-details-title {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-size: 48px;
     padding-top: 20px;
     padding-left: 20px;
@@ -76,7 +77,7 @@ html, body {
 }
 
 .course-details-description {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight: 100;
     font-size: 18px;
     padding-inline: 20px;
@@ -84,7 +85,7 @@ html, body {
 }
 
 .course-details-rating {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 24px;
     padding-left: 20px;
@@ -92,7 +93,7 @@ html, body {
 }
 
 .course-details-rating-count {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:lighter;
     font-size: 20px;
     padding-left: 20px;
@@ -100,7 +101,7 @@ html, body {
 }
 
 .course-details-hours {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 24px;
     padding-left: 20px;
@@ -117,7 +118,7 @@ html, body {
     background-color: var(--text);
 }
 .course-details-instructor-header{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-size: 32px;
     font-weight: 600;
     padding-left: 20px;
@@ -126,7 +127,7 @@ html, body {
     color: var(--primaryLight);
 }
 .course-details-instructor-name{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:var(--font);
     font-size: 38px;
     padding-left: 20px;
     margin-top: -1vh;
@@ -135,7 +136,7 @@ html, body {
 }
 
 .course-details-instructor-bio{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:100;
     font-size: 18px;
     padding-left: 20px;
@@ -144,7 +145,7 @@ html, body {
 }
 
 .course-details-instructor-rating {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 28px;
     padding-left: 20px;
@@ -153,7 +154,7 @@ html, body {
 }
 
 .course-details-instructor-publishedcourses {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 28px;
     padding-left: 20px;
@@ -183,7 +184,7 @@ html, body {
 }
 
 .course-details-price {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight: 600;
     font-size: 32px;
     margin-bottom: 0%;
@@ -212,7 +213,7 @@ html, body {
     
 }
 .course-details-subtitle-header{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-size: 24px;
     margin-top: 0px;
     font-weight: 600;
@@ -255,13 +256,14 @@ html, body {
 }
 
 .body {
-        background-color: var(--text-dark);
-        height: 100%;
-        background-size: cover;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-dark);
+    height: 100%;
 }
 
 .landing-subtitle {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:lighter;
     font-size: 24px;
     padding-left: 2%;
@@ -373,7 +375,7 @@ html, body {
 .course-card-title{
     font-weight: 700;
     padding-inline: 10px;
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     color: var(--white);
     margin-top: 15px;
 }
@@ -388,7 +390,7 @@ html, body {
 .course-card-price {
     padding-inline: 10px;
     font-weight: bolder;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:  var(--font);
     font-size: 32px;
     color: var(--white);
 }
