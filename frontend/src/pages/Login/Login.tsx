@@ -16,8 +16,8 @@ function Login() {
   const [errorMessage, setErrorMesssage] = React.useState('');
   services.createGuestCookie();
 
-  const setUserData = async callback =>{
-    state.loggedInUser = callback;
+  const setUserData = async (data: any) =>{
+    state.loggedInUser = data;
     //console.log(state.loggedInUser);
     try {
       if (state.loggedInUser.user) {
