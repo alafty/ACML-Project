@@ -78,6 +78,11 @@ function app() {
               element={<InstructorRegister />}
             />
 
+            <Route
+              path="/register/corporate"
+              element={<InstructorRegister />}
+            />
+
             <Route 
             path="/login" 
             element={<Login />} />
@@ -85,9 +90,13 @@ function app() {
             <Route 
             path='/rate' 
             element={<Rate/>} />
-            
+
             <Route
             path='/instructor/home'
+            element={<InstructorHome/>}/>
+
+            <Route
+            path='/corporate/home'
             element={<InstructorHome/>}/>
 
             <Route path="/home" element={<Home />} />
