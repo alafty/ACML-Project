@@ -9,7 +9,9 @@ import { Button, TextField } from "@mui/material";
 var instruct = [];
 function ViewInstructors  (props: any){
 const [Instructors,setInstructors] = useState([]);
-
+const [Username,setUsername] = useState('')
+const [showinstructors,setShowinstructors] = useState(true)
+const [updateInfo,setUpdateinfo] = useState(false)
 
     const getinstructors = async ()=> {
         const response = await httpClient.get('/create/instructor');
@@ -27,8 +29,8 @@ const [Instructors,setInstructors] = useState([]);
       }
       const showUpdateInfo =(instructor) =>{
         instruct[0]= instructor
-        console.log(instructor)
-    
+        setShowinstructors(false)
+        setUpdateinfo(true)
       } 
       const updateInstructor = (instructor,username) => {
        
@@ -64,11 +66,15 @@ const [Instructors,setInstructors] = useState([]);
       }, []);
      
     return (
-        <div>
+        <><div
+            
+        >
             <h1>All Instructors</h1>
 
 
             {Instructors.map((instructor) => (
+                <div className="showInstructors"
+            style={{ display: showinstructors ? "block" : "none" }}>
                 <table>
                     <thead>
                         <tr>
@@ -96,10 +102,28 @@ const [Instructors,setInstructors] = useState([]);
                         </Link>
                     <button onClick={() => deleteInstrucor(instructor)}>delete</button>
                 </table>
+                </div>
             ))}
             <Link to="/createInstructor">create Instructor</Link> <br />
         </div>
-            
+            <div className="updateInfo"
+            style={{ display: updateInfo ? "block" : "none" }}>
+                <h1>Updateeee</h1>
+                <TextField label="Username"  required={true}
+                        onChange={(e) => {
+                        setUsername(e.target.value);
+                         }}
+                                 />
+                                 <Button 
+                                    variant="contained" 
+                                    onClick={async () => {
+                                // updateInstructor(instructor,Username);
+ 
+ 
+ 
+}}
+> Create </Button>
+            </div></>
               );
             } 
           

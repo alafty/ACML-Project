@@ -107,23 +107,12 @@ const deleteInstructor = async (req,res) => {
      await instructor.findOneAndDelete(req.body)
      res.status(200).json('Instructor Deleted');
       }
- /* const updateInstructor = async (req, res) => {
+  const updateInstructor = async (req, res) => {
         const filter = req.body 
+        const update = { Status: 'Resolved' };  
         await problem.findOneAndUpdate(filter, req.body);
         res.status(200).json('Instructor Updated');
-          }*/
-          const updateInstructor = async (req, res) => {
-            var newBody = req.body;
-
-    // Hash Password
-    var salt = await bcrypt.genSalt();
-    var hashedPass = await bcrypt.hash(newBody.Password, salt);
-    newBody.Password = hashedPass;
-      //const {Username} = req.body
-      await instructor.updateOne({_id : req.body._id}, newBody);
-      res.status(200).json("Updated A User!");
-              }
-
+          }
 
 const createCTrainee = async (req: Request, res: Response) => {
   if (
@@ -311,6 +300,5 @@ export {
   resolveProblems,
   holdProblems,
   getInstructors,
-  deleteInstructor,
-  updateInstructor
+  deleteInstructor
 };

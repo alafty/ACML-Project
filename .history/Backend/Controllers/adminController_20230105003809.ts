@@ -113,15 +113,13 @@ const deleteInstructor = async (req,res) => {
         res.status(200).json('Instructor Updated');
           }*/
           const updateInstructor = async (req, res) => {
-            var newBody = req.body;
-
-    // Hash Password
-    var salt = await bcrypt.genSalt();
-    var hashedPass = await bcrypt.hash(newBody.Password, salt);
-    newBody.Password = hashedPass;
-      //const {Username} = req.body
-      await instructor.updateOne({_id : req.body._id}, newBody);
-      res.status(200).json("Updated A User!");
+            instructor.findOne({_id:req.body.id},(err,doc)=>{
+              //this will give you the document what you want to update.. then 
+             doc.name = req.body.Username; //so on and so forth
+             
+           
+             
+             });
               }
 
 

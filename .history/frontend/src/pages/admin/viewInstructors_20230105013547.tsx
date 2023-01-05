@@ -3,13 +3,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import httpClient from "../../utils/httpClient";
 import qs from "qs";
-import { Button, TextField } from "@mui/material";
 
 
 var instruct = [];
 function ViewInstructors  (props: any){
 const [Instructors,setInstructors] = useState([]);
-
+const [Username,setUsername] = useState('')
+var showinstructors = true
+var updateInfo = false
 
     const getinstructors = async ()=> {
         const response = await httpClient.get('/create/instructor');
@@ -25,12 +26,12 @@ const [Instructors,setInstructors] = useState([]);
         console.log(instructor)
         axios.delete('http://localhost:8000/create/instructor',{ data: instructor })
       }
-      const showUpdateInfo =(instructor) =>{
-        instruct[0]= instructor
-        console.log(instructor)
-    
+      const showUpdateInfo =() =>{
+        showinstructors=false
+        updateInfo=true
+        console.log("khlasnii")
       } 
-      const updateInstructor = (instructor,username) => {
+      const updateInstrucor = (instructor,username) => {
        
         var data = qs.stringify({
             _id : instructor._id,
@@ -64,11 +65,15 @@ const [Instructors,setInstructors] = useState([]);
       }, []);
      
     return (
-        <div>
+        <><div
+            className="showInstructors"
+            style={{ display: showinstructors ? "block" : "none" }}
+        >
             <h1>All Instructors</h1>
 
 
             {Instructors.map((instructor) => (
+
                 <table>
                     <thead>
                         <tr>
@@ -91,15 +96,18 @@ const [Instructors,setInstructors] = useState([]);
 
                         </tr>
                     </tbody>
-                    <Link to="/updateInstructor">
-                        <button onClick={() => showUpdateInfo(instructor)}>update</button>
-                        </Link>
+                    
+                        <button onClick={showUpdateInfo}>update</button>
+                    
                     <button onClick={() => deleteInstrucor(instructor)}>delete</button>
                 </table>
             ))}
             <Link to="/createInstructor">create Instructor</Link> <br />
         </div>
-            
+            <div className="updateInfo"
+            style={{ display: updateInfo ? "block" : "none" }}>
+                <h1>Updateeee</h1>
+            </div></>
               );
             } 
           

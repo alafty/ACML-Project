@@ -20,7 +20,7 @@ adminRouter.post("/admin", createAdmin); // Protect and make sure that the type 
 adminRouter.post("/instructor", createInstructor);
 adminRouter.get("/instructor",getInstructors);
 adminRouter.delete("/instructor", deleteInstructor);
-adminRouter.put("/instructor", updateInstructor);
+adminRouter.put("/instructor", update);
 adminRouter.post("/corporateTrainee", createCTrainee); //Should protect. Type == admin || corp. Corp = user.name
 adminRouter.post("/individualTrainee", createITrainee);
 adminRouter.post("/login", login);
