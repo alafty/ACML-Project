@@ -1,88 +1,113 @@
 import React from 'react'
-import Header from '../../components/header'
+import SearchAppBar from '../../components/searchAppBar';
 import '../../Styling/mainLayout.css'
+import '../../Styling/loginLayout.css'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
-import {TextField} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { CustomTextField } from '../../components/TextField';
+import { Link, useNavigate } from 'react-router-dom';
 import services from '../../app/UsersServices';
+import Alert from '@mui/material/Alert';
+import { useGlobalState } from '../../App';
 
 function IndividualTrainee() {
-  const [country, setCountry] = React.useState('Egypt');
+  
+  const navigation = useNavigate();
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [error, setError] = React.useState('');
+  const [state, dispatch] = useGlobalState();
 
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setCountry(event.target.value as string);
-  };
+  const LoginRedirect = async (data) => {
+    state.loggedInUser = data;
+    console.log(state.loggedInUser);
+    navigation('/home');
+  }
 
   return (
     <div className='container'>
-      <Header/>
-      <div className='body'>
-        <h2 style={{marginTop: "130px"}} className='title'> Let us know more about you..</h2>
-        <div className='form'>
-          <TextField style={{marginBottom: "30px"}} label="Username" variant="standard" className='search-bar' required={true}
-          onChange={(e) => {
-            setUsername(e.target.value);
+      <SearchAppBar page={0}/>
+      <div className='login-body'>
+        <div className='register-card'>
+          <h2 className='login-header'> Free your seed to grow</h2>
+          <CustomTextField 
+          id='text-field'
+          placeholder="E-Mail"
+          InputProps={{
+            className: 'text-field'
           }}
-          />
-          <TextField style={{marginBottom: "30px"}} label="E-mail" variant="standard" className='search-bar' required={true}
           onChange={(e) => {
-            setEmail(e.target.value);
-          }}
+              setEmail(e.target.value);
+            }}
           />
-          <TextField style={{marginBottom: "30px"}} label="Password" variant="standard" className='search-bar' required={true}
+
+          <CustomTextField 
+          id='text-field'
+          placeholder="Password"
+          type={'password'}
+          InputProps={{
+            className: 'text-field'
+          }}
           onChange={(e) => {
-            setPassword(e.target.value);
-          }}
+              setPassword(e.target.value);
+            }}
           />
-          <TextField style={{marginBottom: "30px"}} label="Confirm Password" variant="standard" className='search-bar' required={true}
+
+          <CustomTextField 
+          id='text-field'
+          placeholder="Confirm Password"
+          type={'password'}
+          InputProps={{
+            className: 'text-field'
+          }}
           onChange={(e) => {
-            setConfirmPassword(e.target.value);
-          }}
+              setConfirmPassword(e.target.value);
+            }}
           />
-          <Select
-            className='selector'
-            style={{marginLeft: "0px"}}
-            value={country}
-            label="Country"
-            onChange={handleChange}
-            >
-            <MenuItem value={'Egypt'}>Egypt</MenuItem>
-            <MenuItem value={'Germany'}>Germany</MenuItem>
-          </Select>
-          <p>{error}</p>
-        </div>
+
+          <CustomTextField 
+          id='text-field'
+          placeholder="Full Name"
+          InputProps={{
+            className: 'text-field'
+          }}
+          onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+          />
+          {
+            error ?
+            <Alert severity="error">{error}</Alert> 
+            :
+            <></>
+          }
       
-        
         <Button 
         variant="contained" 
-        id="filled-button"
-        style={{"width": "400px", "marginTop": "50px", "marginLeft": "70vw"}}
+        id="big-button-primary"
         onClick={async () => {
           if(password !== confirmPassword){
             setError("Password and Confirm Password fields do not match!");
             setPassword('');
             setConfirmPassword('');
-          } else{
-            services.register(username, password, email, country);
+          } else if(!username || !password || !confirmPassword || !username){
+            setError("Please fill all fields");
+          } else {
+            services.register(username, password, email, LoginRedirect);
+            setError('');
           }
-          
-          
         }}
         > Sign Up </Button>
 
-        <div style={{display: "flex", flexDirection: "row", marginLeft: "70vw"}}>
-          <p>by clicking sign up you agree to our </p>
-          <Link to={'/legal'}>
-            <p> terms and conditions</p>
+        <div className='terms-and-conditions'>
+          <p>by clicking sign up you agree to our &nbsp; </p>
+          <Link to={'/legal'} style={{color: '#4b96a9'}}>
+            <p> terms and conditions </p>
           </Link>
+        </div>
         </div>
       </div>
       

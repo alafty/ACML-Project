@@ -7,12 +7,15 @@
     --white: #fcfcfc;
     --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
 html, body{
     min-height: 100%;
 }
+
 .login-body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     background-color: var(--text-dark);
     height: 94vh;
     flex-direction: row;
@@ -32,11 +35,23 @@ html, body{
     display: flex;
     flex-direction: column;
     margin: 20px;
-    width: 80%;
+    width: 45%;
     height: 70%;
     align-self: center;
     justify-self: center;
     align-content: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.register-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 55%;
+    height: 70%;
+    align-self: center;
     justify-content: center;
     border-radius: 20px;
     background-color: var(--text);
@@ -49,6 +64,16 @@ html, body{
 }
 
 .forgot-password{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;    
+    font-family: var(--font);
+    padding-right: 20px;
+    color: var(--primaryLight);
+    border-color: var(--primary);
+}
+
+.terms-and-conditions{
     display: flex;
     justify-content: flex-end;
     font-size: 20px;    

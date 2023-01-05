@@ -8,7 +8,7 @@ import ResetPassword  from './pages/Login/ResetPassword'
 import Landing from "./pages/Landing";
 import IndividualTrainee from "./pages/Register/IndividualTraineeRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
-import CorporateTrainee from "./pages/Register/CorporateTraineeRegister";
+import CorporateTrainee from "./pages/Register/CorporateRegister";
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDetails";
 import Home from "./pages/Home";
@@ -60,10 +60,6 @@ function app() {
             path='/' 
             element={<Landing/>} />
 
-            <Route 
-            path="/register" 
-            element={<Register />} />
-
             <Route
               path="/register/indivTrainee"
               element={<IndividualTrainee />}
@@ -99,9 +95,18 @@ function app() {
             path='/corporate/home'
             element={<InstructorHome/>}/>
 
-            <Route path="/home" element={<Home />} />
-            <Route path="/instructor/profile" element={<InstructorDetails />} />
-            <Route path="/instructor" element={<LandingInstructor/>} />
+            <Route 
+            path="/home" 
+            element={<Home />} />
+
+            <Route
+            path="/instructor/profile" 
+            element={<InstructorDetails />} />
+
+            <Route 
+            path="/instructor/home"
+            element={<LandingInstructor/>} />
+
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/legal' element= {<Legal/>} />

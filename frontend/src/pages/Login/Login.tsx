@@ -3,7 +3,7 @@ import '../../Styling/mainLayout.css';
 import '../../Styling/loginLayout.css'
 import { Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
-import { CssTextField } from '../../components/TextField';
+import { CustomTextField } from '../../components/TextField';
 import Alert from '@mui/material/Alert';
 import services from '../../app/UsersServices';
 import { useGlobalState } from '../../App';
@@ -44,7 +44,7 @@ function Login() {
       <div className='login-body'>
         <div className='login-card'>
           <h2 className='login-header'> Jump back and grow your tree</h2>
-          <CssTextField
+          <CustomTextField
           id='text-field'
           placeholder="E-Mail"
           InputProps={{
@@ -54,9 +54,10 @@ function Login() {
               setEmail(e.target.value);
             }}
           />
-          <CssTextField
+          <CustomTextField
           id='text-field'
           placeholder="Password"
+          type={'password'}
           InputProps={{
             className: 'text-field'
           }}
@@ -91,7 +92,7 @@ function Login() {
           variant="contained"
           id="big-button-primary"
           onClick={ () =>{
-            navigation('/register');
+            navigation('/register/indivTrainee');
           }}
         > Register </Button>
 
@@ -100,7 +101,7 @@ function Login() {
           variant="contained"
           id="big-button-primary"
           onClick={ () =>{
-            navigation('/instructor/home');
+            navigation('/register/instructor');
           }}
         > Register as an Instructor </Button>
 
@@ -109,7 +110,7 @@ function Login() {
           variant="contained"
           id="big-button-primary"
           onClick={ () =>{
-            navigation('/register');
+            navigation('/register/corpTrainee');
           }}
         > Induct your corporate </Button>
         </div>

@@ -8,7 +8,7 @@ import {TextField} from '@mui/material';
 import { Link } from 'react-router-dom';
 import services from '../../app/UsersServices';
 
-function CorporateTrainee() {
+function CorporateRegister() {
   const [country, setCountry] = React.useState('Egypt');
   const [username, setUsername] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -106,4 +106,4 @@ function CorporateTrainee() {
   )
 }
 
-export default CorporateTrainee;
+export default CorporateRegister;

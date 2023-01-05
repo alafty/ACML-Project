@@ -41,13 +41,12 @@ export const register = async (
   username: String,
   email: String,
   password: String,
-  country: String
+  LoginCallback: any
 ) => {
   var data = qs.stringify({
     Username: username,
     Email: email,
     Password: password,
-    Country: country,
   });
   var config = {
     method: "post",
@@ -58,6 +57,7 @@ export const register = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
       console.log(error);
