@@ -40,7 +40,7 @@ function Landing() {
                 <Link  to= '/login' style={{textDecoration: 'none'}}> 
                   <Button variant="contained" id="big-button-secondary"> Login </Button>
                 </Link>
-                <Link to={'/register'} style= {{textDecoration: 'none'}}>
+                <Link to={'/register/indivTrainee'} style= {{textDecoration: 'none'}}>
                   <Button variant="outlined" id="big-button-secondary-outlined">
                   Register
                   </Button>
