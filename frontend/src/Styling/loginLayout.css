@@ -50,14 +50,80 @@ html, body{
     flex-direction: column;
     margin: 20px;
     width: 55%;
-    height: 70%;
+    height: 80%;
     align-self: center;
     justify-content: center;
     border-radius: 20px;
     background-color: var(--text);
 }
 
+.register-card-instructor {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 55%;
+    height: 90%;
+    align-self: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.alert{
+    margin: 20px;
+}
+.package-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 95%;
+    height: 80%;
+    align-self: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+#package-header {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: var(--font);
+    color: var(--primary);
+}
+
+#package-details {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--font);
+}
+
+#package-price {
+    display: flex;
+    justify-content: end;
+    font-size: 28px;
+    font-weight: 600;
+    font-family: var(--font);
+    color: var(--primary);
+}
+
+#package-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    padding-inline: 20px;
+    color: var(--white);
+    border-radius: 15px;
+    background-color: var(--secondary);
+}
+
 .text-field {
+    background-color: var(--white);
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.short-bio {
     background-color: var(--white);
     margin: 20px;
     border-radius: 15px;

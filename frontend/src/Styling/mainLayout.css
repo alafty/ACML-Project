@@ -34,9 +34,13 @@ html, body {
 }
 
 .selector {
-    width: 400px;
-    margin-left: 160px;
     background-color: var(--white);
+    margin: 20px;
+}
+
+.selector-label {
+    color: red;
+    margin: 20px;
 }
 
 #button-search {
@@ -272,6 +276,7 @@ html, body {
 }
 
 #big-button-primary {
+    color: var(--white);
     padding-inline: 50px;
     padding-block: 10px;
     background-color: var(--secondary);

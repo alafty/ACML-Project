@@ -80,7 +80,10 @@ function IndividualTrainee() {
           />
           {
             error ?
-            <Alert severity="error">{error}</Alert> 
+            <Alert 
+            severity="error"
+            className='alert'
+            >{error}</Alert> 
             :
             <></>
           }
