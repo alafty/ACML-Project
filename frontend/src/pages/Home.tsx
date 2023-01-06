@@ -23,16 +23,18 @@ function Home() {
       }
       setCourses(filteredCourses);
     }
-    fetchCourses();
-
-    const loadPurchasedCourses = () => {
+    const loadPurchasedCourses = async () => {
       let tempPurchasedCourses = [];
-      for (let index = 0; index < state.loggedInUser.PurchasedCourses.size ; index++) {
-        const {Name, Description, _id, Price} = state.loggedInUser.PurchasedCourses[index];
+      for (let index = 0; index < state.loggedInUser.PurchasedCourses.length ; index++) {
+        const courseDetails = await Services.getCourseDetails(state.loggedInUser.PurchasedCourses[index])
+        const {Name, Description, _id, Price} = courseDetails;
         tempPurchasedCourses.push({Name, Description, _id, Price});
       }
       setPurchasedCourses(tempPurchasedCourses);
+      console.log(PurchasedCourses);
+      
     }
+    fetchCourses();
     loadPurchasedCourses();
     
   }, []);
@@ -45,7 +47,7 @@ function Home() {
           <p className='home-header'> Welcome Back, {state.loggedInUser.Username}</p>
           {
             PurchasedCourses.length > 0 ? 
-            <CoursesSector coursesList={state.loggedInUser.PurchasedCourses} title= "Continue your work"/>
+            <CoursesSector coursesList={PurchasedCourses} title= "Continue your work"/>
             :
             <></>
           }

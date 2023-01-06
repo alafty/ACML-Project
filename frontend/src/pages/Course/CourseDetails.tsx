@@ -14,77 +14,88 @@ import LoggedInBar from "../../components/loggeedInAppBar";
 
 export default function CourseDetails() {
   const { id } = useParams();
-  const [quizzes, setQuizzes] = useState(null);
+  //const [quizzes, setQuizzes] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
   const [instructorDetails, setInstructorDetails] = useState(null);
-  const [videoStatusText, setVideoStatusText] = useState("");
+  //const [videoStatusText, setVideoStatusText] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-  const [discountStatusText, setDiscountStatusText] = useState("");
+  //const [discountStatusText, setDiscountStatusText] = useState("");
   const [discountDuration, setDiscountDuration] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [state, dispatch] = useGlobalState();
+  const [isPurchased, setPurchased] = useState(false);
+  
 
   useEffect(() => {
     const fetchCourseDetails = async () =>{
       await courseServices.getCourseDetails(id).then((data) => {
         setCourseDetails(data);
       }); 
-      courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
+      //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
     }
     const fetchInstructorDetails = async () => {
       await instructorServices.getInstructorData(courseDetails?.Instructor)
       .then((data) =>{
         setInstructorDetails(data);
       })
+      .catch((Error) => {
+        console.log(Error);
+        
+      });
+    }
+    const isCoursePurchased = async () => {
+      if(state.loggedInUser.Username){
+        console.log(isPurchased);
+        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
+      }
     }
     fetchCourseDetails();
-    console.log(courseDetails);
     fetchInstructorDetails();
-    console.log(instructorDetails);
+    isCoursePurchased();
     
     
   }, [courseDetails, id, instructorDetails]);
 
-  const handleUrlUpload = async () => {
-    try {
-      const vidId = extractIdFromVideoUrl(videoUrl);
-      courseServices.uploadCourseVideo(id, vidId).then((data) => {
-        if (data) {
-          var newCourse = courseDetails;
-          newCourse.VideoId = vidId;
-          setVideoStatusText("Success!");
-          setCourseDetails(newCourse);
-          setVideoUrl('');
-        } else {
-          setVideoStatusText("Try again");
-        }
-      });
-    } catch {
-      setVideoStatusText("Make sure url is valid");
-    }
-  };
+  // const handleUrlUpload = async () => {
+  //   try {
+  //     const vidId = extractIdFromVideoUrl(videoUrl);
+  //     courseServices.uploadCourseVideo(id, vidId).then((data) => {
+  //       if (data) {
+  //         var newCourse = courseDetails;
+  //         newCourse.VideoId = vidId;
+  //         setVideoStatusText("Success!");
+  //         setCourseDetails(newCourse);
+  //         setVideoUrl('');
+  //       } else {
+  //         setVideoStatusText("Try again");
+  //       }
+  //     });
+  //   } catch {
+  //     setVideoStatusText("Make sure url is valid");
+  //   }
+  // };
 
-  const handleDurationAdding = async () => {
-    try {
-      const duration = Number.parseInt(discountDuration);
-      const percentage = Number.parseInt(discountPercentage);
+  // const handleDurationAdding = async () => {
+  //   try {
+  //     const duration = Number.parseInt(discountDuration);
+  //     const percentage = Number.parseInt(discountPercentage);
       
-      courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
-        if (data) {
-          var newCourse = courseDetails;
-          newCourse.Discounts.push(data);
-          setDiscountStatusText("Success!");
-          setCourseDetails(newCourse);
-          setDiscountDuration('');
-          setDiscountPercentage('')
-        } else {
-          setDiscountStatusText("Try again");
-        }
-      });
-    } catch {
-      setDiscountStatusText("Make sure discount is valid");
-    }
-  };
+  //     courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
+  //       if (data) {
+  //         var newCourse = courseDetails;
+  //         newCourse.Discounts.push(data);
+  //         setDiscountStatusText("Success!");
+  //         setCourseDetails(newCourse);
+  //         setDiscountDuration('');
+  //         setDiscountPercentage('')
+  //       } else {
+  //         setDiscountStatusText("Try again");
+  //       }
+  //     });
+  //   } catch {
+  //     setDiscountStatusText("Make sure discount is valid");
+  //   }
+  // };
 
   
 
@@ -113,7 +124,7 @@ export default function CourseDetails() {
       {/* {id} */}
         <div style={{width: '30%'}}>
             <InstructorCard instructorDetails={instructorDetails}/>
-            <PriceCard courseDetails={courseDetails}/>
+            <PriceCard courseDetails={courseDetails} isPurchased={isPurchased} />
             <Divider variant= "fullWidth"/>
         </div>
         <div>
