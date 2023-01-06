@@ -15,6 +15,14 @@ html, body {
     margin: 0px;
 }
 
+.app-bar {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    justify-content: space-between;
+    background-color: var(--text);
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -25,12 +33,6 @@ html, body {
     background-size: cover;
     width: 300px;
     height: 80px;
-}
-
-.search-bar {
-    width: 100%;
-    background-color: var(--primaryLight);
-    border-radius: 10px;
 }
 
 .selector {
@@ -51,6 +53,32 @@ html, body {
     background-color: var(--secondary);
 }
 .landing-header {
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--white);
+    margin-bottom: -2%;
+}
+
+.avatar {
+    display: flex;
+    justify-items: end;
+}
+
+.home-header {
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 20px;
+    color: var(--white);
+    background-color: var(--text);
+    padding: 20px;
+    border-radius: 20px;
+    margin-inline: 20px;
+}
+
+
+.h-header {
     font-family:var(--font);
     font-size: 64px;
     padding-left: 2%;

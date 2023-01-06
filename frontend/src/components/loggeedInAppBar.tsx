@@ -1,18 +1,16 @@
+
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
+import Avatar from '@mui/material/Avatar';
 import SearchIcon from '@mui/icons-material/Search';
 import { Button } from '@mui/material';
 import '../Styling/mainLayout.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { useGlobalState } from '../App';
 
 const Search = styled('div')(({ theme }) => ({
     
@@ -56,46 +54,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function SearchAppBar(props) {
+export default function LoggedInBar(props) {
   const[image, setImage] = React.useState(props.page);
   const navigation = useNavigate();
+  const [state, dispatch] = useGlobalState();
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar className='app-bar'>
-          <FormControl variant='standard'>
-          <Select
-          style={{width: 250, height: 70}}
-          value={image}
-          label=""
-          onChange={(e) => { 
-            setImage(e.target.value);
-          }}
-        >
-          <MenuItem value={0}>
-          <div style={{backgroundColor: '#293237' }}>
-          <Link to={'/'}>
-          <img src={require('../assets/Logo-White.png')} height={70} width={220}/>
+        <Toolbar style={{display: 'flex', flexDirection: 'row', height: '80px',justifyContent: 'space-between', background: '#293237' }}>
+        <Link to={props.default}>
+          <img 
+          src={require('../assets/Logo-White.png')} 
+          height={70} 
+          width={220}
+          />
           </Link>
-          </div>
-          </MenuItem>
-          <MenuItem value={1}>
-          <div style={{backgroundColor: '#293237' }}>
-          <Link to={'/instructor'}>
-          <img src={require('../assets/Logo-White-Instructor.png')} height={70} width={220}/>
-          </Link>
-          </div>
-          </MenuItem>
-          <MenuItem value={2}>
-          <div style={{backgroundColor: '#293237' }}>
-          <Link to={'/corporate'}>
-          <img src={require('../assets/Logo-White-Corp.png')} height={70} width={220}/>
-          </Link>
-          </div>
-          </MenuItem>
-        </Select>
-      </FormControl>
-      <div style={{display: 'flex', flexDirection: 'row'}}>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -110,13 +85,13 @@ export default function SearchAppBar(props) {
           id='small-button-primary'
           >Search</Button>
           </div>
-          <Link to={'/login'}>
-           <Button 
-          variant="contained" 
-          id='small-button-primary'
-          style={{width: '150px'}}
-          >Login</Button>
-          </Link>
+          <Avatar 
+          className='avatar'
+          sx={{ bgcolor: '#4b96a9' }}
+          onClick= {() => {
+            navigation('/login');
+          }}
+          >{state.loggedInUser.Username[0]}</Avatar>
         </Toolbar>
       </AppBar>
     </Box>
