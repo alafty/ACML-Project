@@ -59,6 +59,16 @@ html, body {
     margin-bottom: -2%;
 }
 
+
+.landing-header-instructor{
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--primary);
+    margin-bottom: -2%;
+}
+
 .course-details-body {
     min-height: 150vh;
     background-color: var(--text-dark);
@@ -237,15 +247,40 @@ html, body {
 }
 .landing-card {
     display: flex;
+    align-content: center;
+    justify-content: center;
     background-color: var(--primary);
     flex-direction: row;
     width: 85vw;
     height: 50vh;
     border-radius: 20px;
-    margin-left: 7.5%;
+    margin-inline: 125px;
     margin-top: 5%;
     padding: 20px;
 }
+
+.landing-card-instructor {
+    display: flex;
+    background-color: var(--white);
+    flex-direction: row;
+    width: 80vw;
+    height: 50vh;
+    border-radius: 20px;
+    margin-top: 5%;
+    padding: 20px;
+}
+
+.landing-card-corporate {
+    display: flex;
+    background-color: var(--secondary);
+    flex-direction: row;
+    width: 85vw;
+    height: 50vh;
+    border-radius: 20px;
+    margin-top: 5%;
+    padding: 20px;
+}
+
 .landing-progress {
     margin-block: 200px;
 }
@@ -274,6 +309,17 @@ html, body {
     padding-top: 2%;
     color: var(--white);
 }
+
+.landing-subtitle-instructor {
+    font-family: var(--font);
+    font-weight:lighter;
+    font-size: 24px;
+    padding-left: 2%;
+    padding-top: 2%;
+    color: var(--text);
+}
+
+
 
 #big-button-primary {
     color: var(--white);

@@ -96,7 +96,7 @@ export default function SearchAppBar(props) {
           </MenuItem>
           <MenuItem value={2}>
           <div style={{backgroundColor: '#293237' }}>
-          <Link to={'/instructorHome'}>
+          <Link to={'/corporate'}>
           <img src={require('../assets/Logo-White-Corp.png')} height={70} width={220}/>
           </Link>
           </div>

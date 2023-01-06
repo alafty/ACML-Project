@@ -110,7 +110,7 @@ function Login() {
           variant="contained"
           id="big-button-primary"
           onClick={ () =>{
-            navigation('/register/corpTrainee');
+            navigation('/register/corporate');
           }}
         > Induct your corporate </Button>
         </div>

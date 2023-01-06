@@ -1,14 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ForgotPassword  from './pages/Login/ForgotPassword'
 import ResetPassword  from './pages/Login/ResetPassword'
 
 import Landing from "./pages/Landing";
-import IndividualTrainee from "./pages/Register/IndividualTraineeRegister";
+import InstructorLanding from "./pages/Instructor/InstructorLanding";
+import CorporateLanding from "./pages/Corporate/CorporateLanding";
+
+import IndividualRegister from "./pages/Register/IndividualTraineeRegister";
 import CorporateRegister from "./pages/Register/CorporateRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
+
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDetails";
 import Home from "./pages/Home";
@@ -18,8 +21,6 @@ import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
-import LandingInstructor from "./pages/LandingInstructor";
-import InstructorHome from "./pages/Instructor/InstructorHome";
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -60,9 +61,17 @@ function app() {
             path='/' 
             element={<Landing/>} />
 
+            <Route 
+            path='/instructor' 
+            element={<InstructorLanding/>} />
+
+            <Route 
+            path='/corporate' 
+            element={<CorporateLanding/>} />         
+
             <Route
               path="/register/indivTrainee"
-              element={<IndividualTrainee />}
+              element={<IndividualRegister />}
             />
 
             <Route 
@@ -81,14 +90,6 @@ function app() {
             path='/rate' 
             element={<Rate/>} />
 
-            <Route
-            path='/instructor/home'
-            element={<InstructorHome/>}/>
-
-            <Route
-            path='/corporate/home'
-            element={<InstructorHome/>}/>
-
             <Route 
             path="/home" 
             element={<Home />} />
@@ -96,10 +97,6 @@ function app() {
             <Route
             path="/instructor/profile" 
             element={<InstructorDetails />} />
-
-            <Route 
-            path="/instructor/home"
-            element={<LandingInstructor/>} />
 
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
