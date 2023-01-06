@@ -68,7 +68,8 @@ export const registerInstructor = async (
   username: String,
   email: String,
   password: String,
-  shortBio: String
+  shortBio: String,
+  callback: any
 ) => {
   var data = qs.stringify({
     Username: username,
@@ -86,18 +87,21 @@ export const registerInstructor = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      callback(response.data)
     })
     .catch(function (error) {
       console.log(error);
     });
 };
 
+
 export const registerCorporate = async (
   username: String,
   email: String,
   password: String,
   country: String,
-  corporate: String
+  corporate: String,
+  LoginCallback: any
 ) => {
   var data = qs.stringify({
     Username: username,
@@ -115,11 +119,44 @@ export const registerCorporate = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
       console.log(error);
     });
 };
+
+export const createCorporate = async (
+  name: String,
+  email: String,
+  password: String,
+  industry: String,
+  packageID: String,
+  callback: any
+) => {
+  var data = qs.stringify({
+    Name: name,
+    Email: email,
+    Password: password,
+    Industry: industry,
+    Package: packageID,
+  });
+  var config = {
+    method: "post",
+    url: "/create/corporate",
+    data: data,
+  };
+
+  httpClient(config)
+    .then(function (response) {
+      setToken(response.data.token);
+      callback(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 
 export const createGuestCookie = async () => {
 
@@ -186,6 +223,7 @@ const services = {
   login,
   logout,
   createGuestCookie,
+  createCorporate,
   editInstructorDetails,
 };
 
