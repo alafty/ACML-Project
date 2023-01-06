@@ -16,9 +16,9 @@ const corpTraineeSchema = new Schema(
       required: true,
     },
     PurchasedCourses: {
-      type: [Object],
+      type: [Schema.Types.ObjectId],
       required: false,
-      default: []
+      ref: 'Course'
     },
     Corporate: {
       type: String,
