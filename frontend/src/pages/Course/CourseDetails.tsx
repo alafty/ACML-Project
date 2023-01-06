@@ -9,6 +9,8 @@ import instructorServices from '../../app/InstructorServices'
 import InstructorCard from "../../components/InstructorCard";
 import PriceCard from "../../components/PriceCard";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
+import { useGlobalState } from "../../App";
+import LoggedInBar from "../../components/loggeedInAppBar";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -20,6 +22,7 @@ export default function CourseDetails() {
   const [discountStatusText, setDiscountStatusText] = useState("");
   const [discountDuration, setDiscountDuration] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
+  const [state, dispatch] = useGlobalState();
 
   useEffect(() => {
     const fetchCourseDetails = async () =>{
@@ -100,7 +103,12 @@ export default function CourseDetails() {
 
   return (
     <div className="container">
-      <SearchAppBar page={0}/>
+      {
+        state.loggedInUser.Username ? 
+        <LoggedInBar default='/home' />
+        :
+        <SearchAppBar page={0}/>
+      }
       <div className="course-details-body" style={{display: 'flex', flexDirection: 'row'}}>
       {/* {id} */}
         <div style={{width: '30%'}}>
