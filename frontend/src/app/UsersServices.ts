@@ -60,7 +60,7 @@ export const register = async (
       LoginCallback(response.data);
     })
     .catch(function (error) {
-      console.log(error);
+      LoginCallback(error.response.data.message, true)
     });
 };
 

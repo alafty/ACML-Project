@@ -80,7 +80,10 @@ function Login() {
           </Link>
           {
             errorMessage ?
-            <Alert severity="error">{errorMessage}</Alert> 
+            <Alert 
+            severity="error"
+            className='alert'
+            >{errorMessage}</Alert> 
             :
             <></>
           }

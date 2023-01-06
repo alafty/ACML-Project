@@ -21,7 +21,12 @@ function IndividualTrainee() {
   const [error, setError] = React.useState('');
   const [state, dispatch] = useGlobalState();
 
-  const LoginRedirect = async (data) => {
+  const LoginRedirect = async (data: any, resError: boolean) => {
+    if(resError){
+      setError(data);
+      console.log(error);
+      return;
+    }
     state.loggedInUser = data;
     console.log(state.loggedInUser);
     navigation('/home');
@@ -99,7 +104,7 @@ function IndividualTrainee() {
           } else if(!username || !password || !confirmPassword || !username){
             setError("Please fill all fields");
           } else {
-            services.register(username, password, email, LoginRedirect);
+            services.register(username, email, password, LoginRedirect);
             setError('');
           }
         }}
