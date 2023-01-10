@@ -72,6 +72,7 @@ html, body{
 .alert{
     margin: 20px;
 }
+
 .package-card {
     display: flex;
     flex-direction: column;
@@ -96,6 +97,7 @@ html, body{
     font-weight: 400;
     font-family: var(--font);
     color: var(--font);
+    margin-inline: 20px;
 }
 
 #package-price {
