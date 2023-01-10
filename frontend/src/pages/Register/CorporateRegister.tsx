@@ -7,7 +7,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Button } from '@mui/material';
 import { CustomTextField } from '../../components/TextField';
 import { Link, useNavigate } from 'react-router-dom';
-import corpServices from '../../app/CorporateServices';
 import userServices from '../../app/UsersServices';
 import Alert from '@mui/material/Alert';
 import InputLabel from '@mui/material/InputLabel';
@@ -128,7 +127,23 @@ function CorporateRegister() {
           <Typography id='package-price'> 
             150 EUR / Month
           </Typography>
-          <Button id='package-button'> Select and Register </Button>
+          <Button 
+          id='package-button'
+          onClick={async () => {
+            if(password !== confirmPassword){
+              setPacakageVisible(false);
+              setError("Password and Confirm Password fields do not match!");
+              setPassword('');
+              setConfirmPassword('');
+            } else if(!username || !password || !confirmPassword || !username || !industry){
+              setPacakageVisible(false);
+              setError("Please fill all fields");
+            } else {
+              userServices.createCorporate(username, password, email, industry,'63b82228fda51129cb7b0a9f',LoginRedirect);
+              setError('');
+            }
+          }}
+          > Select and Register </Button>
           </AccordionDetails>
           </Accordion>
           
@@ -153,7 +168,23 @@ function CorporateRegister() {
           <Typography id='package-price'> 
             300 EUR / Month
           </Typography>
-          <Button id='package-button'> Select and Register </Button>
+          <Button 
+          id='package-button'
+          onClick={async () => {
+            if(password !== confirmPassword){
+              setPacakageVisible(false);
+              setError("Password and Confirm Password fields do not match!");
+              setPassword('');
+              setConfirmPassword('');
+            } else if(!username || !password || !confirmPassword || !username || !industry){
+              setPacakageVisible(false);
+              setError("Please fill all fields");
+            } else {
+              userServices.createCorporate(username, password, email, industry,'63b8237ffda53129cb7b0aa3',LoginRedirect);
+              setError('');
+            }
+          }}
+          > Select and Register </Button>
           </AccordionDetails>
           </Accordion>
           <Button 
