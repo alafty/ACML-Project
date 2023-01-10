@@ -29,7 +29,10 @@ function Login() {
     try {
         if (state.loggedInUser.type === "instructor") {
           navigation('/instructor/home');
-        } else {
+        } else if (state.loggedInUser.type === "corporate") {
+          navigation('/corporate/dashboard');
+        } 
+        else {
           navigation('/home');
         }
     } catch (error) {
@@ -71,7 +74,12 @@ function Login() {
           id="big-button-primary"
           onClick={
             async () => {
-            await services.login(email, password, setUserData);
+              if(!email || !password){
+                setErrorMesssage("please enter all required fields");
+              } else{
+                await services.login(email, password, setUserData);
+              }
+           
             }
           }
         > Login </Button>
