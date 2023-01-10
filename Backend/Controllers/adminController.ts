@@ -64,7 +64,7 @@ const createCorporate = async (req: Request, res: Response) => {
       {
         id: false,
         Industry: true,
-        Name: true,
+        Username: true,
         Email: true,
         Password: true,
         Package: true

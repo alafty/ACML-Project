@@ -2,7 +2,7 @@ import { Schema, model, Mongoose } from "mongoose";
 
 const corporateSchema = new Schema(
   {
-    Name: {
+    Username: {
       type: String,
       required: true,
     },
