@@ -21,8 +21,9 @@ const corpTraineeSchema = new Schema(
       ref: 'Course'
     },
     Corporate: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: 'Corporate'
     },
     Wallet: {
       type: Number,
