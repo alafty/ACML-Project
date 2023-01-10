@@ -12,9 +12,11 @@ import IndividualRegister from "./pages/Register/IndividualTraineeRegister";
 import CorporateRegister from "./pages/Register/CorporateRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
 
+import Home from "./pages/Home";
+import CorporateDashboard from "./pages/CorporateDashboard";
+
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDetails";
-import Home from "./pages/Home";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
@@ -46,9 +48,6 @@ export const useGlobalState = () => [
   React.useContext(globalStateContext),
   React.useContext(dispatchStateContext),
 ];
-
-
-
 
 function app() {
   
@@ -93,6 +92,10 @@ function app() {
             <Route 
             path="/home" 
             element={<Home />} />
+
+            <Route 
+            path="/corporate/dashboard" 
+            element={<CorporateDashboard />} />
 
             <Route
             path="/instructor/profile" 
