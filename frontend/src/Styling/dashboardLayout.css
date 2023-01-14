@@ -48,7 +48,15 @@ html, body{
 .dashboard-package-card {
     margin: 40px;
     width: 70vw;
-    height: 60vh;
+    height: 70vh;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+.dashboard-trainee-card {
+    margin: 40px;
+    width: 70vw;
+    height: 30vh;
     background-color: var(--text);
     border-radius: 20px;
 }
