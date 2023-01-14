@@ -124,7 +124,12 @@ export default function CourseDetails() {
       {/* {id} */}
         <div style={{width: '30%'}}>
             <InstructorCard instructorDetails={instructorDetails}/>
-            <PriceCard courseDetails={courseDetails} isPurchased={isPurchased} />
+            <PriceCard 
+            userDetails={state.loggedInUser}
+            courseDetails={courseDetails} 
+            isPurchased={isPurchased} 
+            type={state.loggedInUser.type} />
+
             <Divider variant= "fullWidth"/>
         </div>
         <div>
