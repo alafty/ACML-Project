@@ -23,6 +23,21 @@ import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
+import LandingInstructor from "./pages/LandingInstructor";
+import AdminDashboard from "./pages/admin/adminDashboard";
+import CreateAdmin from "./pages/admin/createAdmin";
+import CreateInstructor from "./pages/admin/createInstructor";
+import CreateCTrainee from "./pages/admin/createCTrainee";
+import CreateITrainee from "./pages/admin/createITrainee";
+import ViewProblems from "./pages/admin/viewProblems";
+import ViewInstructors from "./pages/admin/viewInstructors";
+import UpdateInstructor from "./pages/admin/updateInstructor";
+import ViewAdmins from "./pages/admin/viewAdmins";
+import ViewCorps from "./pages/admin/viewCorps";
+import CreateCorporate from "./pages/admin/createCorporate";
+import ViewCTrainees from "./pages/admin/viewCTrainees";
+import ViewITrainees from "./pages/admin/viewITrainees";
+
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -109,6 +124,27 @@ function app() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/createAdmin" element={<CreateAdmin />} />
+            <Route path="/viewAdmins" element={<ViewAdmins />} />
+            <Route path="/createInstructor" element={<CreateInstructor />} />
+            <Route path="/createCorpTrainee" element={<CreateCTrainee />} />
+            <Route path="/viewCorpTrainee" element={<ViewCTrainees />} />
+            <Route path="/createindivTrainee" element={<CreateITrainee />} />
+            <Route path="/viewindivTrainee" element={<ViewITrainees />} />
+            <Route path="/viewProblems" element={<ViewProblems />} />
+            <Route path="/viewInstructors" element={<ViewInstructors />} />
+            <Route path="/updateInstructor" element={<UpdateInstructor />} />
+            <Route path="/viewCorporates" element={<ViewCorps />} />
+            <Route path="/createCorporate" element={<CreateCorporate />} />
+
+
+
+
+
+
+
+
 
 
           </Routes>

@@ -21,7 +21,8 @@ const corporateSchema = new Schema(
     Package: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'Package'
+        ref: 'Package',
+        default: '63b82228fda53129cb7b0a9f'
     }
   },
   { timestamps: true }
