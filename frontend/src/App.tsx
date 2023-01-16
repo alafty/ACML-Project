@@ -1,17 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ForgotPassword  from './pages/Login/ForgotPassword'
 import ResetPassword  from './pages/Login/ResetPassword'
-
+import PDFGenerator from "./pages/PDFGenerator";
 import Landing from "./pages/Landing";
-import IndividualTrainee from "./pages/Register/IndividualTraineeRegister";
+import InstructorLanding from "./pages/Instructor/InstructorLanding";
+import CorporateLanding from "./pages/Corporate/CorporateLanding";
+
+import IndividualRegister from "./pages/Register/IndividualTraineeRegister";
+import CorporateRegister from "./pages/Register/CorporateRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
-import CorporateTrainee from "./pages/Register/CorporateTraineeRegister";
+
+import Home from "./pages/Home";
+import CorporateDashboard from "./pages/CorporateDashboard";
+
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDetails";
-import Home from "./pages/Home";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
@@ -32,6 +37,7 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
+
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
 };
@@ -58,9 +64,6 @@ export const useGlobalState = () => [
   React.useContext(dispatchStateContext),
 ];
 
-
-
-
 function app() {
   
   return (
@@ -68,26 +71,53 @@ function app() {
       <Router>
         <div>
           <Routes>
-            <Route path='/' element={<Landing/>} />
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path='/rate' element={<Rate/>} />
+            <Route 
+            path='/' 
+            element={<Landing/>} />
+
+            <Route 
+            path='/instructor' 
+            element={<InstructorLanding/>} />
+
+            <Route 
+            path='/corporate' 
+            element={<CorporateLanding/>} />         
+
             <Route
-              path="/indivTraineeRegister"
-              element={<IndividualTrainee />}
+              path="/register/indivTrainee"
+              element={<IndividualRegister />}
             />
+
+            <Route 
+            path="/register/corporate" 
+            element={<CorporateRegister />} />
+
+            <Route 
+            path="/register/instructor" 
+            element={<InstructorRegister />} />
+
+            <Route 
+            path="/login" 
+            element={<Login />} />
+
+            <Route 
+            path='/rate' 
+            element={<Rate/>} />
+
+            <Route 
+            path="/home" 
+            element={<Home />} />
+
+            <Route 
+            path="/corporate/dashboard" 
+            element={<CorporateDashboard />} />
+
             <Route
-              path="/instructorRegister"
-              element={<InstructorRegister />}
-            />
-            <Route path="/corpTraineeRegister" element={<CorporateTrainee />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/instructorHome" element={<InstructorDetails />} />
-            <Route path="/instructor" element={<LandingInstructor/>} />
+            path="/instructor/profile" 
+            element={<InstructorDetails />} />
+            <Route path="/pdf" element={<PDFGenerator/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
-            <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
             <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />

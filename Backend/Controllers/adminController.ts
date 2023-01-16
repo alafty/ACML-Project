@@ -14,6 +14,7 @@ import corpTrainee from "../Models/corporateTrainee";
 import inidvTrainee from "../Models/individualTrainee";
 import userTypes from "../Constants/userTypes";
 import problem from "../Models/problem";
+import corporateInputValidate from "../Validators/corporateValidator";
 
 const createAdmin = async (req: Request, res: Response) => {
   try {
@@ -59,6 +60,46 @@ const createAdmin = async (req: Request, res: Response) => {
 
 const protectAdminCreation = (req: Request): boolean => {
   return req.type == userTypes.admin;
+};
+
+const createCorporate = async (req: Request, res: Response) => {
+  if (
+    corporateInputValidate(
+      {
+        id: false,
+        Industry: true,
+        Username: true,
+        Email: true,
+        Password: true,
+        Package: true
+      },
+      req
+    )
+  ) {
+    const {user: existUser, type: _} = await findUserType('Email', req.body.Email);
+    if (existUser) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
+    var newBody = req.body;
+
+    // Hash Password
+    var salt = await bcrypt.genSalt();
+    var hashedPass = await bcrypt.hash(newBody.Password, salt);
+    newBody.Password = hashedPass;
+
+    // Create
+    var i = await corporate.create(newBody);
+    if (i) {
+      res
+        .status(200)
+        .json({ ...i.toJSON(), token: generateToken(i.id, userTypes.corporate) });
+    } else {
+      res.status(500).json({ message: "An error occured. Try again" });
+    }
+  } else {
+    res.status(400).json({ message: "Make sure fields are valid" });
+  }
 };
 
 const createInstructor = async (req: Request, res: Response) => {
@@ -280,7 +321,7 @@ const findUserType = async (key: string, value: string) => {
 const login = async (req: Request, res: Response) => {
   if (adminInputValidate({ Email: true, Password: true }, req)) {
     var { user, type } = await findUserType("Email", req.body.Email);
-
+    
     if (user) {
       if (await bcrypt.compare(req.body.Password, user.Password)) {
 
@@ -361,6 +402,7 @@ export {
   createInstructor,
   createCTrainee,
   createITrainee,
+  createCorporate,
   login,
   me,
   findUserType,

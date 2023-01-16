@@ -4,13 +4,23 @@
     --primary: #4b96a9;
     --secondary: #52adcc;
     --text: #293237;
+    --text-dark: #111516;
     --white: #fcfcfc;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 html, body {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     margin: 0px;
+}
+
+.app-bar {
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    justify-content: space-between;
+    background-color: var(--text);
 }
 
 .container {
@@ -25,16 +35,14 @@ html, body {
     height: 80px;
 }
 
-.search-bar {
-    width: 100%;
-    background-color: var(--primaryLight);
-    border-radius: 10px;
+.selector {
+    background-color: var(--white);
+    margin: 20px;
 }
 
-.selector {
-    width: 400px;
-    margin-left: 160px;
-    background-color: var(--white);
+.selector-label {
+    color: red;
+    margin: 20px;
 }
 
 #button-search {
@@ -45,82 +53,154 @@ html, body {
     background-color: var(--secondary);
 }
 .landing-header {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:var(--font);
     font-size: 64px;
     padding-left: 2%;
     padding-top: 5%;
-    color: var(--text);
+    color: var(--white);
     margin-bottom: -2%;
 }
+
+.avatar {
+    display: flex;
+    justify-items: end;
+}
+
+.home-header {
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 20px;
+    color: var(--white);
+    background-color: var(--text);
+    padding: 20px;
+    border-radius: 20px;
+    margin-inline: 20px;
+}
+
+
+.h-header {
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--white);
+    margin-bottom: -2%;
+}
+
+
+.landing-header-instructor{
+    font-family:var(--font);
+    font-size: 64px;
+    padding-left: 2%;
+    padding-top: 5%;
+    color: var(--primary);
+    margin-bottom: -2%;
+}
+
+.course-details-body {
+    min-height: 150vh;
+    background-color: var(--text-dark);
+}
+
+.course-details-card {
+    margin: 20px;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+
 .course-details-title {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-size: 48px;
+    padding-top: 20px;
     padding-left: 20px;
     margin-bottom: -5px;
-    color: var(--text);
+    color: var(--white);
 }
 
 .course-details-description {
-    font-family:'Times New Roman', Times, serif;
-    font-weight:lighter;
+    font-family: var(--font);
+    font-weight: 100;
     font-size: 18px;
-    padding-left: 20px;
-    color: var(--text);
+    padding-inline: 20px;
+    color: var(--white);
 }
 
 .course-details-rating {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 24px;
     padding-left: 20px;
-    color: var(--text);
+    color: var(--secondary);
 }
 
 .course-details-rating-count {
-    font-family:'Times New Roman', Times, serif;
+    font-family: var(--font);
     font-weight:lighter;
     font-size: 20px;
     padding-left: 20px;
     color: var(--secondary);
 }
 
+.course-details-hours {
+    font-family: var(--font);
+    font-weight:600;
+    font-size: 24px;
+    padding-left: 20px;
+    color: var(--secondary);
+    padding-bottom: 20px;
+    margin-top: 0px;
+}
+
 .course-details-instructor-info{
-    width: 100%;
-    height: 55%;
+    margin: 20px;
+    width: 28vw;
+    border-radius: 20px;
+    height: 55vh;
     background-color: var(--text);
 }
 .course-details-instructor-header{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 38px;
-    font-weight: bolder;
-    padding-left: 6%;
+    font-family: var(--font);
+    font-size: 32px;
+    font-weight: 600;
+    padding-left: 20px;
     margin-top: 0;
     margin-bottom: -5px;
-    color: var(--primary);
+    color: var(--primaryLight);
 }
 .course-details-instructor-name{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family:var(--font);
     font-size: 38px;
-    padding-left: 6%;
-    margin-top: -1%;
+    padding-left: 20px;
+    margin-top: -1vh;
     margin-bottom: -5px;
     color: var(--white);
 }
 
 .course-details-instructor-bio{
-    font-family:'Times New Roman', Times, serif;
-    font-weight:lighter;
-    font-size: 22px;
-    padding-left: 6%;
+    font-family: var(--font);
+    font-weight:100;
+    font-size: 18px;
+    padding-left: 20px;
     padding-right: 8%;
     color: var(--primaryLight);
 }
 
 .course-details-instructor-rating {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-weight:600;
     font-size: 28px;
-    padding-left: 6%;
+    padding-left: 20px;
+    margin-top: 0px;
+    color: var(--white);
+}
+
+.course-details-instructor-publishedcourses {
+    font-family: var(--font);
+    font-weight:600;
+    font-size: 28px;
+    padding-left: 20px;
+    margin-top: 0px;
     color: var(--white);
 }
 
@@ -128,32 +208,56 @@ html, body {
     font-family:'Times New Roman', Times, serif;
     font-weight:lighter;
     font-size: 20px;
-    padding-left: 6%;
+    padding-left: 20px;
+    margin-top: 0px;
     color: var(--primaryLight);
 }
 
+.course-details-price-body {
+    display: flex;
+    background-color: var(--white);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 13px;
+    height: 8.5%;
+    margin: 20px;
+    border-radius: 20px;
+}
+
 .course-details-price {
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-weight:bolder;
-    font-size: 42px;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 32px;
     margin-bottom: 0%;
     color: var(--text);
 }
-
+.course-details-subtitles-card {
+    width: 94%;
+    align-self: end;
+    margin: 20px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    max-height: 600px;
+    background-color: var(--text);
+}
 .course-details-subtitle{
-    padding-left: 1%;
-    margin-top: 1%;
-    margin-Inline: 2%;
+    padding: 20px;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-Inline: 20px;
     height: 100px;
-    border: 1px solid var(--primary);
-    border-radius: 10px;
-    border-bottom: 0;
-    background-color: var(--primary);
+    border-radius: 20px;
+    background-color: var(--secondary);
     
 }
 .course-details-subtitle-header{
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: var(--font);
     font-size: 24px;
+    margin-top: 0px;
     font-weight: 600;
     margin-top: 10px;
 }
@@ -164,15 +268,49 @@ html, body {
     font-weight: 400;
     margin-top: 10px;
 }
-
+.landing-tree-man{
+    height: 600px;
+    align-self: center;
+    margin-left: 250px;
+}
 .landing-card {
-    background-color: var(--primaryLight);
-    flex-direction: 'row';
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: var(--primary);
+    flex-direction: row;
     width: 85vw;
-    height: 60vh;
+    height: 50vh;
     border-radius: 20px;
-    margin-left: 7.5%;
+    margin-inline: 125px;
     margin-top: 5%;
+    padding: 20px;
+}
+
+.landing-card-instructor {
+    display: flex;
+    background-color: var(--white);
+    flex-direction: row;
+    width: 80vw;
+    height: 50vh;
+    border-radius: 20px;
+    margin-top: 5%;
+    padding: 20px;
+}
+
+.landing-card-corporate {
+    display: flex;
+    background-color: var(--secondary);
+    flex-direction: row;
+    width: 85vw;
+    height: 50vh;
+    border-radius: 20px;
+    margin-top: 5%;
+    padding: 20px;
+}
+
+.landing-progress {
+    margin-block: 200px;
 }
 .register-card {
     background-color: var(--primaryLight);
@@ -185,21 +323,23 @@ html, body {
 }
 
 .body {
-        background-color: var(--white);
-        height: 100vh;
-        background-size: cover;
-}
-
-.title {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 64px;
-    margin-top: 250px;
-    padding-inline: 150px;
-    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-dark);
+    height: 100%;
 }
 
 .landing-subtitle {
-    font-family:'Times New Roman', Times, serif;
+    font-family: var(--font);
+    font-weight:lighter;
+    font-size: 24px;
+    padding-left: 2%;
+    padding-top: 2%;
+    color: var(--white);
+}
+
+.landing-subtitle-instructor {
+    font-family: var(--font);
     font-weight:lighter;
     font-size: 24px;
     padding-left: 2%;
@@ -207,12 +347,16 @@ html, body {
     color: var(--text);
 }
 
+
+
 #big-button-primary {
+    color: var(--white);
     padding-inline: 50px;
     padding-block: 10px;
-    background-color: var(--primary);
+    background-color: var(--secondary);
     margin: 2%;
     font-size: 24px;
+    border-radius: 20px;
 }
 
 #big-button-primary-outlined {
@@ -222,6 +366,17 @@ html, body {
     color: var(--secondary);
     margin: 20px;
     font-size: 24px;
+    border-radius: 20px;
+}
+
+#big-button-secondary-outlined {
+    padding-inline: 50px;
+    padding-block: 10px;
+    border-color: var(--text);
+    color: var(--text);
+    margin: 20px;
+    font-size: 24px;
+    border-radius: 20px;
 }
 
 .form{
@@ -243,6 +398,16 @@ html, body {
 #small-button-primary{
     background-color: var(--primary);
     margin-left: 1%;
+    border-radius: 10px;
+}
+
+#big-button-secondary{
+    padding-inline: 50px;
+    padding-block: 10px;
+    background-color: var(--text);
+    margin: 2%;
+    font-size: 24px;
+    border-radius: 20px;
 }
 
 .courses-panel-bg{
@@ -250,7 +415,7 @@ html, body {
     flex-direction: row;
     padding: 20px;
     border-radius: 20px;
-    background-color: var(--white);
+    background-color: var(--primary);
     width: 75%;
     height: 40%;
     margin-left: 150px;
@@ -258,17 +423,53 @@ html, body {
 
 }
 
+.course-sector {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    margin-top: 50px;
+    margin-inline: 30px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: var(--white);
+}
+
 .course-card{
     display: flex;
     flex-direction: column;
-    justify-content: 'space-between';
+    justify-content:space-between; 
     padding: 10px;
-    border-radius: 10px;
-    background-color: var(--primaryLight);
+    border-radius: 20px;
+    background-color: var(--text);
     min-width: 400px;
     width: 400px;
-    height: 440px;
+    min-height: 560px;
     margin-inline: 20px;
     margin-block: 10px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.course-card-title{
+    font-weight: 700;
+    padding-inline: 10px;
+    font-family: var(--font);
+    color: var(--white);
+    margin-top: 15px;
+}
+
+.course-card-description{
+    padding-inline: 10px;
+    font-weight: lighter;
+    max-height: fit-content;
+    color: var(--secondary);
+}
+
+.course-card-price {
+    padding-inline: 10px;
+    font-weight: bolder;
+    font-family:  var(--font);
+    font-size: 32px;
+    color: var(--white);
 }

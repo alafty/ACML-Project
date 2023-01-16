@@ -19,7 +19,6 @@ const getCourses = async (req: Request, res: Response) => {
     res.status(200).json(result);
   } else if (courseInputValidate({ id: false }, req)) {
     const result = await Course.find();
-    console.log(result);
     res.send(result);
   }
 };
@@ -211,6 +210,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         var newSub = course.Subtitles.create({
           VideoId: sub.VideoId,
           Description: sub.Description,
+          Order: sub.Order
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {

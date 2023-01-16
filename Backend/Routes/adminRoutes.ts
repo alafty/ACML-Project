@@ -3,6 +3,7 @@ import {
   createInstructor,
   createCTrainee,
   createITrainee,
+  createCorporate,
   login,
   me,
   getProblems,
@@ -38,7 +39,7 @@ adminRouter.put("/resolveProblem",resolveProblems)
 adminRouter.put("/holdProblem",holdProblems)
 adminRouter.post("/corporate",createCorp)
 adminRouter.get("/corporate",getCorps)
-
+adminRouter.post("/corporate", createCorporate);
 
 
 export default adminRouter;

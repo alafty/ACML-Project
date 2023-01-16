@@ -4,45 +4,49 @@ import { getTokenHeader, setToken } from "../utils/authUtils";
 import httpClient from "../utils/httpClient";
 
 export const login = async (
-  username: String,
+  email: String,
   password: String,
   callback: Function
 ) => {
   var data = qs.stringify({
-    Email: username,
+    Email: email,
     Password: password,
   });
   var config = {
     method: "post",
-    url: "/create/login",
+    url: "create/login",
     data: data,
   };
 
+
   httpClient(config)
     .then(async function (response) {
-      if (response.data) {
+      if (response.data.message) {
+        callback(response.data.message, true);
+        
+      } else {
         setToken(response.data.token);
         await callback(response.data);
-      } else {
-        callback("NothingFound");
       }
     })
     .catch(function (error) {
       console.log(error);
+      callback(error.response.data.message, true);
     });
+    
+    
 };
 
 export const register = async (
   username: String,
   email: String,
   password: String,
-  country: String
+  LoginCallback: any
 ) => {
   var data = qs.stringify({
     Username: username,
     Email: email,
     Password: password,
-    Country: country,
   });
   var config = {
     method: "post",
@@ -53,9 +57,10 @@ export const register = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
-      console.log(error);
+      LoginCallback(error.response.data.message, true)
     });
 };
 
@@ -63,7 +68,8 @@ export const registerInstructor = async (
   username: String,
   email: String,
   password: String,
-  shortBio: String
+  shortBio: String,
+  callback: any
 ) => {
   var data = qs.stringify({
     Username: username,
@@ -81,18 +87,21 @@ export const registerInstructor = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      callback(response.data)
     })
     .catch(function (error) {
       console.log(error);
     });
 };
 
+
 export const registerCorporate = async (
   username: String,
   email: String,
   password: String,
   country: String,
-  corporate: String
+  corporate: String,
+  LoginCallback: any
 ) => {
   var data = qs.stringify({
     Username: username,
@@ -110,11 +119,44 @@ export const registerCorporate = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
       console.log(error);
     });
 };
+
+export const createCorporate = async (
+  name: String,
+  email: String,
+  password: String,
+  industry: String,
+  packageID: String,
+  callback: any
+) => {
+  var data = qs.stringify({
+    Username: name,
+    Email: email,
+    Password: password,
+    Industry: industry,
+    Package: packageID,
+  });
+  var config = {
+    method: "post",
+    url: "/create/corporate",
+    data: data,
+  };
+
+  httpClient(config)
+    .then(function (response) {
+      setToken(response.data.token);
+      callback(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 
 export const createGuestCookie = async () => {
 
@@ -181,6 +223,7 @@ const services = {
   login,
   logout,
   createGuestCookie,
+  createCorporate,
   editInstructorDetails,
 };
 

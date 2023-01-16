@@ -3,16 +3,15 @@ import qs from "qs";
 import httpClient from "../utils/httpClient";
 
 const COURSES_URL = "/courses";
+
 export const getAllCourses = async () => {
   const response = await httpClient.get(COURSES_URL);
-  console.log(JSON.stringify(response));
 
   if (response.data) {
-    localStorage.setItem("AllCourses", JSON.stringify(response.data));
-  } else {
-    localStorage.setItem("AllCourses", "Nothing Found");
+    return response.data;
   }
-  return response.data;
+
+  return {};
 };
 
 export const searchCourseBySubject = async (searchTerm: String) => {
@@ -54,6 +53,7 @@ const getCourseDetails = async (id: string) => {
 
   return response.data;
 };
+
 const getCourseQuizzes = async (Course: string) => {
   const Body = {
     CourseID: Course,

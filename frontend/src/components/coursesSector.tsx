@@ -7,18 +7,18 @@ import '../Styling/mainLayout.css'
 import CourseCard from './courseCard'
 
 function CoursesSector(props) {
-  const renderCard =  ({name, desc, course}) => {
+  const renderCard =  ({Name, Description, _id, Price}) => {
     return(
-      <CourseCard name={name} desc={desc} course={course}/>
+      <CourseCard name={Name} desc={Description} id={_id} price={Price}/>
     );
   }
   return (
-    <div>
+    <div style={{marginBottom: '50px'}}>
               <h1 className='landing-header' style={{marginTop: '0px'}}>{props.title}</h1>
-              <div style={{display: 'flex', flexDirection: 'row', width: '100%', overflow: 'scroll', scrollbarWidth: 'none', marginTop: '50px', marginLeft: '10px'}}>
-              {props.dummycourses.map(renderCard)}
+              <div className='course-sector'>
+              {props.coursesList.map(renderCard)}
               </div>
-            </div>
+    </div>
           
   )
 }

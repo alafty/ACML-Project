@@ -1,0 +1,152 @@
+:root {
+    --primaryLight: #bae7e4;
+    --primary: #4b96a9;
+    --secondary: #52adcc;
+    --text: #293237;
+    --text-dark: #111516;
+    --white: #fcfcfc;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html, body{
+    min-height: 100%;
+}
+
+.login-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--text-dark);
+    height: 94vh;
+    flex-direction: row;
+}
+
+.login-header{
+    display: flex;
+    align-self: center;
+    font-family: var(--font);
+    font-weight: 600;
+    font-size: 48px;
+    padding-inline: 20px;
+    color: var(--white);
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 45%;
+    height: 70%;
+    align-self: center;
+    justify-self: center;
+    align-content: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.register-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 55%;
+    height: 80%;
+    align-self: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.register-card-instructor {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 55%;
+    height: 90%;
+    align-self: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+.alert{
+    margin: 20px;
+}
+
+.package-card {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    width: 95%;
+    height: 80%;
+    align-self: center;
+    justify-content: center;
+    border-radius: 20px;
+    background-color: var(--text);
+}
+
+#package-header {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: var(--font);
+    color: var(--primary);
+}
+
+#package-details {
+    font-size: 24px;
+    font-weight: 400;
+    font-family: var(--font);
+    color: var(--font);
+    margin-inline: 20px;
+}
+
+#package-price {
+    display: flex;
+    justify-content: end;
+    font-size: 28px;
+    font-weight: 600;
+    font-family: var(--font);
+    color: var(--primary);
+}
+
+#package-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    padding-inline: 20px;
+    color: var(--white);
+    border-radius: 15px;
+    background-color: var(--secondary);
+}
+
+.text-field {
+    background-color: var(--white);
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.short-bio {
+    background-color: var(--white);
+    margin: 20px;
+    border-radius: 15px;
+}
+
+.forgot-password{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;    
+    font-family: var(--font);
+    padding-right: 20px;
+    color: var(--primaryLight);
+    border-color: var(--primary);
+}
+
+.terms-and-conditions{
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;    
+    font-family: var(--font);
+    padding-right: 20px;
+    color: var(--primaryLight);
+    border-color: var(--primary);
+}
