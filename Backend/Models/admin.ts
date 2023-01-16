@@ -15,7 +15,7 @@ const adminSchema = new Schema({
   },
   PreferenceLevel: {
     type: Number,
-    required: true
+    required: false
   }
 }, { timestamps: true });
 

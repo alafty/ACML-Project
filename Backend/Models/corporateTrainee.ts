@@ -18,6 +18,7 @@ const corpTraineeSchema = new Schema(
     PurchasedCourses: {
       type: [Object],
       required: false,
+      default: []
     },
     Corporate: {
       type: String,

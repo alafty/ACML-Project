@@ -3,13 +3,14 @@
     /* padding-bottom: 56.25%; */
     position: relative;
     display: flex;
-
+    background-color: #1f1f1f;
   }
   
   .video-responsive iframe {
     left: 0;
     top: 0;
     height: 100%;
-    width: 100%;
+    width: 90%;
     position: absolute;
+    padding-inline: 5%;
   }

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import Discount from "./discount";
 import Subtitle from "./subtitle";
 
@@ -16,10 +16,10 @@ const courseSchema = new Schema(
       type: [Subtitle.schema],
       default: [],
     },
-
     Instructor: {
-      type: [String],
+      type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: 'Instructor'
     },
     Price: {
       type: Number,

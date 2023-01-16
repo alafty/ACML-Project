@@ -4,6 +4,7 @@ import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
 import coursesRouter from "../Routes/coursesRoutes";
 import discountInputValidate from "../Validators/discountValidator";
+import userTypes from "../Constants/userTypes";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -70,41 +71,79 @@ const addCourse = async (req: Request, res: Response) => {
       id: false,
       Name: true,
       Subject: true,
-      Instructor: true,
       Price: true,
       TotalHours: true,
-      RatingAvg: true,
-      RatingCount: true,
     },
     req
   );
   if (!inputValid) {
     res.status(400).json({ message: "Make sure all fields are here" });
   } else {
-    const newCourse = await Course.create(req.body);
+    var newBody = req.body;
+    if (req.type == userTypes.instructor) {
+      newBody.Instructor = req.user._id;
+    } else if (req.type != userTypes.admin) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
+    }
+    const newCourse = await Course.create(newBody);
     res.status(200).json(newCourse);
   }
 };
 
 // @desc    Remove a Course
-// @rout    POST /courses/:id
+// @rout    DELETE /courses/:id
 // @access  private
-const deleteCourse = (req: Request, res: Response) => {
+const deleteCourse = async (req: Request, res: Response) => {
   if (!req.body) {
     res.status(400);
   } else {
-    Course.findByIdAndDelete(req.params.id);
+    if (
+      courseInputValidate(
+        {
+          id: true,
+        },
+        req
+      )
+    ) {
+      var c = await Course.findById(req.params.id);
+      if (protectCourseOperations(req, c)) {
+        c.delete();
+        res.status(200).json({ ok: true });
+      } else {
+        res.status(401).json({ message: "Not authorized" });
+        return;
+      }
+    }
   }
 };
 
+const protectCourseOperations = (
+  req: Request,
+  course: typeof Course.schema.obj
+): boolean => {
+  return (
+    req.type == userTypes.admin ||
+    (req.type == userTypes.instructor && course.Instructor != req.user._id)
+  );
+};
+
 const addRating = async (req: Request, res: Response) => {
-  if (!req.body.id || !req.body.rating) {
+  if (!req.body.rating || !courseInputValidate({ id: true }, req)) {
     res.status(400);
   } else {
+    if (
+      !(
+        req.type == userTypes.corporateTrainee ||
+        req.type == userTypes.individualTrainee
+      )
+    ) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
+    }
     var mult = 0;
     const courseID = req.body.id;
     const ratingResult = await Course.findById(courseID);
-    console.log("we reached here");
 
     if (ratingResult != null) {
       mult = ratingResult.RatingCount * ratingResult.RatingAvg;
@@ -117,7 +156,6 @@ const addRating = async (req: Request, res: Response) => {
       await Course.findByIdAndUpdate(courseID, {
         RatingCount: ratingResult.RatingCount,
       });
-
       res.status(200).json({ message: "rating added" });
     } else {
       res.status(404).json({ message: "no such course exists" });
@@ -128,7 +166,7 @@ const addRating = async (req: Request, res: Response) => {
 // @desc    Add a Course Subtitle or Modify one
 // @rout    Put /course-subtitle
 // @access  private
-/// @body    {id, {[id], VideoLink, Description}}
+/// @body   {id, {[id], VideoLink, Description}}
 
 const putCourseSubtitle = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
@@ -139,6 +177,10 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         message:
           'Subtitle not found in request. Make sure body has "Subtitle" key',
       });
+    }
+    if (!protectCourseOperations(req, course)) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
     }
     if (course) {
       if (sub.Id) {
@@ -194,6 +236,10 @@ const putCourseVideo = async (req: Request, res: Response) => {
     var c = await Course.findByIdAndUpdate(req.body.id, {
       VideoId: req.body.VideoId,
     });
+    if (!protectCourseOperations(req, c)) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
+    }
     if (!c) {
       res
         .status(400)
@@ -208,6 +254,11 @@ const putCourseVideo = async (req: Request, res: Response) => {
 const putDiscount = async (req: Request, res: Response) => {
   if (courseInputValidate({ id: true }, req)) {
     var c = await Course.findById(req.body.id);
+
+    if (!protectCourseOperations(req, c)) {
+      res.status(401).json({ message: "Not authorized" });
+      return;
+    }
     if (!c) {
       res
         .status(400)
@@ -224,12 +275,10 @@ const putDiscount = async (req: Request, res: Response) => {
     if (
       !discountInputValidate({ Duration: true, Percentage: true }, discount)
     ) {
-      res
-        .status(400)
-        .json({
-          message:
-            "Make sure Discount duration and percentage are properly specified in body",
-        });
+      res.status(400).json({
+        message:
+          "Make sure Discount duration and percentage are properly specified in body",
+      });
       return;
     }
     var newDiscount = c.Discounts.create({
