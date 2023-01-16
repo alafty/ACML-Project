@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import ForgotPassword  from './pages/Login/ForgotPassword'
 import ResetPassword  from './pages/Login/ResetPassword'
-
+import PDFGenerator from "./pages/PDFGenerator";
 import Landing from "./pages/Landing";
 import InstructorLanding from "./pages/Instructor/InstructorLanding";
 import CorporateLanding from "./pages/Corporate/CorporateLanding";
@@ -100,7 +100,7 @@ function app() {
             <Route
             path="/instructor/profile" 
             element={<InstructorDetails />} />
-
+            <Route path="/pdf" element={<PDFGenerator/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/legal' element= {<Legal/>} />

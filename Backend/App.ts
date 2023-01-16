@@ -15,6 +15,7 @@ import filterRoute from "./Routes/filterRoutes";
 import countryRouter from "./Routes/countryRoutes";
 import quizRouter  from "./Routes/quizRoute";
 import passwordResetRouter  from "./Routes/passwordResetRoute";
+import pdfRouter from "./Routes/pdfRoutes";
 import requestRouter from "./Routes/requestsRoutes";
 
 import { createCookie } from "./Controllers/cookieController";
@@ -79,3 +80,4 @@ app.use("/passwordreset",passwordResetRouter);
 app.use("/instructor", instructorRouter);
 app.use("/corps", corporateRouter);
 app.use("/requests", requestRouter);
+app.use("/pdf", pdfRouter);
