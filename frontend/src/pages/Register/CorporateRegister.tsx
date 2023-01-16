@@ -99,7 +99,7 @@ function CorporateRegister() {
               setPacakageVisible(false);
               setError("Please fill all fields");
             } else {
-              userServices.createCorporate(username, password, email, industry,'63b82228fda53129cb7b0a9f',LoginRedirect);
+              userServices.createCorporate(username, email, password, industry,'63b82228fda53129cb7b0a9f',LoginRedirect);
               setError('');
             }
           }}
@@ -181,7 +181,7 @@ function CorporateRegister() {
               setPacakageVisible(false);
               setError("Please fill all fields");
             } else {
-              userServices.createCorporate(username, password, email, industry,'63b8237ffda53129cb7b0aa3',LoginRedirect);
+              userServices.createCorporate(username, email, password, industry,'63b8237ffda53129cb7b0aa3',LoginRedirect);
               setError('');
             }
           }}
