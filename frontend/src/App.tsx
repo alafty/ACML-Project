@@ -4,7 +4,7 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ForgotPassword  from './pages/Login/ForgotPassword'
 import ResetPassword  from './pages/Login/ResetPassword'
-
+import PDFGenerator from "./pages/PDFGenerator";
 import Landing from "./pages/Landing";
 import IndividualTrainee from "./pages/Register/IndividualTraineeRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
@@ -71,7 +71,7 @@ function app() {
             <Route path="/corpTraineeRegister" element={<CorporateTrainee />} />
             <Route path="/home" element={<Home />} />
             <Route path="/instructorHome" element={<InstructorDetails />} />
-            <Route path="/instructor" element={<LandingInstructor/>} />
+            <Route path="/pdf" element={<PDFGenerator/>} />            <Route path="/instructor" element={<LandingInstructor/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/instructorHome' element={<InstructorDetails/>} />
