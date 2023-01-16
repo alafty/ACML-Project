@@ -6,7 +6,7 @@ const pdfTemp = require('../Models/pdf.ts');
 const createPDF = (req: Request, res: Response) => {
     pdf
     .create(pdfTemp(req.body.name, req.body.course, req.body.date), {})
-    .toFile('Backend/Controllers/pdfs/result.pdf', (err: any) => {
+    .toFile(`${__dirname}/pdfs/result.pdf`, (err: any) => {
         if(err){
             res.send(Promise.reject());
         } 
