@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import Discount from "./discount";
 import Subtitle from "./subtitle";
+import instructor from "./instructor";
 
 const courseSchema = new Schema(
   {
@@ -16,8 +17,12 @@ const courseSchema = new Schema(
       type: [Subtitle.schema],
       default: [],
     },
+    Description: {
+      type: String,
+      required: true
+    },
     Instructor: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: 'Instructor'
     },
@@ -47,6 +52,11 @@ const courseSchema = new Schema(
     VideoId: {
       type: String,
       required: false
+    },
+    PurchaseCount: {
+      type: Number,
+      required: false,
+      default: 0
     }
   },
   { timestamps: true }

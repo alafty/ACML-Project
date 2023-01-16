@@ -21,10 +21,12 @@ const instructorSchema = new Schema(
     NumberOfCourses: {
       type: Number,
       required: false,
+      default: 0
     },
     Courses: {
       type: [String],
       required: false,
+      default:[]
     },
     RatingCount: {
       type: Number,
@@ -35,12 +37,7 @@ const instructorSchema = new Schema(
       type: Number,
       required: false,
       default : 0,
-    },
-    Country: {
-      type: String,
-      required: false,
-      default: "Egypt",
-    },
+    }
   },
   { timestamps: true }
 );

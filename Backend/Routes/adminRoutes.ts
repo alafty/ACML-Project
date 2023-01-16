@@ -3,6 +3,7 @@ import {
   createInstructor,
   createCTrainee,
   createITrainee,
+  createCorporate,
   login,
   me,
 } from "../Controllers/adminController";
@@ -16,5 +17,6 @@ adminRouter.post("/corporateTrainee", createCTrainee); //Should protect. Type ==
 adminRouter.post("/individualTrainee", createITrainee);
 adminRouter.post("/login", login);
 adminRouter.get("/me", protect, me); // Protect. Return only user
+adminRouter.post("/corporate", createCorporate);
 
 export default adminRouter;

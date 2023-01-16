@@ -1,10 +1,8 @@
-import { truncate } from "fs";
 import { Schema, model, Mongoose } from "mongoose";
-import  Package  from './package'
 
 const corporateSchema = new Schema(
   {
-    Name: {
+    Username: {
       type: String,
       required: true,
     },
@@ -21,8 +19,9 @@ const corporateSchema = new Schema(
         required: true
     },
     Package: {
-        type: Package.schema,
-        required: true
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'Package'
     }
   },
   { timestamps: true }

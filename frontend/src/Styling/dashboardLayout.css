@@ -1,0 +1,81 @@
+:root {
+    --primaryLight: #bae7e4;
+    --primary: #4b96a9;
+    --secondary: #52adcc;
+    --text: #293237;
+    --text-dark: #111516;
+    --white: #fcfcfc;
+    --font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+html, body{
+    min-height: 100%;
+}
+
+.dashboard-body {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    background-color: var(--text-dark);
+}
+
+.dashboard-side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    background-color: var(--primary);
+    box-shadow: rgba(111, 225, 229, 0.572) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.dashboard-header {
+    font-size: 42px;
+    font-weight: 500;
+    font-family: var(--font);
+    color: var(--white);
+    padding-inline: 40px;
+    padding-block: 20px;
+}
+
+.dashboard-main-card {
+    margin: 40px;
+    width: 70vw;
+    height: 50vh;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+.dashboard-package-card {
+    margin: 40px;
+    width: 70vw;
+    height: 70vh;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+.dashboard-trainee-card {
+    margin: 40px;
+    width: 70vw;
+    height: 30vh;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+.side-bar-header {
+    font-size: 38px;
+    font-weight: 500;
+    margin: 40px;
+    font-family: var(--font);
+    color: var(--text-dark);
+}
+.accordion {
+    margin-inline: 40px;
+}
+
+#side-bar-button {
+    width: 100%;
+    font-size: 20px;
+    color: var(--text-dark);
+    background-color: #3e8191;
+    margin-block: 20px;
+}

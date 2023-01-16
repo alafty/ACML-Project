@@ -16,11 +16,13 @@ import countryRouter from "./Routes/countryRoutes";
 import quizRouter  from "./Routes/quizRoute";
 import passwordResetRouter  from "./Routes/passwordResetRoute";
 import pdfRouter from "./Routes/pdfRoutes";
+import requestRouter from "./Routes/requestsRoutes";
 
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
 import instructorRouter from "./Routes/instructorRoutes";
 import coursesRouter from "./Routes/coursesRoutes";
+import corporateRouter from "./Routes/corporateRoutes";
 
 //App variables
 const app: Application = express();
@@ -76,4 +78,6 @@ app.use('/courses', coursesRouter);
 app.use("/quiz",quizRouter);
 app.use("/passwordreset",passwordResetRouter);
 app.use("/instructor", instructorRouter);
+app.use("/corps", corporateRouter);
+app.use("/requests", requestRouter);
 app.use("/pdf", pdfRouter);
