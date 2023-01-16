@@ -135,7 +135,7 @@ export const createCorporate = async (
   callback: any
 ) => {
   var data = qs.stringify({
-    Name: name,
+    Username: name,
     Email: email,
     Password: password,
     Industry: industry,
