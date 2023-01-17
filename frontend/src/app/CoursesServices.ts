@@ -157,6 +157,7 @@ const Services = {
   updateSubtitle,
   uploadCourseVideo,
   addCourseDiscount,
+  getRecommendedCourses,
 };
 
 export default Services;
