@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-
+import course from "./course";
 const instructorSchema = new Schema(
   {
     Username: {
@@ -24,7 +24,8 @@ const instructorSchema = new Schema(
       default: 0
     },
     Courses: {
-      type: [String],
+      type: [Schema.Types.ObjectId],
+      ref: 'Course',
       required: false,
       default:[]
     },

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import userTypes from "../Constants/userTypes";
 import course from "../Models/course";
 import instructor from "../Models/instructor";
-import instructorInputValidate from "../Validators/instructorValidator";
 
 const viewCourseRatings = async (req: Request, res: Response) => {
   if (!req.body) {
@@ -26,7 +25,7 @@ const viewCourseRatings = async (req: Request, res: Response) => {
 };
 
 const addRating = async (req: Request, res: Response) => {
-  if (!req.body.rating || !instructorInputValidate({ id: true }, req)) {
+  if (!req.body.rating) {
     res.status(400).json({ message: "Make sure all fields are valid" });
   } else if (
     !(
@@ -76,19 +75,34 @@ const editInstructorDetails = async (req: Request, res: Response) => {
  // }
   var i = await instructor.findById(req.body._id);
 
-  if (instructorInputValidate({ Email: true }, req)) {
-    await i.updateOne({ Email: req.body.Email });
+
+  var i = await instructor.findOne({Email: req.body.Email});
+  console.log(i);
+
+  if(i){
+   if(req.body.newEmail){
+  //if (instructorInputValidate({ Email: true }, req)) {
+    await instructor.updateOne({Email: req.body.Email}, {Email: req.body.newEmail });
+    
+  //}
   }
-  if (instructorInputValidate({ ShortBio: true }, req)) {
-    await i.updateOne({ ShortBio: req.body.ShortBio });
+    if(req.body.bio){
+    //if (instructorInputValidate({ ShortBio: true }, req)) {
+      await instructor.updateOne({Email: req.body.Email},{ ShortBio: req.body.bio });
+    //}
+    }
+    res.status(200).json({mesage: 'wslna'});
+  } else {
+    res.status(404).json({message: "no user found"});
   }
-  if (instructorInputValidate({ Username: true }, req)) {
-    await i.updateOne({ Username: req.body.Username });
-  }
+  // if (instructorInputValidate({ Username: true }, req)) {
+  //   await i.updateOne({ Username: req.body.Username });
+  // }
 
   i = await instructor.findById(req.body._id);
 
   res.status(200).json(i);
+
 };
   const getInstructorData = async(req: Request, res: Response) => {
     if(!req.body.id){
@@ -103,4 +117,5 @@ const editInstructorDetails = async (req: Request, res: Response) => {
     }
   }
 
-  export {addRating , viewCourseRatings , viewInstructorRatings, getInstructorData,editInstructorDetails};
+  export {addRating , viewCourseRatings , viewInstructorRatings, getInstructorData, editInstructorDetails};
+

@@ -173,31 +173,6 @@ export const createGuestCookie = async () => {
     });
 };
 
-export const editInstructorDetails = async (
-  username: String,
-  callback: Function,
-  email?: String,
-  bio?: String
-) => {
-  var data = qs.stringify({
-    username: username,
-    email: email,
-    bio: bio,
-  });
-  var config = {
-    method: "post",
-    url: "/create/editInstructor",
-    data: data,
-  };
-
-  httpClient(config)
-    .then(function (response) {
-      callback(response.status);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-};
 
 const testFunciton = async () => {
   const data = qs.stringify({
@@ -224,7 +199,6 @@ const services = {
   logout,
   createGuestCookie,
   createCorporate,
-  editInstructorDetails,
 };
 
 export default services;
