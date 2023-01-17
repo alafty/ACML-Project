@@ -25,7 +25,7 @@ import { Router } from "express";
 import { protect } from "../Middleware/authMiddleware";
 const adminRouter = Router();
 
-adminRouter.post("/admin",protect, createAdmin); // Protect and make sure that the type is admin
+adminRouter.post("/admin", createAdmin); // Protect and make sure that the type is admin
 adminRouter.get("/admin", getAdmins); 
 adminRouter.post("/instructor", createInstructor);
 adminRouter.get("/instructor",getInstructors);

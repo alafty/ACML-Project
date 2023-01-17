@@ -31,6 +31,8 @@ function Login() {
           navigation('/instructor/home');
         } else if (state.loggedInUser.type === "corporate") {
           navigation('/corporate/dashboard');
+        } else if (state.loggedInUser.type === "admin") {
+          navigation('/adminDashboard');
         } 
         else {
           navigation('/home');
