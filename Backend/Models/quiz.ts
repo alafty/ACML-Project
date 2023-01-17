@@ -4,7 +4,7 @@ import question from "./questionBank";
 
 const quizSchema = new Schema(
   {
-    Count: {
+    Order: {
       type: Number,
       required: true,
     },
