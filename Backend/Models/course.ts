@@ -15,7 +15,7 @@ const courseSchema = new Schema(
       required: true,
     },
     Subtitles: {
-      type: [Schema.Types.ObjectId],
+      type: [Subtitle.schema],
       ref: 'Subtitle',
       default: [],
     },
