@@ -210,7 +210,7 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
         var newSub = course.Subtitles.create({
           VideoId: sub.VideoId,
           Description: sub.Description,
-          Order: sub.Order
+          Order: sub.Order,
         });
         course.Subtitles.push(newSub);
         course.save(function (err) {
@@ -299,6 +299,14 @@ const putDiscount = async (req: Request, res: Response) => {
   }
 };
 
+const recommendedCourses = async (req: Request, res: Response) => {
+  var allCourses = await Course.find();
+  allCourses.sort((course1, course2) => {
+    return course2.PurchaseCount - course1.PurchaseCount;
+  });
+  res.status(200).json(allCourses);
+};
+
 export {
   getCourses,
   searchCourses,
@@ -309,4 +317,5 @@ export {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  recommendedCourses,
 };

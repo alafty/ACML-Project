@@ -1,4 +1,5 @@
 import axios from "axios";
+import { response } from "express";
 import qs from "qs";
 import httpClient from "../utils/httpClient";
 
@@ -7,6 +8,16 @@ const COURSES_URL = "/courses";
 export const getAllCourses = async () => {
   const response = await httpClient.get(COURSES_URL);
 
+  if (response.data) {
+    return response.data;
+  }
+
+  return {};
+};
+
+export const getRecommendedCourses = async () => {
+  const response = await httpClient.get(`${COURSES_URL}/recommended`);
+  const courseList = [];
   if (response.data) {
     return response.data;
   }
@@ -110,18 +121,18 @@ const addCourseDiscount = async (
 
 export const rateCourses = async (courseID: String, rating: String) => {
   var data = qs.stringify({
-  id: courseID,
-  rating: rating
-});
+    id: courseID,
+    rating: rating,
+  });
   var config = {
-  method: 'post',
-  url: 'http://localhost:8000/courses/rate',
-  headers: { 
-    'Content-Type': 'application/x-www-form-urlencoded', 
-    'Cookie': 'userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D'
-  },
-  data : data
-};
+    method: "post",
+    url: "http://localhost:8000/courses/rate",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Cookie: "userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D",
+    },
+    data: data,
+  };
 
   axios(config)
     .then(function (response) {
@@ -145,7 +156,7 @@ const Services = {
   getCourseQuizzes,
   updateSubtitle,
   uploadCourseVideo,
-  addCourseDiscount
+  addCourseDiscount,
 };
 
 export default Services;

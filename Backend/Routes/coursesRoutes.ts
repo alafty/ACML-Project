@@ -9,6 +9,7 @@ import {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  recommendedCourses
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
 
@@ -33,5 +34,7 @@ coursesRouter.put("/discount", protect, putDiscount); // Protect. Type = instruc
 coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", protect, addRating); // Protect. Type == indivTrainee || corpTrainee
+
+coursesRouter.get('/recommended', recommendedCourses);
 
 export default coursesRouter;
