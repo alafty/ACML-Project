@@ -14,7 +14,9 @@ instructorRouter.post("/rate", protect, addRating); // Protect. Type == indivTra
 instructorRouter.post("/coursesRate", viewCourseRatings);
 instructorRouter.post("/instructorRate", viewInstructorRatings);
 instructorRouter.post("/getData", getInstructorData);
-instructorRouter.post("/editData", editInstructorDetails);
+
+instructorRouter.put("/editData", editInstructorDetails);
+
 
 
 export default instructorRouter;

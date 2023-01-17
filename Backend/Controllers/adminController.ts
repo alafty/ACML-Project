@@ -71,7 +71,7 @@ const createCorporate = async (req: Request, res: Response) => {
         Username: true,
         Email: true,
         Password: true,
-        Package: true
+        Package: false
       },
       req
     )
@@ -171,6 +171,33 @@ const deleteInstructor = async (req,res) => {
      await instructor.findOneAndDelete(req.body)
      res.status(200).json('Instructor Deleted');
       }
+
+      const deleteCorptrainee = async (req,res) => {
+        const filter = req.body 
+        console.log("hii")
+        console.log(req.body)
+        await cTrainee.findOneAndDelete(req.body)
+        res.status(200).json('Corporate trainee Deleted');
+         }
+         const deleteIndivtrainee = async (req,res) => {
+          const filter = req.body 
+          console.log("hii")
+          console.log(req.body)
+          await iTrainee.findOneAndDelete(req.body)
+          res.status(200).json('individual trainee Deleted');
+           }
+          
+           const deleteCorp = async (req,res) => {
+            const filter = req.body 
+            console.log("hii")
+            console.log(req.body)
+            await corporate.findOneAndDelete(req.body)
+            res.status(200).json('Corporate Deleted');
+             }
+            
+
+
+
  /* const updateInstructor = async (req, res) => {
         const filter = req.body 
         await problem.findOneAndUpdate(filter, req.body);
@@ -372,7 +399,7 @@ const me = async (req: Request, res: Response) => {
 };
 
 const generateToken = (id: string, type: string) => {
-  return jwt.sign({ id, type }, process.env.JWT_SECRET!, {
+  return jwt.sign({ id, type }, 'abc123', {
     expiresIn: "30d",
   });
 };
@@ -416,5 +443,8 @@ export {
   getCorps,
   getAdmins,
   getCTrainees,
-  getITrainees
+  getITrainees,
+  deleteCorptrainee,
+  deleteIndivtrainee,
+  deleteCorp
 };
