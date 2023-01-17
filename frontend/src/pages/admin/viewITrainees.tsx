@@ -19,7 +19,10 @@ const [ITrainees,setITrainees] = useState([]);
         return {};
      
     }
-   
+    const deleteTrainee = (trainee) => {
+        console.log(trainee)
+        axios.delete('http://localhost:8000/create/individualTrainee',{ data: trainee })
+      }
     useEffect(() => {
         const showitrainees = async () => {
           const data = await getitrainees();
@@ -59,7 +62,7 @@ const [ITrainees,setITrainees] = useState([]);
 
                         </tr>
                     </tbody>
-                   
+                    <button onClick={() => deleteTrainee(itrainee)}>delete</button>
                     
                 </table>
             ))}
