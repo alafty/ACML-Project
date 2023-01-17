@@ -57,11 +57,6 @@ const courseSchema = new Schema(
       type: Number,
       required: false,
       default: 0
-    },
-    TraineesNumber: {
-      type: Number,
-      required: false,
-      default: 0
     }
   },
   { timestamps: true }
