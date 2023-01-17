@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "../../Styling/dashboardLayout.css";
 import Header from "../../components/header";
 import Button from "@mui/material/Button";
 import {
@@ -18,7 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { extractIdFromVideoUrl } from "../../utils/video_utils";
 import { CustomTextField } from "../../components/TextField";
 import coursesServices from "../../app/CoursesServices";
-import courseServices from "../../app/CoursesServices";
 
 function InstructorDashboard() {
   const [state, dispatch] = useGlobalState();
@@ -56,6 +56,53 @@ function InstructorDashboard() {
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [grade, setGrade] = useState(0);
   const [quizError, setQuizError] = useState("");
+
+  const [renderedCourses, setRenderedCourses] = useState([]);
+
+  
+  
+  const fetchDetails = async (id:string) => {
+    const courseDetails = await coursesServices.getCourseDetails(id);
+    let tempCourses = renderedCourses; 
+    //console.log(renderedCourses.some(e => e._id === courseDetails._id));
+    if(!renderedCourses.some(e => e._id === courseDetails._id)){  
+      tempCourses.push(courseDetails);
+    }
+    setRenderedCourses(tempCourses);
+  }
+
+  const fetch = async () =>{
+    for (let index = 0; index <= state.loggedInUser.Courses.length - 1; index++) {
+      await fetchDetails(state.loggedInUser.Courses[index]);      
+    }
+  }
+
+  useEffect(() => {
+    fetch();
+  }, [renderedCourses])
+  
+  
+  
+
+  const renderCourses = ( {Name, Description, _id} ) => {
+
+    return (
+      <div className="course-card-dashboard">
+        <p className="course-name">{Name}</p>
+        <p className="course-description"> {Description} </p>
+        <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={async () => {
+            navigation("/course=");
+          }}
+        >
+          {" "}
+          View Course{" "}
+        </Button>
+      </div>
+    );
+  };
 
   const handleSubjectChange = (event: SelectChangeEvent) => {
     setSubject(event.target.value as string);
@@ -163,8 +210,11 @@ function InstructorDashboard() {
           <div>
             <div>
               {activeTab == "COURSES" ? (
-                <div className="dashboard-main-card">
+                <div className="dashboard-courses-card">
                   <p className="dashboard-header"> My Courses </p>
+                  <div className="grid-container">
+                    {renderedCourses.map(renderCourses)}
+                  </div>
                 </div>
               ) : activeTab == "ADD" ? (
                 <>
@@ -441,15 +491,22 @@ function InstructorDashboard() {
                       variant="contained"
                       id="big-button-primary"
                       onClick={async () => {
-                        if (!question || !answer1 || !answer1 || !answer2 || !answer3 || !answer4 || !correctAnswer) {
+                        if (
+                          !question ||
+                          !answer1 ||
+                          !answer1 ||
+                          !answer2 ||
+                          !answer3 ||
+                          !answer4 ||
+                          !correctAnswer
+                        ) {
                           setQuizError("Please Fill All Fields");
-                        } else if (!selectedQuiz){
-                          setQuizError('Please select a quiz to add this question in');
-                        } 
-                        else {
-                          if(true){
-                          
-                            
+                        } else if (!selectedQuiz) {
+                          setQuizError(
+                            "Please select a quiz to add this question in"
+                          );
+                        } else {
+                          if (true) {
                           } else {
                             setQuizError("invalid URL");
                           }
