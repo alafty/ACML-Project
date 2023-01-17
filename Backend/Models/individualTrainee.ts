@@ -1,4 +1,13 @@
 import { Schema, model } from "mongoose";
+import course from "./course";
+
+
+
+
+const purchasedCourse = {
+  courseID : Schema.Types.ObjectId,
+  progress : Number
+}
 
 const indivTraineeSchema = new Schema({
   Username: {
@@ -14,9 +23,9 @@ const indivTraineeSchema = new Schema({
     required: true,
   },
   PurchasedCourses: {
-    type: [Schema.Types.ObjectId],
+    //the number refers to the trainee's progress in each course
+      type: [purchasedCourse],
       required: false,
-      ref: 'Course'
   },
   Wallet: {
     type: Number,

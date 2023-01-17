@@ -165,31 +165,6 @@ export const createGuestCookie = async () => {
     });
 };
 
-export const editInstructorDetails = async (
-  username: String,
-  callback: Function,
-  email?: String,
-  bio?: String
-) => {
-  var data = qs.stringify({
-    username: username,
-    email: email,
-    bio: bio,
-  });
-  var config = {
-    method: "post",
-    url: "/create/editInstructor",
-    data: data,
-  };
-
-  httpClient(config)
-    .then(function (response) {
-      callback(response.status);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-};
 
 export const AddDiscountAll = async (
   percentage: String,
@@ -286,6 +261,7 @@ const services = {
   me,
   AddDiscount,
   AddDiscountAll
+
 };
 
 export default services;
