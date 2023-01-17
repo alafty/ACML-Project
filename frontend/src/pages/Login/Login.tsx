@@ -28,7 +28,7 @@ function Login() {
     console.log(state.loggedInUser);
     try {
         if (state.loggedInUser.type === "instructor") {
-          navigation('/instructor/home');
+          navigation('/instructor/dashboard');
         } else if (state.loggedInUser.type === "corporate") {
           navigation('/corporate/dashboard');
         } 

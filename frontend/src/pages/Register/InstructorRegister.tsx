@@ -26,7 +26,7 @@ function InstructorRegister() {
   const LoginRedirect = async (data) => {
     state.loggedInUser = data;
     console.log(state.loggedInUser);
-    navigation('/instructor/home');
+    navigation('/instructor/dashboard');
   }
 
   return (
