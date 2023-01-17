@@ -388,7 +388,7 @@ export {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
-  putDiscountAllCourses
+  putDiscountAllCourses,
   recommendedCourses,
   purchaseCourse
 };

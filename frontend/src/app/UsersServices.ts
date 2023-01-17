@@ -257,7 +257,6 @@ const services = {
   logout,
   createGuestCookie,
   createCorporate,
-  editInstructorDetails,
   me,
   AddDiscount,
   AddDiscountAll
