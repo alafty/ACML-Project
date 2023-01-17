@@ -33,11 +33,11 @@ const questionBankSchema = new Schema(
     },
 
     Course: {
-      type: String,
+      type: Schema.Types.ObjectId,
     //   required: true,
     },
     QuizID: {
-      type: String,
+      type: Schema.Types.ObjectId,
       //required: true,
     },
   },
