@@ -368,7 +368,7 @@ const me = async (req: Request, res: Response) => {
       break;
   }
 
-  res.status(200).json({...user, type: req.type});
+  res.status(200).json({...(user._doc), type: req.type});
 };
 
 const generateToken = (id: string, type: string) => {

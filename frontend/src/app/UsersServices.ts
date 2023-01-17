@@ -18,12 +18,10 @@ export const login = async (
     data: data,
   };
 
-
   httpClient(config)
     .then(async function (response) {
       if (response.data.message) {
         callback(response.data.message, true);
-        
       } else {
         setToken(response.data.token);
         await callback(response.data);
@@ -33,8 +31,6 @@ export const login = async (
       console.log(error);
       callback(error.response.data.message, true);
     });
-    
-    
 };
 
 export const register = async (
@@ -60,7 +56,7 @@ export const register = async (
       LoginCallback(response.data);
     })
     .catch(function (error) {
-      LoginCallback(error.response.data.message, true)
+      LoginCallback(error.response.data.message, true);
     });
 };
 
@@ -87,13 +83,12 @@ export const registerInstructor = async (
   httpClient(config)
     .then(function (response) {
       setToken(response.data.token);
-      callback(response.data)
+      callback(response.data);
     })
     .catch(function (error) {
       console.log(error);
     });
 };
-
 
 export const registerCorporate = async (
   username: String,
@@ -157,12 +152,9 @@ export const createCorporate = async (
     });
 };
 
-
 export const createGuestCookie = async () => {
-
-
-  httpClient.
-    get("/cookie", {
+  httpClient
+    .get("/cookie", {
       withCredentials: true,
     })
     .then(function (response) {
@@ -212,9 +204,20 @@ const testFunciton = async () => {
     });
 };
 
-const logout = async () => {
-  localStorage.removeItem('token');
-}
+const logout = () => {
+  localStorage.removeItem("token");
+};
+
+const me = async () => {
+  const response = await httpClient.get(
+    "/create/me",
+    {
+      headers: { ...getTokenHeader() },
+    }
+  );
+  
+  return response;
+};
 
 const services = {
   register,
@@ -225,6 +228,7 @@ const services = {
   createGuestCookie,
   createCorporate,
   editInstructorDetails,
+  me,
 };
 
 export default services;

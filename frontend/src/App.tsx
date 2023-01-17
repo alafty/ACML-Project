@@ -37,6 +37,7 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
+import TraineeProfile from "./pages/TraineeProfile";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -137,7 +138,7 @@ function app() {
             <Route path="/updateInstructor" element={<UpdateInstructor />} />
             <Route path="/viewCorporates" element={<ViewCorps />} />
             <Route path="/createCorporate" element={<CreateCorporate />} />
-
+            <Route path="/traineeProfile" element={<TraineeProfile />} />
 
 
 
