@@ -15,11 +15,13 @@ const courseSchema = new Schema(
       required: true,
     },
     Subtitles: {
-      type: [Subtitle.schema],
+      type: [Schema.Types.ObjectId],
+      ref: 'Subtitle',
       default: [],
     },
     Quizzes: {
-      type: [quiz.schema],
+      type: [Schema.Types.ObjectId],
+      ref: 'Quiz',
       default: []
     },
     Description: {

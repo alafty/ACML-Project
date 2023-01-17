@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 import { extractIdFromVideoUrl } from "../../utils/video_utils";
 import { CustomTextField } from "../../components/TextField";
 import coursesServices from "../../app/CoursesServices";
-import AddCourseSubtitle from "../../components/Course/AddCourseSubtitle";
 import courseServices from "../../app/CoursesServices";
 
 function InstructorDashboard() {
@@ -448,7 +447,7 @@ function InstructorDashboard() {
                           setQuizError('Please select a quiz to add this question in');
                         } 
                         else {
-                          if(){
+                          if(true){
                           
                             
                           } else {
