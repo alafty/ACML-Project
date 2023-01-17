@@ -9,7 +9,7 @@ import {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
-  recommendedCourses
+  recommendedCourses,
   purchaseCourse
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
