@@ -17,17 +17,18 @@ const problemSchema = new Schema(
     },
     Status: {
         type: String,
-        required: false,
-        default:"Unseen"
+        required: true
     },
     Course: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Course'
+        //type: course.schema,
+        type : String,
+        required: true
     },
     Sender: {
-        type: Schema.Types.ObjectId,
-        required: true    }
+        //type: corpTrainee.schema || instructor.schema || inidvTrainee.schema,
+        type : String,
+        required: true
+    }
   },
   { timestamps: true }
 );

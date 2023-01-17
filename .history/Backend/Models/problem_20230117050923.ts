@@ -21,13 +21,19 @@ const problemSchema = new Schema(
         default:"Unseen"
     },
     Course: {
+        //type: course.schema,
+        //type : String,
+        //required: true
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'Course'
     },
     Sender: {
+        //type: corpTrainee.schema || instructor.schema || inidvTrainee.schema,
+        //type : String,
+        //required: true
         type: Schema.Types.ObjectId,
-        required: true    }
+        required: false    }
   },
   { timestamps: true }
 );

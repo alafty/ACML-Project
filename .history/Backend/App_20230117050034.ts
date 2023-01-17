@@ -82,4 +82,4 @@ app.use("/instructor", instructorRouter);
 app.use("/corps", corporateRouter);
 app.use("/requests", requestRouter);
 app.use("/pdf", pdfRouter);
-app.use("/problem",problemRouter);
+app.use("problem",problemRouter);
