@@ -19,6 +19,7 @@ import pdfRouter from "./Routes/pdfRoutes";
 import requestRouter from "./Routes/requestsRoutes";
 import problemRouter from "./Routes/problemRoutes";
 import iTraineeRouter from "./Routes/ItraineeRoutes";
+import cTraineeRouter from "./Routes/CtraineeRoutes";
 
 import { createCookie } from "./Controllers/cookieController";
 import { getGuestCookie } from "./Controllers/guestController";
@@ -84,4 +85,5 @@ app.use("/corps", corporateRouter);
 app.use("/requests", requestRouter);
 app.use("/pdf", pdfRouter);
 app.use("/problem",problemRouter);
-app.use("/iTrainee",iTraineeRouter)
+app.use("/iTrainee",iTraineeRouter);
+app.use("/cTrainee",cTraineeRouter)
