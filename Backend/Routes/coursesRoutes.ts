@@ -9,6 +9,7 @@ import {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  recommendedCourses
   purchaseCourse
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
@@ -35,5 +36,8 @@ coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", protect, addRating); // Protect. Type == indivTrainee || corpTrainee
 
+coursesRouter.get('/recommended', recommendedCourses);
+
 coursesRouter.put("/payCourse",purchaseCourse);
+
 export default coursesRouter;
