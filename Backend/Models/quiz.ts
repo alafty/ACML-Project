@@ -9,8 +9,9 @@ const quizSchema = new Schema(
       required: true,
     },
     Questions: {
-      type: [question],
+      type: [Schema.Types.ObjectId],
       required: true,
+      ref : 'QuestionBank'
     }
   },
   { timestamps: true }
