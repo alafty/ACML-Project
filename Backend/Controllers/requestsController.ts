@@ -35,7 +35,6 @@ const createRequest = async (req: Request, res: Response) => {
   };
     }
   const acceptRequests = async (req, res) => {
-   // var Req = await request.findOne({_id : req.body._id});
     var trainee = await corpTrainee.findOne({_id : req.body.TraineeID});
     var theCourse = await course.findOne({_id : req.body.CourseID});
     const newCourse = {
@@ -53,5 +52,11 @@ const createRequest = async (req: Request, res: Response) => {
   }
   
 
+  const rejectRequests = async (req, res) => {
+    await request.findOneAndDelete(req.body);
+    res.status(200).json('request rejected');
+ 
+  }
 
-export { createRequest, fetchRequests,acceptRequests };
+
+export { createRequest, fetchRequests,acceptRequests,rejectRequests };
