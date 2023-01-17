@@ -26,7 +26,6 @@ const indivTraineeSchema = new Schema({
     //the number refers to the trainee's progress in each course
       type: [purchasedCourse],
       required: false,
-      ref: 'Course'
   },
   Wallet: {
     type: Number,
