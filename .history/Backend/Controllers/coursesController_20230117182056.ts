@@ -318,7 +318,17 @@ trainee.save(function (err) {
   res.status(200).json(trainee.PurchasedCourses);
 });
 theCourse.PurchaseCount++;
-theCourse.save();
+theCourse.save(function (err) {
+  try {
+    res.status(200).json(theCourse.PurchaseCount);
+    
+  }
+  catch {
+    res.status(400).json({ message: err });
+
+  }
+  
+});
 //const courses = trainee.PurchasedCourses;
 //courses.push((req.body.courseID,0));
 //await inidvTrainee.updateOne({_id : req.body._id}, {PurchasedCourses : courses});

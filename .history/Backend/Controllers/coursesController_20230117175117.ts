@@ -304,12 +304,9 @@ const putDiscount = async (req: Request, res: Response) => {
 const purchaseCourse = async (req, res) => {
  
 var trainee=  await inidvTrainee.findOne({_id : req.body._id});
-var theCourse = await course.findOne({_id : req.body.courseID});
-const newCourse = {
-  courseID : req.body.courseID,
-  progress : 0
-}
-trainee.PurchasedCourses.push(newCourse);
+//const newCourse = await course.findOne({_id : req.body.courseID})
+//var courseID = req.body.courseID;
+trainee.PurchasedCourses.push(req.body.courseID);
 trainee.save(function (err) {
   if (err) {
     res.status(400).json({ message: err });
@@ -317,8 +314,6 @@ trainee.save(function (err) {
   }
   res.status(200).json(trainee.PurchasedCourses);
 });
-theCourse.PurchaseCount++;
-theCourse.save();
 //const courses = trainee.PurchasedCourses;
 //courses.push((req.body.courseID,0));
 //await inidvTrainee.updateOne({_id : req.body._id}, {PurchasedCourses : courses});

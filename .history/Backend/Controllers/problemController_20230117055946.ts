@@ -17,8 +17,8 @@ const createProblem = async (req: Request, res: Response) => {
     // Courses should have attribute subject in them 
     const senderID =   req.body.Sender
     const problems = await problem.find({Sender: senderID});
-    const Course = await course.find({_id:req.body.Course});
-    console.log(Course);
+    const courseName = await course.find({_id:req.body.Course})
+    console.log(courseName);
     try {
         res.send(problems);
       } catch (error) {

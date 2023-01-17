@@ -74,7 +74,7 @@ const editInstructorDetails = async (req: Request, res: Response) => {
    // res.status(401).json({ message: "Not authorized" });
    // return;
  // }
-  var i = await instructor.findById(req.body._id);
+  var i = await instructor.findById(req.user._id);
 
   if (instructorInputValidate({ Email: true }, req)) {
     await i.updateOne({ Email: req.body.Email });
@@ -86,7 +86,7 @@ const editInstructorDetails = async (req: Request, res: Response) => {
     await i.updateOne({ Username: req.body.Username });
   }
 
-  i = await instructor.findById(req.body._id);
+  i = await instructor.findById(req.user._id);
 
   res.status(200).json(i);
 };
@@ -103,4 +103,4 @@ const editInstructorDetails = async (req: Request, res: Response) => {
     }
   }
 
-  export {addRating , viewCourseRatings , viewInstructorRatings, getInstructorData,editInstructorDetails};
+  export {addRating , viewCourseRatings , viewInstructorRatings, getInstructorData};

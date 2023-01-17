@@ -4,10 +4,7 @@ import course from "./course";
 
 
 
-const purchasedCourse = {
-  courseID : Schema.Types.ObjectId,
-  progress : Number
-}
+
 
 const indivTraineeSchema = new Schema({
   Username: {
@@ -24,7 +21,7 @@ const indivTraineeSchema = new Schema({
   },
   PurchasedCourses: {
     //the number refers to the trainee's progress in each course
-      type: [purchasedCourse],
+      type: [Schema.Types.ObjectId,Number],
       required: false,
       ref: 'Course'
   },

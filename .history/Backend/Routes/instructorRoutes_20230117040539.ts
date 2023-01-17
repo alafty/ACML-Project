@@ -3,8 +3,7 @@ import {
   addRating,
   viewCourseRatings,
   viewInstructorRatings,
-  getInstructorData,
-  editInstructorDetails
+  getInstructorData
 } from "../Controllers/instructorController";
 import { protect } from "../Middleware/authMiddleware";
 
@@ -14,8 +13,6 @@ instructorRouter.post("/rate", protect, addRating); // Protect. Type == indivTra
 instructorRouter.post("/coursesRate", viewCourseRatings);
 instructorRouter.post("/instructorRate", viewInstructorRatings);
 instructorRouter.post("/getData", getInstructorData);
-instructorRouter.put("/editData", editInstructorDetails);
-
 
 
 export default instructorRouter;
