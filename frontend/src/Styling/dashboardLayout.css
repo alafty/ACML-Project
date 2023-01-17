@@ -15,7 +15,13 @@ html, body{
 .dashboard-body {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    background-color: var(--text-dark);
+}
+
+.instructor-dashboard-body {
+    display: flex;
+    flex-direction: row;
+    height:fit-content ;
     background-color: var(--text-dark);
 }
 
@@ -25,6 +31,15 @@ html, body{
     justify-content: space-between;
     width: 400px;
     background-color: var(--primary);
+    box-shadow: rgba(111, 225, 229, 0.572) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.instructor-dashboard-side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    background-color: var(--secondary);
     box-shadow: rgba(111, 225, 229, 0.572) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -41,6 +56,16 @@ html, body{
     margin: 40px;
     width: 70vw;
     height: 50vh;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+.dashboard-add-course-card {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+    width: 70vw;
+    height: fit-content;
     background-color: var(--text);
     border-radius: 20px;
 }
@@ -76,6 +101,14 @@ html, body{
     width: 100%;
     font-size: 20px;
     color: var(--text-dark);
-    background-color: #3e8191;
+    background-color: #4599ae;
     margin-block: 20px;
+}
+
+.profile-items {
+    color: var(--white);
+    margin-inline: 40px;
+    font-size: 26px;
+    margin-block: 20px;
+    font-family: var(--font);
 }
