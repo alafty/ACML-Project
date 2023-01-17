@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import request from "../Models/request";
+import corpTrainee from "../Models/corporateTrainee";
+import course from "../Models/course";
 
 const createRequest = async (req: Request, res: Response) => {
 
@@ -32,8 +34,29 @@ const createRequest = async (req: Request, res: Response) => {
       res.status(400).json({message: "Validation Error"});
   };
     }
-  
+  const acceptRequests = async (req, res) => {
+    var trainee = await corpTrainee.findOne({_id : req.body.TraineeID});
+    var theCourse = await course.findOne({_id : req.body.CourseID});
+    const newCourse = {
+    courseID : req.body.CourseID,
+    progress : 0
+  }
+    trainee.PurchasedCourses.push(newCourse);
+    trainee.save();
+    theCourse.PurchaseCount++;
+    theCourse.save();
+    await request.findOneAndDelete(req.body);
+    res.status(200).json('request accepted');
+    console.log(trainee);
+    console.log(theCourse);
+  }
   
 
+  const rejectRequests = async (req, res) => {
+    await request.findOneAndDelete(req.body);
+    res.status(200).json('request rejected');
+ 
+  }
 
-export { createRequest, fetchRequests };
+
+export { createRequest, fetchRequests,acceptRequests,rejectRequests };

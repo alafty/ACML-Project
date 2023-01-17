@@ -1,5 +1,12 @@
 import { Schema, model } from "mongoose";
 
+
+
+
+const purchasedCourse = {
+  courseID : Schema.Types.ObjectId,
+  progress : Number
+}
 //MIGHT MERGE WITH INDIV TRAINEE AND MAKE A CORPORATE AS AN ATTRIBUTE
 const corpTraineeSchema = new Schema(
   {
@@ -16,9 +23,9 @@ const corpTraineeSchema = new Schema(
       required: true,
     },
     PurchasedCourses: {
-      type: [Schema.Types.ObjectId],
-      required: false,
-      ref: 'Course'
+      //the number refers to the trainee's progress in each course
+        type: [purchasedCourse],
+        required: false,
     },
     Corporate: {
       type: Schema.Types.ObjectId,

@@ -38,7 +38,7 @@ const questionBankSchema = new Schema(
     },
     QuizID: {
       type: String,
-      required: true,
+      //required: true,
     },
   },
   { timestamps: true }

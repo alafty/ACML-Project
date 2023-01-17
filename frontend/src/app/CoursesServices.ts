@@ -1,5 +1,6 @@
 import axios from "axios";
 import { response } from "express";
+import e from "express";
 import qs from "qs";
 import httpClient from "../utils/httpClient";
 
@@ -72,6 +73,70 @@ const getCourseQuizzes = async (Course: string) => {
   const data: [String] = [""];
   await axios.post("http://localhost:8000/quiz/getCourseQuizzes", Body);
   return data;
+};
+
+const createCourse = async (
+  name:String,
+  subject: String, 
+  instructor: String,
+  price: String,
+  totalHours: String,
+  vidID: String,
+  description: String
+) => {
+var data = qs.stringify({
+  'Name': name,
+  'Subject':  subject,
+  'Instructor': instructor,
+  'Price': price,
+  'TotalHours': totalHours,
+  'VideoId': vidID,
+  'Description': description
+});
+var config = {
+  method: 'post',
+  url: 'http://localhost:8000/courses/',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded', 
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+};
+
+const createQuiz = async (
+
+) => {
+  
+}
+
+const createSubtitle = async (
+  courseId: string,
+  videoId: string,
+  description: string,
+  order: String
+) => {
+  var data = qs.stringify({
+    id: courseId,
+    VideoId: videoId,
+    Description: description,
+    Order: order
+  });
+  var response = await httpClient.put(`${COURSES_URL}/subtitle`, data);
+
+  if(response.status == 200){
+    return 'success'
+  }else {
+    return response.data;
+  }
 };
 
 const updateSubtitle = async (
@@ -158,6 +223,8 @@ const Services = {
   uploadCourseVideo,
   addCourseDiscount,
   getRecommendedCourses,
+  createCourse,
+  createSubtitle
 };
 
 export default Services;
