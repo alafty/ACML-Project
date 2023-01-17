@@ -1,67 +1,103 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../../app/CoursesServices";
-import CourseVideo from "../../components/Course/CourseVideo";
+import SearchAppBar from "../../components/searchAppBar";
 import { extractIdFromVideoUrl } from "../../utils/video_utils";
+import  Divider  from "@mui/material/Divider";
+import CourseDetailsCenter from "../../components/Course/CourseDetailsCenter";
+import instructorServices from '../../app/InstructorServices'
+import InstructorCard from "../../components/InstructorCard";
+import PriceCard from "../../components/PriceCard";
+import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
+import { useGlobalState } from "../../App";
+import LoggedInBar from "../../components/loggeedInAppBar";
 
 export default function CourseDetails() {
   const { id } = useParams();
-  const [quizzes, setQuizzes] = useState(null);
+  //const [quizzes, setQuizzes] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
-  const [videoStatusText, setVideoStatusText] = useState("");
+  const [instructorDetails, setInstructorDetails] = useState(null);
+  //const [videoStatusText, setVideoStatusText] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-  const [discountStatusText, setDiscountStatusText] = useState("");
+  //const [discountStatusText, setDiscountStatusText] = useState("");
   const [discountDuration, setDiscountDuration] = useState("");
   const [discountPercentage, setDiscountPercentage] = useState("");
+  const [state, dispatch] = useGlobalState();
+  const [isPurchased, setPurchased] = useState(false);
+  
 
   useEffect(() => {
-    courseServices.getCourseDetails(id).then((data) => {
-      setCourseDetails(data);
-    });
-    courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
-  }, []);
-
-  const handleUrlUpload = async () => {
-    try {
-      const vidId = extractIdFromVideoUrl(videoUrl);
-      courseServices.uploadCourseVideo(id, vidId).then((data) => {
-        if (data) {
-          var newCourse = courseDetails;
-          newCourse.VideoId = vidId;
-          setVideoStatusText("Success!");
-          setCourseDetails(newCourse);
-          setVideoUrl('');
-        } else {
-          setVideoStatusText("Try again");
-        }
-      });
-    } catch {
-      setVideoStatusText("Make sure url is valid");
+    const fetchCourseDetails = async () =>{
+      await courseServices.getCourseDetails(id).then((data) => {
+        setCourseDetails(data);
+      }); 
+      //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
     }
-  };
+    const fetchInstructorDetails = async () => {
+      await instructorServices.getInstructorData(courseDetails?.Instructor)
+      .then((data) =>{
+        setInstructorDetails(data);
+      })
+      .catch((Error) => {
+        console.log(Error);
+        
+      });
+    }
+    const isCoursePurchased = async () => {
+      if(state.loggedInUser.Username){
+        console.log(isPurchased);
+        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
+      }
+    }
+    fetchCourseDetails();
+    fetchInstructorDetails();
+    isCoursePurchased();
+    
+    
+  }, [courseDetails, id, instructorDetails]);
 
-  const handleDurationAdding = async () => {
-    try {
-      const duration = Number.parseInt(discountDuration);
-      const percentage = Number.parseInt(discountPercentage);
-      console.log('wee');
+  // const handleUrlUpload = async () => {
+  //   try {
+  //     const vidId = extractIdFromVideoUrl(videoUrl);
+  //     courseServices.uploadCourseVideo(id, vidId).then((data) => {
+  //       if (data) {
+  //         var newCourse = courseDetails;
+  //         newCourse.VideoId = vidId;
+  //         setVideoStatusText("Success!");
+  //         setCourseDetails(newCourse);
+  //         setVideoUrl('');
+  //       } else {
+  //         setVideoStatusText("Try again");
+  //       }
+  //     });
+  //   } catch {
+  //     setVideoStatusText("Make sure url is valid");
+  //   }
+  // };
+
+  // const handleDurationAdding = async () => {
+  //   try {
+  //     const duration = Number.parseInt(discountDuration);
+  //     const percentage = Number.parseInt(discountPercentage);
       
-      courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
-        if (data) {
-          var newCourse = courseDetails;
-          newCourse.Discounts.push(data);
-          setDiscountStatusText("Success!");
-          setCourseDetails(newCourse);
-          setDiscountDuration('');
-          setDiscountPercentage('')
-        } else {
-          setDiscountStatusText("Try again");
-        }
-      });
-    } catch {
-      setDiscountStatusText("Make sure discount is valid");
-    }
-  };
+  //     courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
+  //       if (data) {
+  //         var newCourse = courseDetails;
+  //         newCourse.Discounts.push(data);
+  //         setDiscountStatusText("Success!");
+  //         setCourseDetails(newCourse);
+  //         setDiscountDuration('');
+  //         setDiscountPercentage('')
+  //       } else {
+  //         setDiscountStatusText("Try again");
+  //       }
+  //     });
+  //   } catch {
+  //     setDiscountStatusText("Make sure discount is valid");
+  //   }
+  // };
+
+  
 
   ///TODOLIST
   //Course name
@@ -77,19 +113,38 @@ export default function CourseDetails() {
   //Course details page as 3 different styles. Non-purchaser, purchaser and instructor
 
   return (
-    <div>
+    <div className="container">
+      {
+        state.loggedInUser.Username ? 
+        <LoggedInBar default='/home' />
+        :
+        <SearchAppBar page={0}/>
+      }
+      <div className="course-details-body" style={{display: 'flex', flexDirection: 'row'}}>
       {/* {id} */}
-      <p>{courseDetails?.Name}</p>
-      <p>{courseDetails?.Subject}</p>
-      <CourseVideo embedId={courseDetails?.VideoId} />
-      <p>{courseDetails?.Price}</p>
-      <p>{courseDetails?.Instructor}</p>
-      <p>{courseDetails?.TotalHours}</p>
-      <p>{JSON.stringify(courseDetails?.Discounts)}</p>
-      <p>{[...(courseDetails?.Subtitles ?? [])]?.map((e) => `${e?._id} `)}</p>
-      <p>{JSON.stringify(courseDetails?.Subtitles)}</p>
-      <p>{JSON.stringify(quizzes)}</p>
-      <input
+        <div style={{width: '30%'}}>
+            <InstructorCard instructorDetails={instructorDetails}/>
+            <PriceCard 
+            userDetails={state.loggedInUser}
+            courseDetails={courseDetails} 
+            isPurchased={isPurchased} 
+            type={state.loggedInUser.type} />
+
+            <Divider variant= "fullWidth"/>
+        </div>
+        <div>
+          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsSubtitles courseDetails={courseDetails} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+{/* <p>{JSON.stringify(courseDetails?.Discounts)}</p> */}
+      {/* <p>{JSON.stringify(courseDetails?.Subtitles)}</p> */}
+      {/* <p>{JSON.stringify(quizzes)}</p> */}
+      {/* <input
         type="text"
         placeholder="VideoURL upload"
         name="VideoURL"
@@ -121,7 +176,4 @@ export default function CourseDetails() {
       <button type="submit" onClick={handleDurationAdding}>
         Add Discount
       </button>
-      <p>{videoStatusText}</p>
-    </div>
-  );
-}
+      <p>{videoStatusText}</p> */}

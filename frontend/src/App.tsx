@@ -1,23 +1,42 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ForgotPassword  from './pages/Login/ForgotPassword'
 import ResetPassword  from './pages/Login/ResetPassword'
-
+import PDFGenerator from "./pages/PDFGenerator";
 import Landing from "./pages/Landing";
-import IndividualTrainee from "./pages/Register/IndividualTraineeRegister";
+import InstructorLanding from "./pages/Instructor/InstructorLanding";
+import CorporateLanding from "./pages/Corporate/CorporateLanding";
+
+import IndividualRegister from "./pages/Register/IndividualTraineeRegister";
+import CorporateRegister from "./pages/Register/CorporateRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
-import CorporateTrainee from "./pages/Register/CorporateTraineeRegister";
+
+import Home from "./pages/Home";
+import CorporateDashboard from "./pages/CorporateDashboard";
+
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDetails";
-import Home from "./pages/Home";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
+import LandingInstructor from "./pages/LandingInstructor";
+import AdminDashboard from "./pages/admin/adminDashboard";
+import CreateAdmin from "./pages/admin/createAdmin";
+import CreateInstructor from "./pages/admin/createInstructor";
+import CreateCTrainee from "./pages/admin/createCTrainee";
+import CreateITrainee from "./pages/admin/createITrainee";
+import ViewProblems from "./pages/admin/viewProblems";
+import ViewInstructors from "./pages/admin/viewInstructors";
+import UpdateInstructor from "./pages/admin/updateInstructor";
+import ViewAdmins from "./pages/admin/viewAdmins";
+import ViewCorps from "./pages/admin/viewCorps";
+import CreateCorporate from "./pages/admin/createCorporate";
+import ViewCTrainees from "./pages/admin/viewCTrainees";
+import ViewITrainees from "./pages/admin/viewITrainees";
 import CheckoutPage from "./pages/Payment/checkoutPage";
 
 const defaultGlobalState = {
@@ -46,9 +65,6 @@ export const useGlobalState = () => [
   React.useContext(dispatchStateContext),
 ];
 
-
-
-
 function app() {
   
   return (
@@ -56,32 +72,72 @@ function app() {
       <Router>
         <div>
           <Routes>
-            <Route path='/' element={<Landing/>} />
-            <Route path="/" element={<Landing />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path='/rate' element={<Rate/>} />
-            <Route
-              path="/indivTraineeRegister"
-              element={<IndividualTrainee />}
-            />
-            <Route
-              path="/instructorRegister"
-              element={<InstructorRegister />}
-            />
-            <Route path="/corpTraineeRegister" element={<CorporateTrainee />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/instructorHome" element={<InstructorDetails />} />
+            <Route 
+            path='/' 
+            element={<Landing/>} />
 
+            <Route 
+            path='/instructor' 
+            element={<InstructorLanding/>} />
+
+            <Route 
+            path='/corporate' 
+            element={<CorporateLanding/>} />         
+
+            <Route
+              path="/register/indivTrainee"
+              element={<IndividualRegister />}
+            />
+
+            <Route 
+            path="/register/corporate" 
+            element={<CorporateRegister />} />
+
+            <Route 
+            path="/register/instructor" 
+            element={<InstructorRegister />} />
+
+            <Route 
+            path="/login" 
+            element={<Login />} />
+
+            <Route 
+            path='/rate' 
+            element={<Rate/>} />
+
+            <Route 
+            path="/home" 
+            element={<Home />} />
+
+            <Route 
+            path="/corporate/dashboard" 
+            element={<CorporateDashboard />} />
+
+            <Route
+            path="/instructor/profile" 
+            element={<InstructorDetails />} />
+            <Route path="/pdf" element={<PDFGenerator/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />
-            <Route path='/instructorHome' element={<InstructorDetails/>} />
             <Route path='/legal' element= {<Legal/>} />
             <Route path='/legalinstructor' element= {<LegalInstructor/>} />
             <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/createAdmin" element={<CreateAdmin />} />
+            <Route path="/viewAdmins" element={<ViewAdmins />} />
+            <Route path="/createInstructor" element={<CreateInstructor />} />
+            <Route path="/createCorpTrainee" element={<CreateCTrainee />} />
+            <Route path="/viewCorpTrainee" element={<ViewCTrainees />} />
+            <Route path="/createindivTrainee" element={<CreateITrainee />} />
+            <Route path="/viewindivTrainee" element={<ViewITrainees />} />
+            <Route path="/viewProblems" element={<ViewProblems />} />
+            <Route path="/viewInstructors" element={<ViewInstructors />} />
+            <Route path="/updateInstructor" element={<UpdateInstructor />} />
+            <Route path="/viewCorporates" element={<ViewCorps />} />
+            <Route path="/createCorporate" element={<CreateCorporate />} />
             <Route path="/checkoutPage" element={<CheckoutPage />} />
 
 

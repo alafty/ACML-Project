@@ -14,8 +14,9 @@ const indivTraineeSchema = new Schema({
     required: true,
   },
   PurchasedCourses: {
-    type: [Object],
-    required: false
+    type: [Schema.Types.ObjectId],
+      required: false,
+      ref: 'Course'
   },
   Wallet: {
     type: Number,

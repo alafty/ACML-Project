@@ -6,7 +6,7 @@ import { Container } from '@mui/material';
 export default function CourseVideo(props: { embedId: string }) {
     return (
         <div className="video-responsive" style={{
-            height: '315px', width: '560px',
+            height: '72.5vh', width: '97%', margin: '20px', borderRadius: '20px'
         }}>
             <Container maxWidth={'sm'}>
 

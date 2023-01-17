@@ -1,166 +1,219 @@
-import axios from 'axios'
-import qs from 'qs'
+import axios from "axios";
+import qs from "qs";
+import { getTokenHeader, setToken } from "../utils/authUtils";
+import httpClient from "../utils/httpClient";
 
-export const login = async (username: String, password: String, callback: Function) => {
+export const login = async (
+  email: String,
+  password: String,
+  callback: Function
+) => {
   var data = qs.stringify({
-    'Username': username,
-    'Password': password,
+    Email: email,
+    Password: password,
   });
   var config = {
-    method: 'post',
-    url: 'http://localhost:8000/create/login',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    withCredentials: true,
-    data: data
+    method: "post",
+    url: "create/login",
+    data: data,
   };
-  let returnData;
 
-  axios(config)
+
+  httpClient(config)
     .then(async function (response) {
-      if (response.data) {
-        //console.log(response.data);
-        await callback(response.data);
-
+      if (response.data.message) {
+        callback(response.data.message, true);
+        
       } else {
-        callback('NothingFound');
+        setToken(response.data.token);
+        await callback(response.data);
       }
-
-
-
     })
     .catch(function (error) {
       console.log(error);
+      callback(error.response.data.message, true);
     });
-}
+    
+    
+};
 
-export const register = async (username: String, email: String, password: String, country: String) => {
+export const register = async (
+  username: String,
+  email: String,
+  password: String,
+  LoginCallback: any
+) => {
   var data = qs.stringify({
-    'Username': username,
-    'Email': email,
-    'Password': password,
-    'Country': country
+    Username: username,
+    Email: email,
+    Password: password,
   });
   var config = {
-    method: 'post',
-    url: 'http://localhost:8000/create/individualTrainee',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: data
+    method: "post",
+    url: "/create/individualTrainee",
+    data: data,
   };
 
-  axios(config)
+  httpClient(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
-      console.log(error);
+      LoginCallback(error.response.data.message, true)
     });
+};
 
-}
-
-export const registerInstructor = async (username: String, email: String, password: String, country: String, shortBio: String) => {
+export const registerInstructor = async (
+  username: String,
+  email: String,
+  password: String,
+  shortBio: String,
+  callback: any
+) => {
   var data = qs.stringify({
-    'Username': username,
-    'Email': email,
-    'Password': password,
-    'Country': country,
-    'ShortBio': shortBio
+    Username: username,
+    Email: email,
+    Password: password,
+    ShortBio: shortBio,
   });
   var config = {
-    method: 'post',
-    url: 'http://localhost:8000/create/instructor',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: data
+    method: "post",
+    url: "/create/instructor",
+
+    data: data,
   };
 
-  axios(config)
+  httpClient(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      setToken(response.data.token);
+      callback(response.data)
     })
     .catch(function (error) {
       console.log(error);
     });
+};
 
-}
 
-export const registerCorporate = async (username: String, email: String, password: String, country: String, corporate: String) => {
+export const registerCorporate = async (
+  username: String,
+  email: String,
+  password: String,
+  country: String,
+  corporate: String,
+  LoginCallback: any
+) => {
   var data = qs.stringify({
-    'Username': username,
-    'Email': email,
-    'Password': password,
-    'Country': country,
-    'Corporate': corporate
+    Username: username,
+    Email: email,
+    Password: password,
+    Country: country,
+    Corporate: corporate,
   });
   var config = {
-    method: 'post',
-    url: 'http://localhost:8000/create/corporateTrainee',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data: data
+    method: "post",
+    url: "/create/corporateTrainee",
+    data: data,
   };
 
-  axios(config)
+  httpClient(config)
     .then(function (response) {
-      console.log(JSON.stringify(response.data));
+      setToken(response.data.token);
+      LoginCallback(response.data);
     })
     .catch(function (error) {
       console.log(error);
     });
+};
 
-}
+export const createCorporate = async (
+  name: String,
+  email: String,
+  password: String,
+  industry: String,
+  packageID: String,
+  callback: any
+) => {
+  var data = qs.stringify({
+    Username: name,
+    Email: email,
+    Password: password,
+    Industry: industry,
+    Package: packageID,
+  });
+  var config = {
+    method: "post",
+    url: "/create/corporate",
+    data: data,
+  };
+
+  httpClient(config)
+    .then(function (response) {
+      setToken(response.data.token);
+      callback(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
 
 export const createGuestCookie = async () => {
-  var config = {
-    method: 'get',
-    url: 'http://localhost:8000/cookie',
-    headers: {
-      withCredentials: true
-    }
 
-  };
 
-  axios.get('http://localhost:8000/cookie', {
-    withCredentials: true
-  })
+  httpClient.
+    get("/cookie", {
+      withCredentials: true,
+    })
     .then(function (response) {
-      localStorage.setItem('currentCookie', JSON.stringify(response.data));
+      localStorage.setItem("currentCookie", JSON.stringify(response.data));
     })
     .catch(function (error) {
       console.log(error);
     });
+};
 
-}
-
-export const editInstructorDetails = async (username: String, callback: Function, email?: String, bio?: String, ) => {
+export const editInstructorDetails = async (
+  username: String,
+  callback: Function,
+  email?: String,
+  bio?: String
+) => {
   var data = qs.stringify({
-    'username': username,
-    'email': email,
-    'bio': bio
+    username: username,
+    email: email,
+    bio: bio,
   });
   var config = {
-    method: 'post',
-    url: 'http://localhost:8000/create/editInstructor',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Cookie': 'userData=j%3A%7B%22id%22%3A%22%22%2C%22type%22%3A%22%22%2C%22Country%22%3A%22Egypt%22%7D'
-    },
-    data: data
+    method: "post",
+    url: "/create/editInstructor",
+    data: data,
   };
 
-  axios(config)
+  httpClient(config)
     .then(function (response) {
       callback(response.status);
     })
     .catch(function (error) {
       console.log(error);
     });
+};
 
+const testFunciton = async () => {
+  const data = qs.stringify({
+    Username: "taku",
+  });
+  httpClient
+    .post("/instructor/edit", data, {
+      headers: { ...getTokenHeader() },
+    })
+    .then((response) => {
+      console.log(response);
+    });
+};
+
+const logout = async () => {
+  localStorage.removeItem('token');
 }
 
 const services = {
@@ -168,8 +221,10 @@ const services = {
   registerCorporate,
   registerInstructor,
   login,
+  logout,
   createGuestCookie,
-  editInstructorDetails
-}
+  createCorporate,
+  editInstructorDetails,
+};
 
 export default services;

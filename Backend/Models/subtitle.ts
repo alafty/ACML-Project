@@ -9,6 +9,10 @@ const subtitleSchema = new Schema(
       type: String,
       required: true,
     },
+    Order:{
+      type: Number,
+      required: true
+    }
   },
   { timestamps: true }
 );

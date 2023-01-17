@@ -13,10 +13,7 @@ const adminSchema = new Schema({
     type: String,
     required: true,
   },
-  PreferenceLevel: {
-    type: Number,
-    required: true
-  }
+
 }, { timestamps: true });
 
 const admin = model('Admin', adminSchema);
