@@ -191,6 +191,61 @@ export const editInstructorDetails = async (
     });
 };
 
+export const AddDiscountAll = async (
+  percentage: String,
+  duration: String,
+  callback: Function
+ 
+
+) => {
+  var data = qs.stringify({
+    Percentage: percentage,
+    Duration: duration
+  });
+  var config = {
+    method: "put",
+    url: "/courses/discountAll",
+    data: data,
+    headers: {...getTokenHeader()}
+  };
+
+  httpClient(config)
+    .then(function (response) {
+      callback(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+export const AddDiscount = async (
+  percentage: String,
+  duration: String,
+  courseID: String,
+  callback: Function
+ 
+
+) => {
+  var data = qs.stringify({
+    id:courseID,
+    Percentage: percentage,
+    Duration: duration
+  });
+  var config = {
+    method: "put",
+    url: "/courses/discount",
+    data: data,
+    headers: {...getTokenHeader()}
+  };
+
+  httpClient(config)
+    .then(function (response) {
+      callback(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
 const testFunciton = async () => {
   const data = qs.stringify({
     Username: "taku",
@@ -229,6 +284,8 @@ const services = {
   createCorporate,
   editInstructorDetails,
   me,
+  AddDiscount,
+  AddDiscountAll
 };
 
 export default services;
