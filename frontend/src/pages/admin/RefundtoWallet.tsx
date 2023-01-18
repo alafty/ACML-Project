@@ -5,19 +5,20 @@ import { Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField } from '../../components/TextField';
 import Alert from '@mui/material/Alert';
-import services from '../../app/UsersServices';
+import services from '../../app/AdminServices';
 import { useGlobalState } from '../../App';
 import SearchAppBar from '../../components/searchAppBar';
 
-function ApplyDiscount() {
+function RefundtoWallet() {
   
-  const [courseID, setCourseID] = React.useState('');
-  const [percentage , setPercentage ] = React.useState('');
-  const [ duration , setDuration ] = React.useState('');
+  const [userID, setUserID] = React.useState('');
+  const [amount, setAmount] = React.useState('');
   const [state, dispatch] = useGlobalState();
   const [errorMessage, setErrorMesssage] = React.useState('');
-  services.createGuestCookie();
 
+  // if (props._id){
+  // setUserID(props._id);
+  // }
   const callBack = async (data: any, resError?: boolean) =>{
     if(resError){
       setErrorMesssage(data);
@@ -25,42 +26,31 @@ function ApplyDiscount() {
       return;
     }
     
-  }
+  };
 
   return (
-    <div className="container">
-      <SearchAppBar page={0} />
-      <div className='login-body'>
+    <div className="dashboard-add-course-card">
+      
         <div className='login-card'>
-          <h2 className='login-header'> Add Discount to Course </h2>
+          <h2 className='login-header'> Refund User</h2>
           <CustomTextField
           id='text-field'
-          placeholder="Course ID"
+          placeholder="User ID"
           InputProps={{
             className: 'text-field'
           }}
           onChange={(e) => {
-              setCourseID(e.target.value);
+              setUserID(e.target.value);
             }}
           />
           <CustomTextField
           id='text-field'
-          placeholder="Discount Percentage"
+          placeholder="Amount"
           InputProps={{
             className: 'text-field'
           }}
           onChange={(e) => {
-              setPercentage(e.target.value);
-            }}
-          />
-          <CustomTextField
-          id='text-field'
-          placeholder="Duration "
-          InputProps={{
-            className: 'text-field'
-          }}
-          onChange={(e) => {
-              setDuration(e.target.value);
+              setAmount(e.target.value);
             }}
           />
 
@@ -71,26 +61,25 @@ function ApplyDiscount() {
           onClick={
             
             async () => {
-              if( !percentage || !duration){
-                setErrorMesssage("Please set the percentage and duration for the Discount");
+              console.log("hig");
+              if( !userID || !amount){
+                setErrorMesssage("Please set the User ID and the amount ");
               } else{
              
-                // if (!courseID){
-                //     await services.AddDiscount(percentage, duration,courseID, callBack);
-                // }else{
-                    await services.AddDiscountAll(percentage,duration, callBack);
+      
+                    await services.RefundUser(userID,Number(amount), callBack);
 
-                // }
+        
             }
            
             }
           }
-        > Apply Discount </Button>
+        > Refund </Button>
         </div>
-      </div>
+      
     </div>
 
   )
 }
 
-export default ApplyDiscount;
+export default RefundtoWallet;

@@ -9,6 +9,7 @@ import inidvTrainee from "../Models/individualTrainee";
 import course from "../Models/course";
 import instructor from "../Models/instructor";
 import corpTrainee from "../Models/corporateTrainee";
+import IndividualTrainee from "../../frontend/src/pages/Register/IndividualTraineeRegister";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -50,16 +51,18 @@ const searchCourses = (req: Request, res: Response) => {
   Course.find(
     {
       $or: [
-        { Subject: req.body.searchTerm },
-        { Instructor: req.body.searchTerm },
-        { Name: req.body.searchTerm },
+        { Name: { $regex: `.*${req.body.searchTerm}.*`, $options: "i" } },
+        { Subject: { $regex: `.*${req.body.searchTerm}.*`, $options: "i" } },
+        //   // { Instructor: req.body.searchTerm },
       ],
     },
     function (err: any, data: any) {
       if (err) {
         console.log(err);
       } else {
-        res.send(data);
+        console.log(data);
+
+        res.status(200).json(data);
       }
     }
   );
@@ -92,13 +95,13 @@ const addCourse = async (req: Request, res: Response) => {
     const newCourse = await Course.create(newBody);
     const tempInstructor = await instructor.findById(newCourse.Instructor);
     console.log(tempInstructor);
-    tempInstructor.NumberOfCourses ++;
+    tempInstructor.NumberOfCourses++;
     tempInstructor.Courses.push(newCourse._id);
     console.log(tempInstructor);
-    await instructor.findByIdAndUpdate(newCourse.Instructor, 
-      {NumberOfCourses: tempInstructor.NumberOfCourses, 
-      Courses: tempInstructor.Courses
-      });
+    await instructor.findByIdAndUpdate(newCourse.Instructor, {
+      NumberOfCourses: tempInstructor.NumberOfCourses,
+      Courses: tempInstructor.Courses,
+    });
     res.status(200).json(newCourse);
   }
 };
@@ -153,6 +156,27 @@ const addRating = async (req: Request, res: Response) => {
       res.status(401).json({ message: "Not authorized" });
       return;
     }
+    var ownsCourse = false;
+    if (userTypes.corporateTrainee) {
+      const u = await corpTrainee.findById(req.user._id);
+      for (var c in u.PurchasedCourses) {
+        if (u.PurchasedCourses[c].courseID == req.body.id) {
+          ownsCourse = true;
+        }
+      }
+    } else {
+      const u = await inidvTrainee.findById(req.user._id);
+      for (var c in u.PurchasedCourses) {
+        if (u.PurchasedCourses[c].courseID == req.body.id) {
+          ownsCourse = true;
+        }
+      }
+    }
+    if (!ownsCourse) {
+      res.status(400).json({ message: "Can't rate course you don't own" });
+      return;
+    }
+
     var mult = 0;
     const courseID = req.body.id;
     const ratingResult = await Course.findById(courseID);
@@ -195,22 +219,24 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
       return;
     }
     if (course) {
-        var newSub = Subtitle.create({
-          VideoId: sub.VideoId,
-          Description: sub.Description,
-          Order: sub.Order,
-        });
-        var createdSub = Subtitle.findOne({VideoId: sub.VideoId,
-          Description: sub.Description,
-          Order: sub.Order});
-        course.Subtitles.push((await createdSub)._id);
-        course.save(function (err) {
-          if (err) {
-            res.status(400).json({ message: err });
-            return;
-          }
-          res.status(200).json(newSub);
-        });
+      var newSub = Subtitle.create({
+        VideoId: sub.VideoId,
+        Description: sub.Description,
+        Order: sub.Order,
+      });
+      var createdSub = Subtitle.findOne({
+        VideoId: sub.VideoId,
+        Description: sub.Description,
+        Order: sub.Order,
+      });
+      course.Subtitles.push((await createdSub)._id);
+      course.save(function (err) {
+        if (err) {
+          res.status(400).json({ message: err });
+          return;
+        }
+        res.status(200).json(newSub);
+      });
     } else {
       res
         .status(400)
@@ -284,38 +310,34 @@ const putDiscount = async (req: Request, res: Response) => {
       }
       res.status(200).json(newDiscount);
     });
-  } 
+  }
 };
 
 const putDiscountAllCourses = async (req: Request, res: Response) => {
-    
-     if ( req.type != userTypes.admin) {
-      res.status(401).json({ message: req.type });
-      return;
-     }
-    var c = await Course.find();
-    
-    if (!c) {
-      console.log("herwwwwe")
-      res
-        .status(400)
+  if (req.type != userTypes.admin) {
+    res.status(401).json({ message: req.type });
+    return;
+  }
+  var c = await Course.find();
 
-        
-        .json({ message: "No courses Available " });
-      return;
-    }
-  
-    if (
-    ( !req.body.Duration ||!req.body.Percentage)
-    ) {
-      console.log("here");
-      res.status(400).json({
-        message:
-          "Make sure Discount duration and percentage are properly specified in body",
-      });
-      return;
-    }
-    c.forEach(function (i){
+  if (!c) {
+    console.log("herwwwwe");
+    res
+      .status(400)
+
+      .json({ message: "No courses Available " });
+    return;
+  }
+
+  if (!req.body.Duration || !req.body.Percentage) {
+    console.log("here");
+    res.status(400).json({
+      message:
+        "Make sure Discount duration and percentage are properly specified in body",
+    });
+    return;
+  }
+  c.forEach(function (i) {
     var newDiscount = i.Discounts.create({
       Duration: req.body.Duration,
       Percentage: req.body.Percentage,
@@ -329,7 +351,6 @@ const putDiscountAllCourses = async (req: Request, res: Response) => {
       res.status(200).json(newDiscount);
     });
   });
-
 };
 
 const recommendedCourses = async (req: Request, res: Response) => {
@@ -387,54 +408,51 @@ const putCourseProgress = async(req: Request, res: Response) => {
 
 
 const purchaseCourse = async (req, res) => {
- 
-var trainee=  await inidvTrainee.findOne({_id : req.body._id});
-var theCourse = await course.findOne({_id : req.body.courseID});
-const newCourse = {
-  courseID : req.body.courseID,
-  progress : 0
-}
-trainee.PurchasedCourses.push(newCourse);
-trainee.save(function (err) {
-  if (err) {
-    res.status(400).json({ message: err });
-    return;
-  }
-  res.status(200).json(trainee.PurchasedCourses);
-});
-theCourse.PurchaseCount++;
-theCourse.save();
-//const courses = trainee.PurchasedCourses;
-//courses.push((req.body.courseID,0));
-//await inidvTrainee.updateOne({_id : req.body._id}, {PurchasedCourses : courses});
-//res.status(200).json("Course purchased successfully");
+  var id = req.user._id;
+  var trainee = await inidvTrainee.findOne(id);
+  var theCourse = await course.findOne({ _id: req.body.courseID });
+
+  const newCourse = {
+    courseID: req.body.courseID,
+    progress: 0,
+  };
+  trainee.PurchasedCourses.push(newCourse);
+  trainee.save(function (err) {
+    if (err) {
+      res.status(400).json({ message: err });
+      return;
     }
+    res.status(200).json(trainee.PurchasedCourses);
+  });
+  theCourse.PurchaseCount++;
+  theCourse.save();
+  //const courses = trainee.PurchasedCourses;
+  //courses.push((req.body.courseID,0));
+  //await inidvTrainee.updateOne({_id : req.body._id}, {PurchasedCourses : courses});
+  //res.status(200).json("Course purchased successfully");
+};
 
-    const getCourseSubtitles= async (req: Request, res: Response) => {
-  
-      var CourseID = req.body._id
-      var Course = await course.findOne({_id:CourseID})
-      var subs = Course.Subtitles;
-      res.status(200).json(subs);
-      return subs
+const getCourseSubtitles = async (req: Request, res: Response) => {
+  var CourseID = req.body._id;
+  var Course = await course.findOne({ _id: CourseID });
+  var subs = Course.Subtitles;
+  res.status(200).json(subs);
+  return subs;
+};
+const getSubtitle = async (req: Request, res: Response) => {
+  var CourseID = req.body._id;
+  var Course = await course.findOne({ _id: CourseID });
+  var subs = Course.Subtitles;
+  var sub = {};
+  for (let i = 0; i < subs.length; i++) {
+    if (subs[i].Order == req.body.Order) {
+      sub = subs[i];
+      break;
     }
-    const getSubtitle= async (req: Request, res: Response) => {
-      var CourseID = req.body._id
-      var Course = await course.findOne({_id:CourseID})
-      var subs = Course.Subtitles;
-      var sub={};
-      for (let i=0;i<subs.length;i++){
-        if (subs[i].Order==req.body.Order) {
-          sub = subs[i];
-          break;
-        }
-      }
-      res.status(200).json(sub);
-      return sub;
-  
   }
-
-
+  res.status(200).json(sub);
+  return sub;
+};
 
 export {
   getCourses,
@@ -452,4 +470,5 @@ export {
   getCourseSubtitles,
   getSubtitle,
   putCourseProgress
+
 };

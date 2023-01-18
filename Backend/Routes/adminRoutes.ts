@@ -19,7 +19,8 @@ import {
   getCorps,
   deleteCorptrainee,
   deleteIndivtrainee,
-  deleteCorp
+  deleteCorp,
+  refundUser
 } from "../Controllers/adminController";
 import { Router } from "express";
 import { protect } from "../Middleware/authMiddleware";
@@ -40,12 +41,13 @@ adminRouter.get("/individualTrainee", getITrainees);
 adminRouter.post("/login", login);
 adminRouter.get("/me", protect, me); // Protect. Return only user
 adminRouter.get("/problem",getProblems);
-adminRouter.put("/resolveProblem",resolveProblems)
-adminRouter.put("/holdProblem",holdProblems)
+adminRouter.put("/resolveProblem",resolveProblems);
+adminRouter.put("/holdProblem",holdProblems);
 //adminRouter.post("/corporate",createCorp)
-adminRouter.get("/corporate",getCorps)
+adminRouter.get("/corporate",getCorps);
 adminRouter.post("/corporate", createCorporate);
 adminRouter.delete("/corporate", deleteCorp);
+adminRouter.post("/refund", protect, refundUser);
 
 
 export default adminRouter;

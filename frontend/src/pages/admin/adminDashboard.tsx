@@ -10,6 +10,7 @@ import CorporateServices from "../../app/CorporateServices";
 import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import Services from "../../app/AdminServices";
+import RefundtoWallet from "./RefundtoWallet";
 import {
   FormControl,
   InputLabel,
@@ -137,6 +138,15 @@ function AdminDashboard() {
               >
                 {" "}
                 Problems{" "}
+              </Button>
+              <Button
+                id="side-bar-button"
+                onClick={() => {
+                  setActiveTab("REFUNDS");
+                }}
+              >
+                {" "}
+                Refunds{" "}
               </Button>
               <Divider variant="middle" />
             </div>
@@ -450,7 +460,9 @@ function AdminDashboard() {
                     </Alert> 
                     : <></>}
                 </div>
-              ) : (
+              )    :activeTab == "REFUNDS" ? (
+                <RefundtoWallet/>
+              ): (
                 <></>
               )}
             </div>

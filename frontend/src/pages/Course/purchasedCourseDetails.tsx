@@ -310,6 +310,7 @@ export default function PurchasedCourseDetails() {
       ) : (
         <p>error 401: unauthorized access</p>
       )}
+
     </div>
   );
 }

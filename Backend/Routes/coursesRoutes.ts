@@ -50,6 +50,6 @@ coursesRouter.post("/rate", protect, addRating); // Protect. Type == indivTraine
 
 coursesRouter.get('/recommended', recommendedCourses);
 
-coursesRouter.put("/payCourse",purchaseCourse);
+coursesRouter.put("/payCourse", protect, purchaseCourse);
 
 export default coursesRouter;

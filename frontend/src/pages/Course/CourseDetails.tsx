@@ -11,6 +11,8 @@ import PriceCard from "../../components/PriceCard";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
+import httpClient from "../../utils/httpClient";
+import { getTokenHeader } from "../../utils/authUtils";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -35,27 +37,54 @@ export default function CourseDetails() {
       //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
     }
     const fetchInstructorDetails = async () => {
+ 
       await instructorServices.getInstructorData(courseDetails?.Instructor)
       .then((data) =>{
         setInstructorDetails(data);
       })
       .catch((Error) => {
-        console.log(Error);
+       // console.log(Error);
         
       });
+    
     }
     const isCoursePurchased = async () => {
+      var config = {
+        method: "get",
+        url: "/create/me",
+        headers: {
+         ...getTokenHeader(), 
+        },
+        data: null,
+      };
+      httpClient(config)
+      .then(function (response) {
+        state.loggedInUser = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      console.log(courseDetails._id);
       if(state.loggedInUser.Username){
+       var pur = false ;
+        for (let i = 0 ; i<state.loggedInUser.PurchasedCourses.length;i++){
+          console.log(state.loggedInUser.PurchasedCourses[i].courseID);
+          console.log(state.loggedInUser.PurchasedCourses);
+          if (state.loggedInUser.PurchasedCourses[i].courseID.includes(courseDetails._id.trim())){
+            pur=true;
+            break;
+          }
+        }
+        setPurchased(pur);
         console.log(isPurchased);
-        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
       }
-    }
+    } 
     fetchCourseDetails();
     fetchInstructorDetails();
     isCoursePurchased();
     
     
-  }, [courseDetails, id, instructorDetails]);
+  }, []);
 
   // const handleUrlUpload = async () => {
   //   try {
@@ -128,13 +157,14 @@ export default function CourseDetails() {
             <PriceCard 
             userDetails={state.loggedInUser}
             courseDetails={courseDetails} 
+            courseID = {id}
             isPurchased={isPurchased} 
             type={state.loggedInUser.type} />
 
             <Divider variant= "fullWidth"/>
         </div>
         <div>
-          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsCenter courseDetails={courseDetails} isPurchased={isPurchased} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
         
         </div>
