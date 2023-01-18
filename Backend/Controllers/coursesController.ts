@@ -320,6 +320,31 @@ theCourse.save();
 //res.status(200).json("Course purchased successfully");
     }
 
+    const getCourseSubtitles= async (req: Request, res: Response) => {
+  
+      var CourseID = req.body._id
+      var Course = await course.findOne({_id:CourseID})
+      var subs = Course.Subtitles;
+      res.status(200).json(subs);
+      return subs
+    }
+    const getSubtitle= async (req: Request, res: Response) => {
+      var CourseID = req.body._id
+      var Course = await course.findOne({_id:CourseID})
+      var subs = Course.Subtitles;
+      var sub={};
+      for (let i=0;i<subs.length;i++){
+        if (subs[i].Order==req.body.Order) {
+          sub = subs[i];
+          break;
+        }
+      }
+      res.status(200).json(sub);
+      return sub;
+  
+  }
+
+
 
 export {
   getCourses,
@@ -332,5 +357,7 @@ export {
   putCourseVideo,
   putDiscount,
   recommendedCourses,
-  purchaseCourse
+  purchaseCourse,
+  getCourseSubtitles,
+  getSubtitle
 };
