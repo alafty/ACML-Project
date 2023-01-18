@@ -8,7 +8,7 @@ import userTypes from "../Constants/userTypes";
 import inidvTrainee from "../Models/individualTrainee";
 import course from "../Models/course";
 import instructor from "../Models/instructor";
-
+import corpTrainee from "../Models/corporateTrainee";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -340,6 +340,52 @@ const recommendedCourses = async (req: Request, res: Response) => {
   res.status(200).json(allCourses);
 };
 
+const putCourseProgress = async(req: Request, res: Response) => {
+  if(!req.body.courseID || !req.body.progress || !req.body.id){
+    res.status(400).json({message: "missing fields"});
+  }
+
+  let tempUser = await inidvTrainee.findById(req.body.id);
+  let type;
+  if(!tempUser){
+    tempUser = await corpTrainee.findById(req.body.id);
+    if(!tempUser){
+      res.status(400).json({message: "invalid User id"});
+
+    }else {
+      type = 'corp';
+    }
+  } else{
+    type = 'indiv';
+  }
+  
+  for (let index = 0; index < tempUser.PurchasedCourses.length; index++) {
+    if(tempUser.PurchasedCourses[index].courseID === req.body.courseID){
+      if (tempUser.PurchasedCourses[index].progress > req.body.progress){
+        res.status(200).json({message: 'progress less than actual'})
+      } else{
+        tempUser.PurchasedCourses[index].progress = req.body.progress;
+      }
+      break;
+    }
+    if(index == tempUser.PurchasedCourses.length - 1){
+      res.status(400).json({message: "invalid course id"});
+    }
+  }
+  let trainee;
+  if(type === 'indiv'){
+     trainee = await inidvTrainee.findByIdAndUpdate(req.body.id,{
+      PurchasedCourses: tempUser.PurchasedCourses
+    })
+  } else {
+     trainee = await corpTrainee.findByIdAndUpdate(req.body.id,{
+      PurchasedCourses: tempUser.PurchasedCourses
+    })
+  }
+  res.status(200).json(trainee);
+}
+
+
 const purchaseCourse = async (req, res) => {
  
 var trainee=  await inidvTrainee.findOne({_id : req.body._id});
@@ -404,5 +450,6 @@ export {
   recommendedCourses,
   purchaseCourse,
   getCourseSubtitles,
-  getSubtitle
+  getSubtitle,
+  putCourseProgress
 };

@@ -118,6 +118,35 @@ axios(config)
 
 };
 
+const changeProgress = async (
+  courseID: string,
+  userID: string,
+  progress: number
+) => {
+
+var data = qs.stringify({
+  'id': userID,
+  'courseID': courseID,
+  'progress': progress 
+});
+var config = {
+  method: 'put',
+  url: 'http://localhost:8000/courses/progress',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded', 
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+}
 const createSubtitle = async (
   courseId: string,
   videoId: string,
@@ -224,7 +253,8 @@ const Services = {
   addCourseDiscount,
   getRecommendedCourses,
   createCourse,
-  createSubtitle
+  createSubtitle,
+  changeProgress
 };
 
 export default Services;

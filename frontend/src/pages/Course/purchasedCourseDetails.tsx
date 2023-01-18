@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
+import Services from "../../app/CoursesServices";
 import {
   Button,
   FormControl,
@@ -14,13 +15,16 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import Services from "../../app/pdfServices";
+
+import pdfServices from "../../app/pdfServices";
 import CourseVideo from "../../components/Course/CourseVideo";
 import { CustomTextField } from "../../components/TextField";
+import services from "../../app/UsersServices";
 
 export default function PurchasedCourseDetails() {
   const { id } = useParams();
 
+  const [openedSubtitles, setOpenedSubtitles] = useState(0.0);
   const [startedQuiz, setStartedQuiz] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [quizGrade, setQuizGrade] = useState(0);
@@ -36,7 +40,7 @@ export default function PurchasedCourseDetails() {
   const [isPurchased, setPurchased] = useState(false);
   const [Notes, setNotes] = useState("");
 
-  const calulateScore = () => {
+  const calulateScore = async () => {
     const choice =
       chosenAnswer === 1
         ? currentQuiz.Questions[currentQuestion].Choice1
@@ -66,16 +70,29 @@ export default function PurchasedCourseDetails() {
     if (currentQuiz.Questions.length - 1 > currentQuestion) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      console.log('done');
-      
+      console.log("done");
       setStartedQuiz(false);
+      var curr = quizzes;
+      if (!curr[currentQuiz.Order - 1].completed) {
+        curr[currentQuiz.Order - 1].completed = true;
+        setOpenedSubtitles(openedSubtitles + 1);
+        setQuizzes(curr);
+        console.log();
+        await Services.changeProgress(
+          courseDetails._id,
+          state.loggedInUser.id,
+          (openedSubtitles / parseFloat(quizzes.length)) * 100
+        );
+      }
     }
   };
   useEffect(() => {
     const fetchCourseDetails = async () => {
       const details = await courseServices.getCourseDetails(id);
-      setCourseDetails(details);
-      setSubtitles(courseDetails.Subtitles);
+      if (details) {
+        setCourseDetails(details);
+        setSubtitles(courseDetails.Subtitles);
+      }
       if (!currentSubtitle) {
         setCurrentSubtitle(subtitles[0]);
       }
@@ -87,14 +104,21 @@ export default function PurchasedCourseDetails() {
     const isCoursePurchased = async () => {
       if (state.loggedInUser.Username) {
         console.log(isPurchased);
-        setPurchased(
-          state.loggedInUser.PurchasedCourses.includes(courseDetails._id)
-        );
+        for (
+          let index = 0;
+          index < state.loggedInUser.PurchasedCourses.length;
+          index++
+        ) {
+          if (state.loggedInUser.PurchasedCourses[index].courseID === id) {
+            console.log(state.loggedInUser.PurchasedCourses[index].courseID);
+            setPurchased(true);
+          }
+        }
       }
     };
     fetchCourseDetails();
     isCoursePurchased();
-  }, [courseDetails]);
+  }, []);
 
   const renderSubtitle = ({ _id, Description, Order }) => {
     return (
@@ -123,11 +147,11 @@ export default function PurchasedCourseDetails() {
           variant="contained"
           id="big-button-secondary"
           onClick={() => {
+            setCorrectAnswers([]);
             setStartedQuiz(true);
             setQuizGrade(0);
             setQuestionGrade(0);
             setCurrentQuiz(quizzes[Order - 1]);
-            console.log(quizzes);
             setCurrentQuestion(0);
           }}
         >
@@ -140,146 +164,152 @@ export default function PurchasedCourseDetails() {
 
   return (
     <div className="container">
-      {/* <LoggedInBar default='/home' /> */}
-      <div
-        className="course-details-body"
-        style={{ display: "flex", flexDirection: "row" }}
-      >
-        {/* {id} */}
-        <div style={{ display: "flex", flexDirection: "column", width: "30%" }}>
-          <div className="purchased-course-subtitles-card">
-            <p
-              className="course-details-title"
-              style={{ marginTop: "0px", marginBottom: "20px" }}
+      {true ? (
+        <>
+          <LoggedInBar default="/home" />
+
+          <div
+            className="course-details-body"
+            style={{ display: "flex", flexDirection: "row" }}
+          >
+            {/* {id} */}
+            <div
+              style={{ display: "flex", flexDirection: "column", width: "30%" }}
             >
-              {" "}
-              Course Content{" "}
-            </p>
-            {courseDetails?.Subtitles.map(renderSubtitle)}
-          </div>
-          <div className="purchased-course-subtitles-card">
-            <p
-              className="course-details-title"
-              style={{ marginTop: "0px", marginBottom: "20px" }}
-            >
-              {" "}
-              Course Quizzes{" "}
-            </p>
-            {quizzes?.map(renderQuizzes)}
-          </div>
-        </div>
-        <div style={{ width: "70%" }}>
-          <CourseVideo embedId={currentSubtitle?.VideoId} />
-          <div className="course-details-card">
-            <p className="purchased-course-description">
-              {currentSubtitle?.Description}
-            </p>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <CustomTextField
-                id="text-field"
-                placeholder="Notes"
-                multiline
-                rows={3}
-                InputProps={{
-                  className: "short-bio",
-                }}
-                onChange={(e) => {
-                  setNotes(e.target.value);
-                }}
-              />
-              <Button
-                variant="contained"
-                id="big-button-primary"
-                onClick={() => {
-                  Services.generateNotesPDF(Notes);
-                }}
-              >
-                {" "}
-                Download Notes{" "}
-              </Button>
-            </div>
-          </div>
-          <div className="quiz-card">
-            {startedQuiz ? (
-              <>
-                <p className="course-details-title">
-                  {" "}
-                  {currentQuiz.Questions[currentQuestion].Question}{" "}
-                </p>
-                <FormControl>
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="1"
-                    id="radio-quiz"
-                    name="radio-buttons-group"
-                  >
-                    <FormControlLabel
-                      value="1"
-                      control={<Radio />}
-                      label={currentQuiz.Questions[currentQuestion].Choice1}
-                      onClick={() => {
-                        setChosenAnswer(1);
-                      }}
-                    />
-                    <FormControlLabel
-                      value="2"
-                      control={<Radio />}
-                      label={currentQuiz.Questions[currentQuestion].Choice2}
-                      onClick={() => {
-                        setChosenAnswer(2);
-                      }}
-                    />
-                    <FormControlLabel
-                      value="3"
-                      control={<Radio />}
-                      label={currentQuiz.Questions[currentQuestion].Choice3}
-                      onClick={() => {
-                        setChosenAnswer(3);
-                      }}
-                    />
-                    <FormControlLabel
-                      value="4"
-                      control={<Radio />}
-                      label={currentQuiz.Questions[currentQuestion].Choice4}
-                      onClick={() => {
-                        setChosenAnswer(4);
-                      }}
-                    />
-                  </RadioGroup>
-                </FormControl>
-                <p> your score {questionGrade}</p>
-                <Button
-                  variant="contained"
-                  id="big-button-primary"
-                  onClick={calulateScore}
+              <div className="purchased-course-subtitles-card">
+                <p
+                  className="course-details-title"
+                  style={{ marginTop: "0px", marginBottom: "20px" }}
                 >
                   {" "}
-                  Next{" "}
-                </Button>
-              </>
-            ) : questionGrade ? (
-              <>
-                <p className="login-header">
-                  {" "}
-                  You scored {questionGrade} out of {quizGrade}{" "}
+                  Course Content{" "}
                 </p>
-                <p className="login-header">
+                {courseDetails?.Subtitles.map(renderSubtitle)}
+              </div>
+              <div className="purchased-course-subtitles-card">
+                <p
+                  className="course-details-title"
+                  style={{ marginTop: "0px", marginBottom: "20px" }}
+                >
                   {" "}
-                  the correct answers for the questions were{" "}
+                  Course Quizzes{" "}
                 </p>
-                {correctAnswers.map((answer) => {
-                  return(
-                    <p className="login-header">{answer}</p>
-                  );
-                })}
-              </>
-            ) : (
-              <></>
-            )}
+                {quizzes?.map(renderQuizzes)}
+              </div>
+            </div>
+            <div style={{ width: "70%" }}>
+              <CourseVideo embedId={currentSubtitle?.VideoId} />
+              <div className="course-details-card">
+                <p className="purchased-course-description">
+                  {currentSubtitle?.Description}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <CustomTextField
+                    id="text-field"
+                    placeholder="Notes"
+                    multiline
+                    rows={3}
+                    InputProps={{
+                      className: "short-bio",
+                    }}
+                    onChange={(e) => {
+                      setNotes(e.target.value);
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    id="big-button-primary"
+                    onClick={() => {
+                      pdfServices.generateNotesPDF(Notes);
+                    }}
+                  >
+                    {" "}
+                    Download Notes{" "}
+                  </Button>
+                </div>
+              </div>
+              <div className="quiz-card">
+                {startedQuiz ? (
+                  <>
+                    <p className="course-details-title">
+                      {" "}
+                      {currentQuiz.Questions[currentQuestion].Question}{" "}
+                    </p>
+                    <FormControl>
+                      <RadioGroup
+                        aria-labelledby="demo-radio-buttons-group-label"
+                        defaultValue="1"
+                        id="radio-quiz"
+                        name="radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          value="1"
+                          control={<Radio />}
+                          label={currentQuiz.Questions[currentQuestion].Choice1}
+                          onClick={() => {
+                            setChosenAnswer(1);
+                          }}
+                        />
+                        <FormControlLabel
+                          value="2"
+                          control={<Radio />}
+                          label={currentQuiz.Questions[currentQuestion].Choice2}
+                          onClick={() => {
+                            setChosenAnswer(2);
+                          }}
+                        />
+                        <FormControlLabel
+                          value="3"
+                          control={<Radio />}
+                          label={currentQuiz.Questions[currentQuestion].Choice3}
+                          onClick={() => {
+                            setChosenAnswer(3);
+                          }}
+                        />
+                        <FormControlLabel
+                          value="4"
+                          control={<Radio />}
+                          label={currentQuiz.Questions[currentQuestion].Choice4}
+                          onClick={() => {
+                            setChosenAnswer(4);
+                          }}
+                        />
+                      </RadioGroup>
+                    </FormControl>
+                    <p> your score {questionGrade}</p>
+                    <Button
+                      variant="contained"
+                      id="big-button-primary"
+                      onClick={calulateScore}
+                    >
+                      {" "}
+                      Next{" "}
+                    </Button>
+                  </>
+                ) : questionGrade ? (
+                  <>
+                    <p className="login-header">
+                      {" "}
+                      You scored {questionGrade} out of {quizGrade}{" "}
+                    </p>
+                    <p className="login-header">
+                      {" "}
+                      the correct answers for the questions were{" "}
+                    </p>
+                    {correctAnswers.map((answer) => {
+                      return <p className="login-header">{answer}</p>;
+                    })}
+                  </>
+                ) : (
+                  <></>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <p>error 401: unauthorized access</p>
+      )}
     </div>
   );
 }
-
