@@ -46,20 +46,22 @@ const hoverCourse = async (req: Request, res: Response) => {
 // @desc    Search Courses By Subject
 // @rout    POST /courses/search/:subje
 // @access  public
-const searchCourses = (req: Request, res: Response) => {
+const searchCourses = (req: Request, res: Response) => {  
   Course.find(
     {
       $or: [
-        { Subject: req.body.searchTerm },
-        { Instructor: req.body.searchTerm },
-        { Name: req.body.searchTerm },
+        {Name: {$regex: `.*${req.body.searchTerm}.*`, $options: 'i'},},
+        {Subject: {$regex: `.*${req.body.searchTerm}.*`, $options: 'i'}}
+      //   // { Instructor: req.body.searchTerm },
       ],
     },
     function (err: any, data: any) {
       if (err) {
         console.log(err);
       } else {
-        res.send(data);
+        console.log(data);
+        
+        res.status(200).json(data);
       }
     }
   );
