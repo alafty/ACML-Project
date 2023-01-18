@@ -101,7 +101,7 @@ function InstructorDashboard() {
           variant="contained"
           id="big-button-primary"
           onClick={async () => {
-            navigation("/course=");
+            navigation(`/course=${_id}`);
           }}
         >
           {" "}
