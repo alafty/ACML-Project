@@ -41,7 +41,6 @@ import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
 
 import TraineeProfile from "./pages/TraineeProfile";
 
