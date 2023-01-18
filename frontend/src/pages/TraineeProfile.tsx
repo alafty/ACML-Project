@@ -72,10 +72,8 @@ function TraineeProfile() {
       var tempCourses = [];
       state.loggedInUser.PurchasedCourses.map(async (value: any) => {
         console.log(value);
-
-        tempCourses.push(
-          await CoursesServices.getCourseDetails(value["courseID"])
-        );
+        var course = await CoursesServices.getCourseDetails(value["courseID"]);
+        tempCourses.push({ ...course, progress: value["progress"] });
         setCourses(tempCourses);
       });
       // console.log(tempCourses);
@@ -84,7 +82,7 @@ function TraineeProfile() {
     }
   }, [state.loggedInUser.PurchasedCourses]);
 
-  const renderCourses = ({ Name, Description, _id }) => {
+  const renderCourses = ({ Name, Description, _id, progress }) => {
     return (
       <div className="course-card-dashboard">
         <p className="course-name">{Name}</p>
@@ -101,7 +99,7 @@ function TraineeProfile() {
         </Button>
         <Button
           variant="contained"
-          id="big-button-primary"
+          id="big-button-secondary"
           onClick={async () => {
             setCourseToReport(_id);
             setReportingProblem(true);
@@ -112,6 +110,38 @@ function TraineeProfile() {
           {" "}
           Report Problem{" "}
         </Button>
+        <br />
+        <br />
+        {progress <= 50 ? (
+          <>
+            <Button
+              variant="contained"
+              id="small-button-primary"
+              onClick={async () => {
+                setCourseToReport(_id);
+                setcourseNameToReport(Name);
+                setProblemDescription("Request Refund");
+                setProblemType("Refund");
+                reportProblem();
+              }}
+            >
+              {" "}
+              Request Refund{" "}
+            </Button>
+            <br />
+          </>
+        ) : (
+          <></>
+        )}
+
+        <Grid spacing={1} container>
+          <LinearProgress
+            variant="determinate"
+            color="primary"
+            value={progress}
+            style={{ width: "300px", height: "5px" }}
+          />
+        </Grid>
       </div>
     );
   };
