@@ -64,13 +64,13 @@ export default function CourseDetails() {
       .catch(function (error) {
         console.log(error);
       });
-      console.log(courseDetails._id);
+      //console.log(courseDetails._id);
       if(state.loggedInUser.Username){
        var pur = false ;
         for (let i = 0 ; i<state.loggedInUser.PurchasedCourses.length;i++){
           console.log(state.loggedInUser.PurchasedCourses[i].courseID);
           console.log(state.loggedInUser.PurchasedCourses);
-          if (state.loggedInUser.PurchasedCourses[i].courseID.includes(courseDetails._id.trim())){
+          if (state.loggedInUser.PurchasedCourses[i].courseID.includes(id.trim())){
             pur=true;
             break;
           }
@@ -86,61 +86,7 @@ export default function CourseDetails() {
     
   }, []);
 
-  // const handleUrlUpload = async () => {
-  //   try {
-  //     const vidId = extractIdFromVideoUrl(videoUrl);
-  //     courseServices.uploadCourseVideo(id, vidId).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.VideoId = vidId;
-  //         setVideoStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setVideoUrl('');
-  //       } else {
-  //         setVideoStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setVideoStatusText("Make sure url is valid");
-  //   }
-  // };
-
-  // const handleDurationAdding = async () => {
-  //   try {
-  //     const duration = Number.parseInt(discountDuration);
-  //     const percentage = Number.parseInt(discountPercentage);
-      
-  //     courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.Discounts.push(data);
-  //         setDiscountStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setDiscountDuration('');
-  //         setDiscountPercentage('')
-  //       } else {
-  //         setDiscountStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setDiscountStatusText("Make sure discount is valid");
-  //   }
-  // };
-
   
-
-  ///TODOLIST
-  //Course name
-  //Course subject
-  //Course video preview
-  //Course instructors
-  //Course price
-  //Course hours
-  //List of subtitles
-  //Each subtitle would go to the subtitle page
-  //Subtitle page has video, description and the quiz
-  //Price should be rendered with descount depending on country
-  //Course details page as 3 different styles. Non-purchaser, purchaser and instructor
 
   return (
     <div className="container">
@@ -159,7 +105,8 @@ export default function CourseDetails() {
             courseDetails={courseDetails} 
             courseID = {id}
             isPurchased={isPurchased} 
-            type={state.loggedInUser.type} />
+            type={state.loggedInUser.type} 
+            />
 
             <Divider variant= "fullWidth"/>
         </div>
