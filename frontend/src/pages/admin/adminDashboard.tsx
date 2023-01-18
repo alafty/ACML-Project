@@ -12,6 +12,7 @@ function AdminDashboard () {
         <Link to="/viewCorpTrainee">View Corporate Trainee</Link> <br />
         <Link to="/viewindivTrainee">View Individual Trainee</Link> <br />
         <Link to="/viewProblems">View Problems</Link> <br />
+        <Link to="/applyDiscount">Apply Dicount</Link> <br />
 
 
 

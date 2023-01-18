@@ -9,6 +9,7 @@ import {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  putDiscountAllCourses,
   recommendedCourses,
   purchaseCourse
 } from "../Controllers/coursesController";
@@ -31,6 +32,8 @@ coursesRouter.put("/subtitle", protect, putCourseSubtitle); // Protect. Type = i
 coursesRouter.put("/videoId", protect, putCourseVideo); // Protect. Type = instructor || admin. Course creator == id
 
 coursesRouter.put("/discount", protect, putDiscount); // Protect. Type = instructor || admin. Course creator == id
+
+coursesRouter.put("/discountAll", protect, putDiscountAllCourses);
 
 coursesRouter.post("/hover", hoverCourse);
 

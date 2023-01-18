@@ -89,8 +89,8 @@ export default function LoggedInBar(props) {
           className='avatar'
           sx={{ bgcolor: '#4b96a9' }}
           onClick= {() => {
-            state.loggedInUser = {};
-            navigation('/login');
+            // state.loggedInUser = {};
+            navigation('/traineeProfile');
           }}
           >{state.loggedInUser.Username[0]}</Avatar>
         </Toolbar>
