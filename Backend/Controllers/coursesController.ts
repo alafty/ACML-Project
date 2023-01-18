@@ -341,9 +341,11 @@ const recommendedCourses = async (req: Request, res: Response) => {
 };
 
 const purchaseCourse = async (req, res) => {
- 
-var trainee=  await inidvTrainee.findOne({_id : req.body._id});
+
+var id = req.user._id;
+var trainee=  await inidvTrainee.findOne(id);
 var theCourse = await course.findOne({_id : req.body.courseID});
+
 const newCourse = {
   courseID : req.body.courseID,
   progress : 0

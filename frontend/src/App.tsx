@@ -19,7 +19,10 @@ import InstructorDetails from "./pages/Instructor/InstructorDashboard";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
+
+import Checkout from "./pages/payment/checkout";
 import PurchasedCourseDetails from "./pages/Course/purchasedCourseDetails";
+
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
@@ -47,7 +50,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import TraineeProfile from "./pages/TraineeProfile";
 
 const defaultGlobalState = {
-  loggedInUser: { },
+  loggedInUser: {},
+
 };
 
 const globalStateContext = React.createContext(defaultGlobalState);
@@ -124,6 +128,14 @@ function app() {
             path="/instructor/dashboard" 
             element={<InstructorDetails />} />
             
+
+            <Route path="/pdf" element={<PDFGenerator/>} />
+            <Route path="/createquiz" element={<CreateQuiz />} />
+            <Route path="/checkout=:id" element={<Checkout />} />
+            <Route path="/course=:id" element={<CourseDetails />} />
+            <Route path='/legal' element= {<Legal/>} />
+            <Route path='/legalinstructor' element= {<LegalInstructor/>} />
+
             <Route 
             path="/adminDashboard" 
             element={<AdminDashboard />} />
