@@ -136,7 +136,7 @@ export default function PurchasedCourseDetails() {
             <Divider variant= "fullWidth"/>
         </div>
         <div>
-          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsCenter courseDetails={courseDetails} isPurchased={isPurchased} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
           <TextField label="Notes" variant="standard" className='search-bar' required={true}
             onChange={(e) => {

@@ -84,7 +84,7 @@ export default function CourseDetails() {
     isCoursePurchased();
     
     
-  }, [courseDetails, id, instructorDetails]);
+  }, []);
 
   // const handleUrlUpload = async () => {
   //   try {
@@ -164,7 +164,7 @@ export default function CourseDetails() {
             <Divider variant= "fullWidth"/>
         </div>
         <div>
-          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsCenter courseDetails={courseDetails} isPurchased={isPurchased} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
         
         </div>
