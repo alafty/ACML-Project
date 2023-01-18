@@ -15,12 +15,17 @@ const createProblem = async (req: Request, res: Response) => {
   const getMyProblems= async (req: Request, res: Response) => {
     //used Acml as test name, replace to get the required name from the user
     // Courses should have attribute subject in them 
-    const senderID =   req.body.Sender
+    const senderID =   req.user._id;
     const problems = await problem.find({Sender: senderID});
-    const Course = await course.find({_id:req.body.Course});
-    console.log(Course);
+    const modifiedProblems = [];
+    for (var key in problems) {
+      let p = problems[key] as any;
+      const Course = await course.find({_id:p.Course.toString()});
+      modifiedProblems[key] = {...(p._doc), CourseName: Course[0].Name};
+    }    
+
     try {
-        res.send(problems);
+        res.send(modifiedProblems);
       } catch (error) {
         res.status(500).send(error);
       }
