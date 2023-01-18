@@ -13,7 +13,7 @@ import CorporateRegister from "./pages/Register/CorporateRegister";
 import InstructorRegister from "./pages/Register/InstructorRegister";
 
 import Home from "./pages/Home";
-import CorporateDashboard from "./pages/CorporateDashboard";
+import CorporateDashboard from "./pages/Corporate/CorporateDashboard";
 
 import InstructorDetails from "./pages/Instructor/InstructorDashboard";
 import Legal from "./pages/Legal/Legal";
@@ -38,7 +38,7 @@ import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 const defaultGlobalState = {
-  loggedInUser: { user: String, instructor: String },
+  loggedInUser: { },
 };
 
 const globalStateContext = React.createContext(defaultGlobalState);
