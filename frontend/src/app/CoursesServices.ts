@@ -9,7 +9,6 @@ import { useGlobalState } from "../App";
 
 const COURSES_URL = "/courses";
 
-
 export const getAllCourses = async () => {
   const response = await httpClient.get(COURSES_URL);
 
@@ -179,33 +178,30 @@ const addCourseDiscount = async (
   return response.data;
 };
 
-export const rateCourses = async (courseID: String, rating: String) => {
+export const rateCourse = async (courseID: String, rating: String) => {
   var data = qs.stringify({
     id: courseID,
     rating: rating,
   });
   var config = {
     method: "post",
-    url: "http://localhost:8000/courses/rate",
+    url: "/courses/rate",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Cookie: "userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D",
+      ...getTokenHeader(),
     },
     data: data,
   };
-
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-      if (response.data) {
-        localStorage.setItem("rateCourse", JSON.stringify(response.data));
-      } else {
-        localStorage.setItem("rateCourse", "Nothing Found");
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  try {
+    const response = await httpClient(config);
+    if (response.data) {
+      return response.data;
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
 };
 export const BuyCourse = async (courseID: String) => {
   var data = qs.stringify({
@@ -215,7 +211,7 @@ export const BuyCourse = async (courseID: String) => {
     method: "put",
     url: "/courses/payCourse",
     headers: {
-     ...getTokenHeader(), 
+      ...getTokenHeader(),
     },
     data: data,
   };
@@ -227,28 +223,27 @@ export const BuyCourse = async (courseID: String) => {
     .catch(function (error) {
       console.log(error);
     });
-    const [state, dispatch] = useGlobalState();
-    var config = {
-      method: "get",
-      url: "/create/me",
-      headers: {
-       ...getTokenHeader(), 
-      },
-      data: data,
-    };
-    httpClient(config)
+  const [state, dispatch] = useGlobalState();
+  var config = {
+    method: "get",
+    url: "/create/me",
+    headers: {
+      ...getTokenHeader(),
+    },
+    data: data,
+  };
+  httpClient(config)
     .then(function (response) {
       state.loggedInUser = response.data;
     })
     .catch(function (error) {
       console.log(error);
     });
-    
 };
 const CoursesServices = {
   getAllCourses,
   searchCourses,
-  rateCourses,
+  rateCourses: rateCourse,
   getCourseDetails,
   getCourseQuizzes,
   updateSubtitle,
@@ -257,7 +252,7 @@ const CoursesServices = {
   getRecommendedCourses,
   createCourse,
   createSubtitle,
-  BuyCourse
+  BuyCourse,
 };
 
 export default CoursesServices;
