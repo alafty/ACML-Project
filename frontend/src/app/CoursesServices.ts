@@ -67,12 +67,12 @@ const getCourseDetails = async (id: string) => {
 };
 
 const getCourseQuizzes = async (Course: string) => {
-  const Body = {
-    CourseID: Course,
-  };
-  const data: [String] = [""];
-  await axios.post("http://localhost:8000/quiz/getCourseQuizzes", Body);
-  return data;
+  var data = qs.stringify( {
+    _id: Course,
+  });
+  const response = await httpClient.post("http://localhost:8000/quiz/getCourseQuizzes", data);
+
+  return response.data;
 };
 
 const createCourse = async (
@@ -106,6 +106,8 @@ var config = {
   data : data
 };
 
+
+
 axios(config)
 .then(function (response) {
   console.log(JSON.stringify(response.data));
@@ -115,12 +117,6 @@ axios(config)
 });
 
 };
-
-const createQuiz = async (
-
-) => {
-  
-}
 
 const createSubtitle = async (
   courseId: string,

@@ -126,6 +126,15 @@ html, body {
     color: var(--white);
 }
 
+.purchased-course-description {
+    padding: 40px;
+    font-family: var(--font);
+    font-weight: 300;
+    font-size: 22px;
+    padding-inline: 20px;
+    color: var(--white);
+}
+
 .course-details-rating {
     font-family: var(--font);
     font-weight:600;
@@ -254,6 +263,45 @@ html, body {
     background-color: var(--secondary);
     
 }
+
+.purchased-course-subtitles-card{
+    margin: 20px;
+    padding: 20px;
+    width: 88%;
+    height: 67vh;
+    border-radius: 20px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background-color: var(--text);
+    
+}
+
+.purchased-course-subtitle{
+    padding: 20px;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-Inline: 5px;
+    height: fit-content;
+    border-radius: 20px;
+    background-color: var(--primary);
+    
+}
+.quiz-card{
+    display: flex;
+    flex-direction: column;
+    padding-inline: 20px;
+    margin: 20px;
+    background-color: var(--text);
+    border-radius: 20px;
+}
+
+#radio-quiz{
+    margin: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--white);
+}
+
 .course-details-subtitle-header{
     font-family: var(--font);
     font-size: 24px;

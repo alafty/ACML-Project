@@ -1,197 +1,285 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import courseServices from "../../app/CoursesServices";
-import SearchAppBar from "../../components/searchAppBar";
-import { extractIdFromVideoUrl } from "../../utils/video_utils";
-import  Divider  from "@mui/material/Divider";
-import CourseDetailsCenter from "../../components/Course/CourseDetailsCenter";
-import instructorServices from '../../app/InstructorServices'
-import InstructorCard from "../../components/InstructorCard";
-import PriceCard from "../../components/PriceCard";
+import Divider from "@mui/material/Divider";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import Services from "../../app/pdfServices";
+import CourseVideo from "../../components/Course/CourseVideo";
+import { CustomTextField } from "../../components/TextField";
 
 export default function PurchasedCourseDetails() {
   const { id } = useParams();
-  //const [quizzes, setQuizzes] = useState(null);
+
+  const [startedQuiz, setStartedQuiz] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
+  const [quizGrade, setQuizGrade] = useState(0);
+  const [questionGrade, setQuestionGrade] = useState(0);
+  const [chosenAnswer, setChosenAnswer] = useState(0);
+  const [currentQuiz, setCurrentQuiz] = useState(null);
+  const [currentQuestion, setCurrentQuestion] = useState<null | number>(null);
+  const [quizzes, setQuizzes] = useState(null);
+  const [subtitles, setSubtitles] = useState(null);
+  const [currentSubtitle, setCurrentSubtitle] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
-  const [instructorDetails, setInstructorDetails] = useState(null);
-  //const [videoStatusText, setVideoStatusText] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-  //const [discountStatusText, setDiscountStatusText] = useState("");
-  const [discountDuration, setDiscountDuration] = useState("");
-  const [discountPercentage, setDiscountPercentage] = useState("");
   const [state, dispatch] = useGlobalState();
   const [isPurchased, setPurchased] = useState(false);
-  const [Notes,setNotes] = useState('');
-  
+  const [Notes, setNotes] = useState("");
 
-  useEffect(() => {
-    const fetchCourseDetails = async () =>{
-      await courseServices.getCourseDetails(id).then((data) => {
-        setCourseDetails(data);
-      }); 
-      //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
-    }
-    const fetchInstructorDetails = async () => {
-      await instructorServices.getInstructorData(courseDetails?.Instructor)
-      .then((data) =>{
-        setInstructorDetails(data);
-      })
-      .catch((Error) => {
-        console.log(Error);
-        
-      });
-    }
-    const isCoursePurchased = async () => {
-      if(state.loggedInUser.Username){
-        console.log(isPurchased);
-        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
-      }
-    }
-    fetchCourseDetails();
-    fetchInstructorDetails();
-    isCoursePurchased();
-    
-    
-  }, [courseDetails, id, instructorDetails]);
+  const calulateScore = () => {
+    const choice =
+      chosenAnswer === 1
+        ? currentQuiz.Questions[currentQuestion].Choice1
+        : chosenAnswer === 2
+        ? currentQuiz.Questions[currentQuestion].Choice2
+        : chosenAnswer === 3
+        ? currentQuiz.Questions[currentQuestion].Choice3
+        : chosenAnswer === 4
+        ? currentQuiz.Questions[currentQuestion].Choice4
+        : currentQuiz.Questions[currentQuestion].Choice1;
 
-  // const handleUrlUpload = async () => {
-  //   try {
-  //     const vidId = extractIdFromVideoUrl(videoUrl);
-  //     courseServices.uploadCourseVideo(id, vidId).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.VideoId = vidId;
-  //         setVideoStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setVideoUrl('');
-  //       } else {
-  //         setVideoStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setVideoStatusText("Make sure url is valid");
-  //   }
-  // };
+    if (currentQuiz.Questions[currentQuestion].Answer === choice) {
+      setQuestionGrade(
+        questionGrade + parseFloat(currentQuiz.Questions[currentQuestion].Grade)
+      );
+    }
 
-  // const handleDurationAdding = async () => {
-  //   try {
-  //     const duration = Number.parseInt(discountDuration);
-  //     const percentage = Number.parseInt(discountPercentage);
+    let tempAnswer = correctAnswers;
+    tempAnswer.push(currentQuiz.Questions[currentQuestion].Answer);
+    setCorrectAnswers(tempAnswer);
+
+    setQuizGrade(
+      quizGrade + parseFloat(currentQuiz.Questions[currentQuestion].Grade)
+    );
+    //console.log(quizGrade);
+
+    if (currentQuiz.Questions.length - 1 > currentQuestion) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      console.log('done');
       
-  //     courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.Discounts.push(data);
-  //         setDiscountStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setDiscountDuration('');
-  //         setDiscountPercentage('')
-  //       } else {
-  //         setDiscountStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setDiscountStatusText("Make sure discount is valid");
-  //   }
-  // };
+      setStartedQuiz(false);
+    }
+  };
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      const details = await courseServices.getCourseDetails(id);
+      setCourseDetails(details);
+      setSubtitles(courseDetails.Subtitles);
+      if (!currentSubtitle) {
+        setCurrentSubtitle(subtitles[0]);
+      }
+      await courseServices
+        .getCourseQuizzes(id)
+        .then((data) => setQuizzes(data));
+    };
 
-  
+    const isCoursePurchased = async () => {
+      if (state.loggedInUser.Username) {
+        console.log(isPurchased);
+        setPurchased(
+          state.loggedInUser.PurchasedCourses.includes(courseDetails._id)
+        );
+      }
+    };
+    fetchCourseDetails();
+    isCoursePurchased();
+  }, [courseDetails]);
 
-  ///TODOLIST
-  //Course name
-  //Course subject
-  //Course video preview
-  //Course instructors
-  //Course price
-  //Course hours
-  //List of subtitles
-  //Each subtitle would go to the subtitle page
-  //Subtitle page has video, description and the quiz
-  //Price should be rendered with descount depending on country
-  //Course details page as 3 different styles. Non-purchaser, purchaser and instructor
+  const renderSubtitle = ({ _id, Description, Order }) => {
+    return (
+      <div className="purchased-course-subtitle">
+        <p className="course-details-subtitle-header"> Subsection {Order}</p>
+        <p className="course-details-subtitle-description">{Description}</p>
+        <Button
+          variant="contained"
+          id="big-button-secondary"
+          onClick={() => {
+            setCurrentSubtitle(subtitles[Order]);
+          }}
+        >
+          {" "}
+          View{" "}
+        </Button>
+      </div>
+    );
+  };
+
+  const renderQuizzes = ({ Order }) => {
+    return (
+      <div className="purchased-course-subtitle">
+        <p className="course-details-subtitle-header"> Quiz {Order}</p>
+        <Button
+          variant="contained"
+          id="big-button-secondary"
+          onClick={() => {
+            setStartedQuiz(true);
+            setQuizGrade(0);
+            setQuestionGrade(0);
+            setCurrentQuiz(quizzes[Order - 1]);
+            console.log(quizzes);
+            setCurrentQuestion(0);
+          }}
+        >
+          {" "}
+          Take Quiz{" "}
+        </Button>
+      </div>
+    );
+  };
 
   return (
     <div className="container">
-      {
-        state.loggedInUser.Username ? 
-        <LoggedInBar default='/home' />
-        :
-        <SearchAppBar page={0}/>
-      }
-      <div className="course-details-body" style={{display: 'flex', flexDirection: 'row'}}>
-      {/* {id} */}
-        <div style={{width: '30%'}}>
-            <InstructorCard instructorDetails={instructorDetails}/>
-            <PriceCard 
-            userDetails={state.loggedInUser}
-            courseDetails={courseDetails} 
-            isPurchased={isPurchased} 
-            type={state.loggedInUser.type} />
-
-            <Divider variant= "fullWidth"/>
+      {/* <LoggedInBar default='/home' /> */}
+      <div
+        className="course-details-body"
+        style={{ display: "flex", flexDirection: "row" }}
+      >
+        {/* {id} */}
+        <div style={{ display: "flex", flexDirection: "column", width: "30%" }}>
+          <div className="purchased-course-subtitles-card">
+            <p
+              className="course-details-title"
+              style={{ marginTop: "0px", marginBottom: "20px" }}
+            >
+              {" "}
+              Course Content{" "}
+            </p>
+            {courseDetails?.Subtitles.map(renderSubtitle)}
+          </div>
+          <div className="purchased-course-subtitles-card">
+            <p
+              className="course-details-title"
+              style={{ marginTop: "0px", marginBottom: "20px" }}
+            >
+              {" "}
+              Course Quizzes{" "}
+            </p>
+            {quizzes?.map(renderQuizzes)}
+          </div>
         </div>
-        <div>
-          <CourseDetailsCenter courseDetails={courseDetails} />
-          <CourseDetailsSubtitles courseDetails={courseDetails} />
-          <TextField label="Notes" variant="standard" className='search-bar' required={true}
-            onChange={(e) => {
-              setNotes(e.target.value);
-            }}
-            />
-          <Button
-          variant="contained"
-          id="filled-button"
-          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
-          onClick={
-            () => {
-                Services.generateNotesPDF(Notes);
-            }
-          }
-        > Download Notes </Button>
+        <div style={{ width: "70%" }}>
+          <CourseVideo embedId={currentSubtitle?.VideoId} />
+          <div className="course-details-card">
+            <p className="purchased-course-description">
+              {currentSubtitle?.Description}
+            </p>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              <CustomTextField
+                id="text-field"
+                placeholder="Notes"
+                multiline
+                rows={3}
+                InputProps={{
+                  className: "short-bio",
+                }}
+                onChange={(e) => {
+                  setNotes(e.target.value);
+                }}
+              />
+              <Button
+                variant="contained"
+                id="big-button-primary"
+                onClick={() => {
+                  Services.generateNotesPDF(Notes);
+                }}
+              >
+                {" "}
+                Download Notes{" "}
+              </Button>
+            </div>
+          </div>
+          <div className="quiz-card">
+            {startedQuiz ? (
+              <>
+                <p className="course-details-title">
+                  {" "}
+                  {currentQuiz.Questions[currentQuestion].Question}{" "}
+                </p>
+                <FormControl>
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="1"
+                    id="radio-quiz"
+                    name="radio-buttons-group"
+                  >
+                    <FormControlLabel
+                      value="1"
+                      control={<Radio />}
+                      label={currentQuiz.Questions[currentQuestion].Choice1}
+                      onClick={() => {
+                        setChosenAnswer(1);
+                      }}
+                    />
+                    <FormControlLabel
+                      value="2"
+                      control={<Radio />}
+                      label={currentQuiz.Questions[currentQuestion].Choice2}
+                      onClick={() => {
+                        setChosenAnswer(2);
+                      }}
+                    />
+                    <FormControlLabel
+                      value="3"
+                      control={<Radio />}
+                      label={currentQuiz.Questions[currentQuestion].Choice3}
+                      onClick={() => {
+                        setChosenAnswer(3);
+                      }}
+                    />
+                    <FormControlLabel
+                      value="4"
+                      control={<Radio />}
+                      label={currentQuiz.Questions[currentQuestion].Choice4}
+                      onClick={() => {
+                        setChosenAnswer(4);
+                      }}
+                    />
+                  </RadioGroup>
+                </FormControl>
+                <p> your score {questionGrade}</p>
+                <Button
+                  variant="contained"
+                  id="big-button-primary"
+                  onClick={calulateScore}
+                >
+                  {" "}
+                  Next{" "}
+                </Button>
+              </>
+            ) : questionGrade ? (
+              <>
+                <p className="login-header">
+                  {" "}
+                  You scored {questionGrade} out of {quizGrade}{" "}
+                </p>
+                <p className="login-header">
+                  {" "}
+                  the correct answers for the questions were{" "}
+                </p>
+                {correctAnswers.map((answer) => {
+                  return(
+                    <p className="login-header">{answer}</p>
+                  );
+                })}
+              </>
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-{/* <p>{JSON.stringify(courseDetails?.Discounts)}</p> */}
-      {/* <p>{JSON.stringify(courseDetails?.Subtitles)}</p> */}
-      {/* <p>{JSON.stringify(quizzes)}</p> */}
-      {/* <input
-        type="text"
-        placeholder="VideoURL upload"
-        name="VideoURL"
-        onChange={(e) => setVideoUrl(e.target.value)}
-        value={videoUrl}
-        required
-      />
-      <button type="submit" onClick={handleUrlUpload}>
-        Upload url
-      </button>
-      <p>{videoStatusText}</p>
-      <input
-        type="text"
-        placeholder="Specify Discount Duration"
-        name="Discount Duration"
-        onChange={(e) => setDiscountDuration(e.target.value)}
-        value={discountDuration}
-        required
-      />
-
-      <input
-        type="text"
-        placeholder="Specify Discount Percentage"
-        name="Discount Percentage"
-        onChange={(e) => setDiscountPercentage(e.target.value)}
-        value={discountPercentage}
-        required
-      />  
-      <button type="submit" onClick={handleDurationAdding}>
-        Add Discount
-      </button>
-      <p>{videoStatusText}</p> */}

@@ -23,7 +23,6 @@ const getCourseQuizzes= async (req: Request, res: Response) => {
   }
   console.log(quizzes);
   res.status(200).json(quizzes);
-  return quizzes
 }
 
 const createQuestion = async (req: Request, res: Response) => {
