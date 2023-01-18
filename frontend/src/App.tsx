@@ -23,7 +23,6 @@ import PurchasedCourseDetails from "./pages/Course/purchasedCourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
-import LandingInstructor from "./pages/LandingInstructor";
 import Admin from "./pages/admin/admin";
 
 import AdminDashboard from "./pages/admin/adminDashboard";
@@ -41,8 +40,6 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
-
-import AdminDashboard from "./pages/admin/AdminDashboard";
 
 import TraineeProfile from "./pages/TraineeProfile";
 
