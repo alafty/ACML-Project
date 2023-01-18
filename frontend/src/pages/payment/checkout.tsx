@@ -22,6 +22,7 @@ function Checkout() {
   };
   const buyCourse = () => {
     courseServices.BuyCourse(id);
+    
     navigation('/home');
 
     

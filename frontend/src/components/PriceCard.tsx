@@ -21,7 +21,7 @@ function PriceCard(props) {
       id="big-button-primary"
       onClick={async ()  => {
         if(props.isPurchased) {
-          navigation('/home');
+          navigation(`/course/purchased=${props.courseID}`);
         } else {
           if(props.type === "corporateTrainee" && !request){
               await Services.createCourseRequest(props.userDetails._id, props.courseDetails._id, props.userDetails.Corporate);

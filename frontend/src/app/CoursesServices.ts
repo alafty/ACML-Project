@@ -113,13 +113,13 @@ const createCourse = async (
 const changeProgress = async (
   courseID: string,
   userID: string,
-  progress: number
+  progress: string
 ) => {
 
 var data = qs.stringify({
-  'id': userID,
-  'courseID': courseID,
-  'progress': progress 
+  courseID: courseID,
+  progress: progress ,
+  userID: userID
 });
 var config = {
   method: 'put',
@@ -129,14 +129,11 @@ var config = {
   },
   data : data
 };
+console.log(data);
+const response = await httpClient.put("http://localhost:8000/courses/progress", data);
 
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
+
+  return response.data;
 
 }
 const createSubtitle = async (

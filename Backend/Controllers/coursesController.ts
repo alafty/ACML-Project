@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import Course from "../Models/course";
 import courseInputValidate from "../Validators/courseValidator";
 import Subtitle from "../Models/subtitle";
-import coursesRouter from "../Routes/coursesRoutes";
 import discountInputValidate from "../Validators/discountValidator";
 import userTypes from "../Constants/userTypes";
 import inidvTrainee from "../Models/individualTrainee";
@@ -361,51 +360,60 @@ const recommendedCourses = async (req: Request, res: Response) => {
   res.status(200).json(allCourses);
 };
 
-const putCourseProgress = async(req: Request, res: Response) => {
-  if(!req.body.courseID || !req.body.progress || !req.body.id){
-    res.status(400).json({message: "missing fields"});
-  }
-
-  let tempUser = await inidvTrainee.findById(req.body.id);
+const putCourseProgress = async (req: Request, res: Response) => {
+  // if(!req.body.courseID || !req.body.progress || !req.body.id){
+  //   res.status(400).json({message: "missing fields"});
+  // }
   let type;
-  if(!tempUser){
-    tempUser = await corpTrainee.findById(req.body.id);
-    if(!tempUser){
-      res.status(400).json({message: "invalid User id"});
-
-    }else {
-      type = 'corp';
-    }
-  } else{
-    type = 'indiv';
-  }
-  
-  for (let index = 0; index < tempUser.PurchasedCourses.length; index++) {
-    if(tempUser.PurchasedCourses[index].courseID === req.body.courseID){
-      if (tempUser.PurchasedCourses[index].progress > req.body.progress){
-        res.status(200).json({message: 'progress less than actual'})
-      } else{
-        tempUser.PurchasedCourses[index].progress = req.body.progress;
-      }
-      break;
-    }
-    if(index == tempUser.PurchasedCourses.length - 1){
-      res.status(400).json({message: "invalid course id"});
-    }
-  }
-  let trainee;
-  if(type === 'indiv'){
-     trainee = await inidvTrainee.findByIdAndUpdate(req.body.id,{
-      PurchasedCourses: tempUser.PurchasedCourses
-    })
+  let tempUser = await inidvTrainee.findById(req.body.userID);
+  if (!tempUser) {
+    tempUser = await corpTrainee.findById(req.body.userID);
+    type = "corp";
   } else {
-     trainee = await corpTrainee.findByIdAndUpdate(req.body.id,{
-      PurchasedCourses: tempUser.PurchasedCourses
-    })
+    type = "indiv";
   }
-  res.status(200).json(trainee);
-}
+  console.log(tempUser);
+  
+  if (tempUser) {
+    for (let index = 0; index < tempUser.PurchasedCourses.length; index++) {
+      console.log(
+        tempUser.PurchasedCourses[index].courseID == req.body.courseID
+      );
 
+      if (tempUser.PurchasedCourses[index].courseID == req.body.courseID) {
+        if (tempUser.PurchasedCourses[index].progress > req.body.progress) {
+          res.status(200).json({ message: "progress less than actual" });
+          return;
+        } else {
+          tempUser.PurchasedCourses[index].progress = req.body.progress;
+        }
+      }
+      console.log(tempUser);
+
+      // if(index == tempUser.PurchasedCourses.length - 1){
+      //   res.status(400).json({message: "invalid course id"});
+      //   return;
+      // }
+    }
+    let trainee;
+    if (type === "indiv") {
+      trainee = await inidvTrainee.findByIdAndUpdate(req.body.userID, {
+        PurchasedCourses: tempUser.PurchasedCourses,
+      });
+    } else {
+      trainee = await corpTrainee.findByIdAndUpdate(req.body.userID, {
+        PurchasedCourses: tempUser.PurchasedCourses,
+      });
+    }
+    res.status(200).json(trainee);
+    return
+  } else{
+    res.status(400).json({message: "you reached the end"});
+    return
+  }
+
+  return;
+};
 
 const purchaseCourse = async (req, res) => {
   var id = req.user._id;
@@ -469,6 +477,5 @@ export {
   purchaseCourse,
   getCourseSubtitles,
   getSubtitle,
-  putCourseProgress
-
+  putCourseProgress,
 };

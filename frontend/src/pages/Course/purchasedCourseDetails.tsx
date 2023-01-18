@@ -77,22 +77,20 @@ export default function PurchasedCourseDetails() {
         curr[currentQuiz.Order - 1].completed = true;
         setOpenedSubtitles(openedSubtitles + 1);
         setQuizzes(curr);
-        console.log();
-        await Services.changeProgress(
+        const change = await Services.changeProgress(
           courseDetails._id,
-          state.loggedInUser.id,
-          (openedSubtitles / parseFloat(quizzes.length)) * 100
+          state.loggedInUser._id,
+          (openedSubtitles / parseFloat(quizzes.length)) * 100 + ""
         );
+        console.log(change);
       }
     }
   };
   useEffect(() => {
     const fetchCourseDetails = async () => {
       const details = await courseServices.getCourseDetails(id);
-      if (details) {
-        setCourseDetails(details);
-        setSubtitles(courseDetails.Subtitles);
-      }
+      setCourseDetails(details);
+      setSubtitles(courseDetails.Subtitles);
       if (!currentSubtitle) {
         setCurrentSubtitle(subtitles[0]);
       }
@@ -103,14 +101,14 @@ export default function PurchasedCourseDetails() {
 
     const isCoursePurchased = async () => {
       if (state.loggedInUser.Username) {
-        console.log(isPurchased);
+        //console.log(isPurchased);
         for (
           let index = 0;
           index < state.loggedInUser.PurchasedCourses.length;
           index++
         ) {
           if (state.loggedInUser.PurchasedCourses[index].courseID === id) {
-            console.log(state.loggedInUser.PurchasedCourses[index].courseID);
+            //console.log(state.loggedInUser.PurchasedCourses[index].courseID);
             setPurchased(true);
           }
         }
@@ -118,7 +116,7 @@ export default function PurchasedCourseDetails() {
     };
     fetchCourseDetails();
     isCoursePurchased();
-  }, []);
+  }, [courseDetails]);
 
   const renderSubtitle = ({ _id, Description, Order }) => {
     return (
@@ -280,7 +278,68 @@ export default function PurchasedCourseDetails() {
                     <Button
                       variant="contained"
                       id="big-button-primary"
-                      onClick={calulateScore}
+                      onClick={async () => {
+                        const choice =
+                          chosenAnswer === 1
+                            ? currentQuiz.Questions[currentQuestion].Choice1
+                            : chosenAnswer === 2
+                            ? currentQuiz.Questions[currentQuestion].Choice2
+                            : chosenAnswer === 3
+                            ? currentQuiz.Questions[currentQuestion].Choice3
+                            : chosenAnswer === 4
+                            ? currentQuiz.Questions[currentQuestion].Choice4
+                            : currentQuiz.Questions[currentQuestion].Choice1;
+
+                        if (
+                          currentQuiz.Questions[currentQuestion].Answer ===
+                          choice
+                        ) {
+                          setQuestionGrade(
+                            questionGrade +
+                              parseFloat(
+                                currentQuiz.Questions[currentQuestion].Grade
+                              )
+                          );
+                        }
+
+                        let tempAnswer = correctAnswers;
+                        tempAnswer.push(
+                          currentQuiz.Questions[currentQuestion].Answer
+                        );
+                        setCorrectAnswers(tempAnswer);
+
+                        setQuizGrade(
+                          quizGrade +
+                            parseFloat(
+                              currentQuiz.Questions[currentQuestion].Grade
+                            )
+                        );
+                        //console.log(quizGrade);
+
+                        if (
+                          currentQuiz.Questions.length - 1 >
+                          currentQuestion
+                        ) {
+                          setCurrentQuestion(currentQuestion + 1);
+                        } else {
+                          console.log("done");
+                          setStartedQuiz(false);
+                          var curr = quizzes;
+                          if (!curr[currentQuiz.Order - 1].completed) {
+                            curr[currentQuiz.Order - 1].completed = true;
+                            setOpenedSubtitles(openedSubtitles + 1);
+                            setQuizzes(curr);
+                            const change = await Services.changeProgress(
+                              id,
+                              state.loggedInUser.id,
+                              (openedSubtitles / parseFloat(quizzes.length)) *
+                                100 +
+                                ""
+                            );
+                            console.log(change);
+                          }
+                        }
+                      }}
                     >
                       {" "}
                       Next{" "}
@@ -310,7 +369,6 @@ export default function PurchasedCourseDetails() {
       ) : (
         <p>error 401: unauthorized access</p>
       )}
-
     </div>
   );
 }
