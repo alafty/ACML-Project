@@ -11,10 +11,10 @@ import PriceCard from "../../components/PriceCard";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
-import httpClient from "../../utils/httpClient";
-import { getTokenHeader } from "../../utils/authUtils";
+import { Button, TextField } from "@mui/material";
+import Services from "../../app/pdfServices";
 
-export default function CourseDetails() {
+export default function PurchasedCourseDetails() {
   const { id } = useParams();
   //const [quizzes, setQuizzes] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
@@ -26,7 +26,7 @@ export default function CourseDetails() {
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [state, dispatch] = useGlobalState();
   const [isPurchased, setPurchased] = useState(false);
-
+  const [Notes,setNotes] = useState('');
   
 
   useEffect(() => {
@@ -37,48 +37,21 @@ export default function CourseDetails() {
       //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
     }
     const fetchInstructorDetails = async () => {
- 
       await instructorServices.getInstructorData(courseDetails?.Instructor)
       .then((data) =>{
         setInstructorDetails(data);
       })
       .catch((Error) => {
-       // console.log(Error);
+        console.log(Error);
         
       });
-    
     }
     const isCoursePurchased = async () => {
-      var config = {
-        method: "get",
-        url: "/create/me",
-        headers: {
-         ...getTokenHeader(), 
-        },
-        data: null,
-      };
-      httpClient(config)
-      .then(function (response) {
-        state.loggedInUser = response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      console.log(courseDetails._id);
       if(state.loggedInUser.Username){
-       var pur = false ;
-        for (let i = 0 ; i<state.loggedInUser.PurchasedCourses.length;i++){
-          console.log(state.loggedInUser.PurchasedCourses[i].courseID);
-          console.log(state.loggedInUser.PurchasedCourses);
-          if (state.loggedInUser.PurchasedCourses[i].courseID.includes(courseDetails._id.trim())){
-            pur=true;
-            break;
-          }
-        }
-        setPurchased(pur);
         console.log(isPurchased);
+        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
       }
-    } 
+    }
     fetchCourseDetails();
     fetchInstructorDetails();
     isCoursePurchased();
@@ -157,7 +130,6 @@ export default function CourseDetails() {
             <PriceCard 
             userDetails={state.loggedInUser}
             courseDetails={courseDetails} 
-            courseID = {id}
             isPurchased={isPurchased} 
             type={state.loggedInUser.type} />
 
@@ -166,7 +138,21 @@ export default function CourseDetails() {
         <div>
           <CourseDetailsCenter courseDetails={courseDetails} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
-        
+          <TextField label="Notes" variant="standard" className='search-bar' required={true}
+            onChange={(e) => {
+              setNotes(e.target.value);
+            }}
+            />
+          <Button
+          variant="contained"
+          id="filled-button"
+          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
+          onClick={
+            () => {
+                Services.generateNotesPDF(Notes);
+            }
+          }
+        > Download Notes </Button>
         </div>
       </div>
     </div>

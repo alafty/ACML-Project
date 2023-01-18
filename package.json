@@ -22,9 +22,7 @@
   "homepage": "https://github.com/Advanced-Computer-Lab-2022",
   "dependencies": {
     "@mui/icons-material": "^5.11.0",
-
     "@types/file-saver": "^2.0.5",
-
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.13",
     "@types/react": "^18.0.26",
@@ -48,6 +46,7 @@
     "node": "^19.0.0",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "pdfkit": "^0.13.0",
     "react-hook-form": "^7.40.0",
     "react-modal": "^3.16.1",
     "ts-node": "^10.9.1",

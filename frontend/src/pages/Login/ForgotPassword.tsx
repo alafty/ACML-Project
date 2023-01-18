@@ -1,108 +1,119 @@
-import React,{Component} from "react";
-import axios from 'axios';
-import '../../Styling/mainLayout.css';
-import Header from '../../components/header';
+import React, { Component } from "react";
+import axios from "axios";
+import "../../Styling/mainLayout.css";
+import Header from "../../components/header";
 import Button from "@mui/material/Button";
-import { TextField } from "@mui/material";
-
+import { Alert, TextField } from "@mui/material";
+import { CustomTextField } from "../../components/TextField";
+import { Link, useNavigate } from "react-router-dom";
 
 type State = {
-    Email: string,
-    Error: string,
-    Msg:string
+  Email: string;
+  Error: string;
+  Msg: string;
+};
+
+export default class Create extends Component<{}, State> {
+
+
+  constructor(props: any) {
+    super(props);
+    
+    this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+
+    this.state = {
+      Email: "",
+      Error: "",
+      Msg: "",
+    };
+  }
+  onChangeEmail(e) {
+    this.setState({
+      Email: e.target.value,
+    });
   }
 
-    export default class Create extends Component<{}, State> {
-   
-    constructor(props: any) {
-        super(props);
+  async onSubmit(e) {
+    e.preventDefault();
 
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
 
-        this.state = {
-            Email: '',
-            Error: '',
-            Msg : ''
-      
-            
-        }
-    }
+    const reqBody = {
+      Email: this.state.Email,
+    };
 
-    onChangeEmail(e) {
+    try {
+      const url = `http://localhost:8000/passwordreset/SendLink`;
+      const { data } = await axios.post(url, reqBody);
+      this.setState({
+        Email: "",
+        Msg: data.message,
+        Error: "Please check your mail",
+      });
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
         this.setState({
-            Email: e.target.value
+          Msg: "",
+          Error: error.response.data.message,
         });
+      }
     }
+  }
 
-    
-   async onSubmit(e) {
-        e.preventDefault();
+  render() {
+    return (
+      <div className="container">
+        <div className="login-body">
+          <div className="login-card">
+            <h2 className="login-header">Forgot Password</h2>
 
-      console.log("Here");
+            <CustomTextField
+              id="text-field"
+              placeholder="E-Mail"
+              InputProps={{
+                className: "text-field",
+              }}
+              onChange={(e) => {
+                this.onChangeEmail(e);
+              }}
+            />
 
-        const reqBody = {
-            Email: this.state.Email,
-        }
+            <Button
+              variant="contained"
+              id="big-button-primary"
+              onClick={this.onSubmit}
+            >
+              {" "}
+              Send Link{" "}
+            </Button>
 
-        try {
-          const url = `http://localhost:8000/passwordreset/SendLink`;
-          const { data } = await axios.post(url, reqBody);
-          this.setState({
-            Email:'',
-            Msg:data.message,
-            Error:''
-          })
-          
-        } catch (error) {
-          if (
-            error.response &&
-            error.response.status >= 400 &&
-            error.response.status <= 500
-          ) {
-            this.setState({
-              Msg:'',
-              Error:error.response.data.message
-            })
-
+              <Link 
+              to={'/login'}
+              >
+            <Button
+              variant="outlined"
+              id="big-button-primary-outlined"
+            >
+              {" "}
+              Back{" "}
+            </Button>
+            </Link>
+            {
+            this.state.Error ?
+            <Alert 
+            severity={ this.state.Error === 'Please check your mail' ? "success" : "error"}
+            className='alert'
+            >{this.state.Error}</Alert> 
+            :
+            <></>
           }
-        }
-       
-    }
-
-        render() {
-          return (
-              <div className="container">
-                <Header />
-                  <div className='body'>
-                        <h2 
-                        style={{ marginTop: "200px" }} 
-                        className='title'>
-                          Forgot Password</h2>
-                        <TextField 
-                        style={{marginLeft: "150px"}}
-                        label="Email"
-                        variant="standard"
-                        className='search-bar'
-                        onChange={this.onChangeEmail}
-                        value={this.state.Email}
-                        required={true}
-                          />
-          
-                          <Button
-                          variant="contained"
-                          id="filled-button"
-                          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
-                          onClick={this.onSubmit}
-                          > Login </Button>
-                          {this.state.Error && <p style={{marginLeft: "70vw"}}>{this.state.Error}</p>}
-                          {this.state.Msg && <p style={{marginLeft: "70vw"}}>{this.state.Msg}</p>}
-                        </div>
-                        
-                    </div>
-          );
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
-
-    }
-

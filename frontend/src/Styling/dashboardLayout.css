@@ -13,6 +13,8 @@ html, body{
 }
 
 .dashboard-body {
+    display: flex;
+    flex-direction: row;
     background-color: var(--text-dark);
 }
 .grid-container{
@@ -95,6 +97,13 @@ html, body{
     width: 70vw;
     height: fit-content;
     background-color: var(--text);
+    border-radius: 20px;
+}
+
+.problems-table {
+    padding: 20px;
+    margin: 20px;
+    background-color: var(--white);
     border-radius: 20px;
 }
 

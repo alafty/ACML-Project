@@ -11,7 +11,9 @@ import {
   putDiscount,
   putDiscountAllCourses,
   recommendedCourses,
-  purchaseCourse
+  purchaseCourse,
+  getCourseSubtitles,
+  getSubtitle
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
 
@@ -28,6 +30,11 @@ coursesRouter.post("/search", searchCourses);
 coursesRouter.route("/id").post(getCourses);
 
 coursesRouter.put("/subtitle", protect, putCourseSubtitle); // Protect. Type = instructor || admin. Course creator == id
+
+coursesRouter.post("/subtitles",getCourseSubtitles);
+
+coursesRouter.post("/subtitle",getSubtitle)
+
 
 coursesRouter.put("/videoId", protect, putCourseVideo); // Protect. Type = instructor || admin. Course creator == id
 

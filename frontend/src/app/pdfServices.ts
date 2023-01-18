@@ -29,8 +29,35 @@ export const generatePDF = async (name: String, course: String, date: String) =>
       
       
 }
+
+export const generateNotesPDF = async (notes: String) => {
+  var data = qs.stringify({
+  notes: notes
+  
+});
+  var config = {
+  method: 'post',
+  url: 'http://localhost:8000/pdf/generateNotesPDF',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded'
+  },
+  data : data
+};
+
+axios(config)
+.then(() => axios.get('http://localhost:8000/pdf/getNotes', { responseType: 'blob' }))
+    .then((res) => {
+      const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+
+      saveAs(pdfBlob, 'MyNotes.pdf');
+    })
+
+    
+    
+}
 const Services = {
-    generatePDF
+    generatePDF,
+    generateNotesPDF
 }
 
 export default Services;
