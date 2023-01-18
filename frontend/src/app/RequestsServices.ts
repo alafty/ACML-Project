@@ -45,9 +45,51 @@ export const fetchCorporateRequests = async (corporateID: String) => {
 
 }
 
+export const acceptRequest = async (traineeID: String, courseID: string, id: string) => {
+    var data = qs.stringify({
+        'TraineeID': traineeID,
+        'CourseID': courseID,
+        'id': id
+    });
+    var config = {
+        method: 'delete',
+        url: 'http://localhost:8000/requests/accept',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: data
+    };
+
+    let res =  await axios(config);
+    console.log(res.data);
+    return res.data;
+
+}
+
+export const rejectRequest = async (reqID: String) => {
+    var data = qs.stringify({
+        '_id': reqID,
+    });
+    var config = {
+        method: 'delete',
+        url: 'http://localhost:8000/requests/reject',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        data: data
+    };
+
+    let res =  await axios(config);
+    console.log(res.data);
+    return res.data;
+
+}
+
 const Services = {
     createCourseRequest,
-    fetchCorporateRequests
+    fetchCorporateRequests,
+    rejectRequest,
+    acceptRequest
 }
 
 export default Services;
