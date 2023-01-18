@@ -82,7 +82,9 @@ const createCourse = async (
   price: String,
   totalHours: String,
   vidID: String,
-  description: String
+  description: String,
+  quizzes: any[],
+  Subtitles: any[]
 ) => {
 var data = qs.stringify({
   'Name': name,
@@ -91,7 +93,9 @@ var data = qs.stringify({
   'Price': price,
   'TotalHours': totalHours,
   'VideoId': vidID,
-  'Description': description
+  'Description': description,
+  'Quizzes': quizzes,
+  'Subtitles': Subtitles
 });
 var config = {
   method: 'post',
