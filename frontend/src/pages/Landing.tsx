@@ -11,18 +11,28 @@ import { width } from '@mui/system';
 
 function Landing() {
   const [courses, setCourses] = useState(null);
-
+  const [featuredCourses, setFeaturedCourses] = useState([]);
   useEffect(() => {
     const fetchCourses = async () => {
       const data = await Services.getAllCourses();
       let filteredCourses = [];
-      for (let index = 0; index < 5; index++) {
+      for (let index = 0; index < data.length; index++) {
         const {Name, Description, _id, Price} = data[index];
         filteredCourses.push({Name, Description, _id, Price});
       }
       setCourses(filteredCourses);
     }
+    const fetchFeaturedCourses = async () => {
+      const data = await Services.getRecommendedCourses();
+      let filteredCourses = [];
+      for (let index = 0; index < data.length; index++) {
+        const {Name, Description, _id, Price} = data[index];
+        filteredCourses.push({Name, Description, _id, Price});
+      }
+      setFeaturedCourses(filteredCourses);
+    };
     fetchCourses();
+    fetchFeaturedCourses();
   }, []);
 
   
@@ -52,7 +62,7 @@ function Landing() {
             {
             courses ? 
             <>
-            <CoursesSector coursesList={courses} title="Featured Courses"/> 
+            <CoursesSector coursesList={featuredCourses} title="Featured Courses"/> 
             <Divider />
             <CoursesSector coursesList={courses} title="Engineering"/>
             <Divider />

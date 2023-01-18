@@ -9,6 +9,7 @@ import {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  recommendedCourses,
   purchaseCourse
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
@@ -18,7 +19,7 @@ const coursesRouter = Router();
 coursesRouter
   .route("/")
   .get(getCourses)
-  .post(protect, addCourse) // Protect. Type = instructor || admin. Post by id
+  .post(addCourse) // Protect. Type = instructor || admin. Post by id
   .delete(protect, deleteCourse); // Protect. Type = instructor || admin. Course creator == id
 
 coursesRouter.post("/search", searchCourses);
@@ -35,5 +36,8 @@ coursesRouter.post("/hover", hoverCourse);
 
 coursesRouter.post("/rate", protect, addRating); // Protect. Type == indivTrainee || corpTrainee
 
+coursesRouter.get('/recommended', recommendedCourses);
+
 coursesRouter.put("/payCourse",purchaseCourse);
+
 export default coursesRouter;

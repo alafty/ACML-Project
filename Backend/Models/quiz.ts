@@ -4,13 +4,14 @@ import question from "./questionBank";
 
 const quizSchema = new Schema(
   {
-    Count: {
-      type: Number,
-      required: true,
+    Order: {
+      type: String,
+      required: false,
     },
     Questions: {
-      type: [question],
+      type: [Object],
       required: true,
+      ref : 'QuestionBank'
     }
   },
   { timestamps: true }
