@@ -16,7 +16,7 @@ import Home from "./pages/Home";
 import CorporateDashboard from "./pages/CorporateDashboard";
 
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
-import InstructorDetails from "./pages/Instructor/InstructorDetails";
+import InstructorDetails from "./pages/Instructor/InstructorDashboard";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
@@ -114,8 +114,9 @@ function app() {
             element={<CorporateDashboard />} />
 
             <Route
-            path="/instructor/profile" 
+            path="/instructor/dashboard" 
             element={<InstructorDetails />} />
+            
             <Route path="/pdf" element={<PDFGenerator/>} />
             <Route path="/createquiz" element={<CreateQuiz />} />
             <Route path="/course=:id" element={<CourseDetails />} />

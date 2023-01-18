@@ -91,9 +91,7 @@ const [Instructors,setInstructors] = useState([]);
 
                         </tr>
                     </tbody>
-                    <Link to="/updateInstructor">
-                        <button onClick={() => showUpdateInfo(instructor)}>update</button>
-                        </Link>
+                   
                     <button onClick={() => deleteInstrucor(instructor)}>delete</button>
                 </table>
             ))}

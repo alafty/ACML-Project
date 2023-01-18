@@ -19,7 +19,10 @@ const [Corps,setCorps] = useState([]);
         return {};
      
     }
-   
+    const deleteCorp = (corp) => {
+        console.log(corp)
+        axios.delete('http://localhost:8000/create/corporate',{ data: corp })
+      }
     useEffect(() => {
         const showcorps = async () => {
           const data = await getcorps();
@@ -52,7 +55,7 @@ const [Corps,setCorps] = useState([]);
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{corp.Name}</td> <br></br>
+                            <td>{corp.Username}</td> <br></br>
                             <td>{corp.Email}</td> <br></br>
                             <td>{corp.Industry}</td> <br></br>
                             <td>{corp.PackageID}</td> <br></br>
@@ -61,7 +64,7 @@ const [Corps,setCorps] = useState([]);
 
                         </tr>
                     </tbody>
-                   
+                    <button onClick={() => deleteCorp(corp)}>delete</button>
                     
                 </table>
             ))}

@@ -2,6 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 import Discount from "./discount";
 import Subtitle from "./subtitle";
 import instructor from "./instructor";
+import quiz from "./quiz";
 
 const courseSchema = new Schema(
   {
@@ -14,8 +15,13 @@ const courseSchema = new Schema(
       required: true,
     },
     Subtitles: {
-      type: [Subtitle.schema],
+      type: [],
       default: [],
+    },
+    Quizzes: {
+      type: [Schema.Types.ObjectId],
+      ref: 'Quiz',
+      default: []
     },
     Description: {
       type: String,
