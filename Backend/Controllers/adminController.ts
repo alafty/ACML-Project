@@ -420,10 +420,26 @@ const getProblems = async (req, res) => {
       const update = { Status: 'Pending' };  
       await problem.findOneAndUpdate(filter, update);
       res.status(200).json("Problem Pending");
+        };
+
+      const refundUser = async (req, res) => {
+          if (req.type != userTypes.admin){
+            res.status(400).json("Authoraization failed");
+          }else{
+        var  user =   await inidvTrainee.findOne({_id:req.body._id.trim()});
+        
+        if (user){
+          var namount = Number(user.Wallet)+Number(req.body.amount);
+          await inidvTrainee.findOneAndUpdate({_id:req.body._id.trim()},{Wallet:namount});
+          res.status(200).json("User Refunded");
+        }else{
+          res.status(400).json("User not found");
         }
-      
-  
- ;
+      }
+        };
+
+    
+        
 export {
   createAdmin,
   createInstructor,
@@ -446,5 +462,6 @@ export {
   getITrainees,
   deleteCorptrainee,
   deleteIndivtrainee,
-  deleteCorp
+  deleteCorp,
+  refundUser
 };
