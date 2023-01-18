@@ -5,11 +5,11 @@ import question from "./questionBank";
 const quizSchema = new Schema(
   {
     Order: {
-      type: Number,
-      required: true,
+      type: String,
+      required: false,
     },
     Questions: {
-      type: [Schema.Types.ObjectId],
+      type: [Object],
       required: true,
       ref : 'QuestionBank'
     }

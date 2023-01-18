@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { extractIdFromVideoUrl } from "../../utils/video_utils";
 import { CustomTextField } from "../../components/TextField";
 import coursesServices from "../../app/CoursesServices";
+import instructorServices from "../../app/InstructorServices";
 
 function InstructorDashboard() {
   const [state, dispatch] = useGlobalState();
@@ -39,6 +40,7 @@ function InstructorDashboard() {
   const [courseVidID, setCourseVidID] = React.useState("");
   const [totalHours, setTotalHours] = React.useState("");
   const [courseDescription, setCourseDescription] = React.useState("");
+  const [courseError, setCourseError] = React.useState("");
 
   const [courseSubtitles, setCourseSubtitles] = useState([]);
   const [subtitleID, setSubtitleID] = useState("");
@@ -54,38 +56,43 @@ function InstructorDashboard() {
   const [answer3, setAnswer3] = useState("");
   const [answer4, setAnswer4] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
-  const [grade, setGrade] = useState(0);
+  const [grade, setGrade] = useState('');
   const [quizError, setQuizError] = useState("");
+  const [quizzesIDs, setQuizzesIDs] = useState([]);
 
   const [renderedCourses, setRenderedCourses] = useState([]);
 
-  
-  
-  const fetchDetails = async (id:string) => {
+
+  const quizzesCallback = async(id) => {
+    let tempQuizzesIDs = quizzesIDs;
+    tempQuizzesIDs.push(id);
+    setQuizzesIDs(tempQuizzesIDs);
+  }
+  const fetchDetails = async (id: string) => {
     const courseDetails = await coursesServices.getCourseDetails(id);
-    let tempCourses = renderedCourses; 
+    let tempCourses = renderedCourses;
     //console.log(renderedCourses.some(e => e._id === courseDetails._id));
-    if(!renderedCourses.some(e => e._id === courseDetails._id)){  
+    if (!renderedCourses.some((e) => e._id === courseDetails._id)) {
       tempCourses.push(courseDetails);
     }
     setRenderedCourses(tempCourses);
-  }
+  };
 
-  const fetch = async () =>{
-    for (let index = 0; index <= state.loggedInUser.Courses.length - 1; index++) {
-      await fetchDetails(state.loggedInUser.Courses[index]);      
+  const fetch = async () => {
+    for (
+      let index = 0;
+      index <= state.loggedInUser.Courses.length - 1;
+      index++
+    ) {
+      await fetchDetails(state.loggedInUser.Courses[index]);
     }
-  }
+  };
 
   useEffect(() => {
     fetch();
-  }, [renderedCourses])
-  
-  
-  
+  }, [renderedCourses, quizzesIDs]);
 
-  const renderCourses = ( {Name, Description, _id} ) => {
-
+  const renderCourses = ({ Name, Description, _id }) => {
     return (
       <div className="course-card-dashboard">
         <p className="course-name">{Name}</p>
@@ -109,7 +116,7 @@ function InstructorDashboard() {
   };
 
   const handleQuizSelector = (event: SelectChangeEvent) => {
-    setSelectedQuiz(event.target.value as string);
+    setSelectedQuiz(event.target.value);
   };
 
   const handleUrlUpload = (url) => {
@@ -351,6 +358,8 @@ function InstructorDashboard() {
                             let tempSubs = courseSubtitles;
                             tempSubs.push(newSubtitle);
                             setCourseSubtitles(tempSubs);
+                            console.log(courseSubtitles);
+                            
                             setSubtitleError("Subtitle Added");
                           } else {
                             setSubtitleError("invalid URL");
@@ -389,9 +398,11 @@ function InstructorDashboard() {
                         className="selector"
                         onChange={handleQuizSelector}
                       >
-                        {quizzes.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            {name}
+                        {quizzes.map(({Order}) => (
+                          <MenuItem 
+                          key={Order} 
+                          value={Order}>
+                            {Order}
                           </MenuItem>
                         ))}
                       </Select>
@@ -399,11 +410,15 @@ function InstructorDashboard() {
                     <Button
                       variant="contained"
                       id="big-button-primary"
-                      onClick={() => {
+                      onClick={async () => {
                         let tempQuiz = quizzes;
-                        let tempName = "quiz" + (quizzes.length + 1);
+                        let tempName = {
+                          Order: quizzes.length + 1,
+                          Questions: []
+                        }
                         tempQuiz.push(tempName);
                         setQuizzes(tempQuiz);
+                        
                         console.log(quizzes);
                       }}
                     >
@@ -473,7 +488,7 @@ function InstructorDashboard() {
                         className: "text-field",
                       }}
                       onChange={(e) => {
-                        setAnswer4(e.target.value);
+                        setCorrectAnswer(e.target.value);
                       }}
                     />
 
@@ -484,7 +499,7 @@ function InstructorDashboard() {
                         className: "text-field",
                       }}
                       onChange={(e) => {
-                        setAnswer4(e.target.value);
+                        setGrade(e.target.value);
                       }}
                     />
                     <Button
@@ -506,16 +521,99 @@ function InstructorDashboard() {
                             "Please select a quiz to add this question in"
                           );
                         } else {
-                          if (true) {
-                          } else {
-                            setQuizError("invalid URL");
+                          //ADD A QUESTION TO COURSES
+                          let tempQues = {
+                            Question: question,
+                            Choice1: answer1,
+                            Choice2: answer2,
+                            Choice3: answer3,
+                            Choice4: answer4,
+                            Answer: correctAnswer,
+                            Grade: grade
                           }
+                          let tempQuiz = quizzes;
+                          tempQuiz[Number(selectedQuiz) - 1].Questions.push(tempQues);
+                          setQuizzes(tempQuiz);
+                          console.log(quizzes);
                         }
                       }}
                     >
                       {" "}
                       Add Question to Selected Quiz{" "}
                     </Button>
+                    {quizError ? (
+                      <Alert
+                        severity={
+                          subtitleError == "success" ? "success" : "error"
+                        }
+                        className="alert"
+                      >
+                        {quizError}
+                      </Alert>
+                    ) : (
+                      <></>
+                    )}
+                    <Button
+                      variant="contained"
+                      id="big-button-primary"
+                      onClick={async () => {
+                        if (
+                          !courseDescription ||
+                          !courseName ||
+                          !coursePrice ||
+                          !courseVidID ||
+                          !totalHours ||
+                          !subject
+                        ) {
+                          console.log(courseDescription + '  ' +
+                            courseName + '  ' +
+                            coursePrice + '  ' +
+                            courseVidID + '  ' +
+                            totalHours + '  ' +
+                            subject);
+                          
+                          setCourseError("Please Fill All Fields");
+                        } else {
+                          setCourseError('');
+                          let actualQuizzes = 1;
+                          let quizzesid =[]
+                          for(let i = 0; i < quizzes.length; i++){
+                            if(quizzes[i].Questions.length > 0){
+                              await instructorServices.createQuiz(actualQuizzes + '', quizzes[i].Questions, quizzesCallback); 
+                              //console.log(quizzesIDs);
+                              actualQuizzes ++;
+                            }
+                          }
+                          const feedback = await coursesServices.createCourse(
+                            courseName,
+                            subject,
+                            state.loggedInUser._id,
+                            coursePrice,
+                            totalHours,
+                            courseVidID,
+                            courseDescription,
+                            quizzesIDs,
+                            courseSubtitles
+                          );
+                          console.log(feedback);
+                        }
+                      }}
+                    >
+                      {" "}
+                      Publish Course{" "}
+                    </Button>
+                    {courseError ? (
+                      <Alert
+                        severity={
+                          subtitleError == "success" ? "success" : "error"
+                        }
+                        className="alert"
+                      >
+                        {courseError}
+                      </Alert>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </>
               ) : activeTab == "PROBLEMS" ? (

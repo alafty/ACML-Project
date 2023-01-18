@@ -19,7 +19,7 @@ const coursesRouter = Router();
 coursesRouter
   .route("/")
   .get(getCourses)
-  .post(protect, addCourse) // Protect. Type = instructor || admin. Post by id
+  .post(addCourse) // Protect. Type = instructor || admin. Post by id
   .delete(protect, deleteCourse); // Protect. Type = instructor || admin. Course creator == id
 
 coursesRouter.post("/search", searchCourses);

@@ -7,6 +7,7 @@ import discountInputValidate from "../Validators/discountValidator";
 import userTypes from "../Constants/userTypes";
 import inidvTrainee from "../Models/individualTrainee";
 import course from "../Models/course";
+import instructor from "../Models/instructor";
 
 // @desc    Get All Courses
 // @rout    GET /courses/
@@ -81,13 +82,22 @@ const addCourse = async (req: Request, res: Response) => {
     res.status(400).json({ message: "Make sure all fields are here" });
   } else {
     var newBody = req.body;
-    if (req.type == userTypes.instructor) {
-      newBody.Instructor = req.user._id;
-    } else if (req.type != userTypes.admin) {
-      res.status(401).json({ message: "Not authorized" });
-      return;
-    }
+    // if (req.type == userTypes.instructor) {
+    //   newBody.Instructor = req.user._id;
+    // } else if (req.type != userTypes.admin) {
+    //   res.status(401).json({ message: "Not authorized" });
+    //   return;
+    // }
     const newCourse = await Course.create(newBody);
+    const tempInstructor = await instructor.findById(newCourse.Instructor);
+    console.log(tempInstructor);
+    tempInstructor.NumberOfCourses ++;
+    tempInstructor.Courses.push(newCourse._id);
+    console.log(tempInstructor);
+    await instructor.findByIdAndUpdate(newCourse.Instructor, 
+      {NumberOfCourses: tempInstructor.NumberOfCourses, 
+      Courses: tempInstructor.Courses
+      });
     res.status(200).json(newCourse);
   }
 };
@@ -184,37 +194,15 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
       return;
     }
     if (course) {
-      if (sub.Id) {
-        var subToModify = course.Subtitles.id(sub.Id);
-        if (subToModify) {
-          var tempSub = {
-            Description: subToModify.Description,
-            ...(subToModify.VideoId ? { VideoId: subToModify.VideoId } : {}),
-          };
-          if (sub.Description) {
-            tempSub.Description = sub.Description;
-          }
-          if (sub.VideoId) {
-            tempSub.VideoId = sub.VideoId;
-          }
-          console.log(tempSub);
-          console.log(subToModify);
-
-          var newSub = subToModify.set(tempSub);
-          course.save(function (err) {
-            if (err) res.status(400).json({ message: err });
-            res.status(200).json(newSub);
-          });
-        } else {
-          res.status(400).json("Subtitle not found. Make sure the id is valid");
-        }
-      } else {
-        var newSub = course.Subtitles.create({
+        var newSub = Subtitle.create({
           VideoId: sub.VideoId,
           Description: sub.Description,
           Order: sub.Order,
         });
-        course.Subtitles.push(newSub);
+        var createdSub = Subtitle.findOne({VideoId: sub.VideoId,
+          Description: sub.Description,
+          Order: sub.Order});
+        course.Subtitles.push((await createdSub)._id);
         course.save(function (err) {
           if (err) {
             res.status(400).json({ message: err });
@@ -222,7 +210,6 @@ const putCourseSubtitle = async (req: Request, res: Response) => {
           }
           res.status(200).json(newSub);
         });
-      }
     } else {
       res
         .status(400)
