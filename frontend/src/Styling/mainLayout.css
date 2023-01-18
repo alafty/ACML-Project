@@ -329,6 +329,13 @@ html, body {
     height: 100%;
 }
 
+.legal-body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--text-dark);
+    height: fit-content;
+}
+
 .landing-subtitle {
     font-family: var(--font);
     font-weight:lighter;
