@@ -71,7 +71,7 @@ function Legal(props) {
               variant="contained" 
               id='big-button-primary'
               onClick={() => {
-                navigation('/register/indivTrainee')
+                navigation('/register/indivTrainee  ')
               }}
               >
                 Back to Registeration
