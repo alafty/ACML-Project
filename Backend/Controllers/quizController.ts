@@ -60,12 +60,12 @@ const createQuiz = async (req: Request, res: Response) => {
     Order : req.body.Order,
     Questions : req.body.Questions
   }
-  await quiz.create(Quiz)
+  await quiz.create({Order: req.body.Order, Questions: req.body.Questions})
   var addedQuiz = await quiz.findOne(Quiz)
-  const Course = await course.findOne({_id:req.body.CourseID});
-  Course.Quizzes.push(addedQuiz._id)
-  Course.save();
-  res.status(200).json({ message: "Quiz Created" });
+  // const Course = await course.findOne({_id:req.body.CourseID});
+  // Course.Quizzes.push(addedQuiz._id)
+  // Course.save();
+  res.status(200).json(addedQuiz);
 
 
 }
