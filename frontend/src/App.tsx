@@ -115,7 +115,7 @@ function app() {
 
 
             <Route path="/pdf" element={<PDFGenerator/>} />
-            <Route path="/createquiz" element={<CreateQuiz />} />
+            
             <Route path="/checkout=:id" element={<Checkout />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/legal' element= {<Legal/>} />
