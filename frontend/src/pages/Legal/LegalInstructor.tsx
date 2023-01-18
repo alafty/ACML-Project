@@ -1,14 +1,14 @@
 import React from 'react'
 import Header from '../../components/header'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Button from '@mui/material/Button'
 
 function LegalInstructor() {
+  const navigate = useNavigate();
   return (
     <div className= "container">
-      <Header/>
-        <div className= "body" style={{height: '135vh'}}>
-            <h2 className='title' style={{marginTop: '80px', paddingInline: '40px'}}> Edu Act legal terms and conditions</h2>
+        <div className= "legal-body" >
+            <h2 className='landing-header' style={{marginBottom: '20px', paddingInline: '40px'}}> Edu Act legal terms and conditions</h2>
             <div className='legal-border'>
               <h4> 1. Agreement to Terms</h4>
             <p>
@@ -19,6 +19,7 @@ function LegalInstructor() {
             Supplemental terms and conditions or documents that may be posted on the Site from time to time are hereby expressly incorporated herein by reference. We reserve the right, in our sole discretion, to make changes or modifications to these Terms of Use from time to time. We will alert you about any changes by updating the "Last updated" date of these lerms ot Use, and you waive any right to receive specific notice ot each such change. Please ensure that you check the applicable lerms every time you use our Site so that you understand which Terms applv. You will be subiect to, and will be deemed to have been made aware of and to have accepted, the changes in an revised Terms of Use by vour continued use of the Site after the date such revised Terms of Use are posted.
             The information provided on the Site is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law or reaulation or which would subiect us to an reaistration reauirement within such jurisdiction or countr. Accordinalv. those persons who choose to access the Site from other locations do so on their own initiative and are solely responsible for compliance with local laws. if and to the extent local laws are applicable.
             All users who are minors in the jurisdiction in which they reside (generally under the age of 18) must have the permission of, and be directly supervised by, their parent or guardian to use the Site. If you are a minor, you must have your parent or guardian read and agree to these Terms of Use prior to you using the Site.
+            ALL INSTRUCTORS TAKE A 45% CUT FROM THEIR COURSES REVENUES AS PER COMPANY POLICY
             </p>
 
             <h4> 2. Interllectual Property Rights</h4>
@@ -67,11 +68,15 @@ function LegalInstructor() {
             recourse against us for anv aleded or actual intrIngement or misappropriation or any proprietary right in vour submissions
             </p>
             </div>
-            <Link to={'/instructorRegister'} style={{textDecoration: 'none'}}>
-              <Button style={{ marginLeft: '75%'}}variant="contained" id='filled-button'>
+              <Button 
+              variant="contained" 
+              id='big-button-primary'
+              onClick={() => {
+                navigate('/register/instructor');
+              }}
+              >
                 Back to Registeration
               </Button>
-            </Link>
         </div>
     </div>
   )

@@ -1,14 +1,14 @@
 import React from 'react'
 import Header from '../../components/header'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Button from '@mui/material/Button'
 
-function Legal() {
+function Legal(props) {
+  const navigation = useNavigate();
   return (
     <div className= "container">
-      <Header/>
-        <div className= "body" style={{height: '135vh'}}>
-            <h2 className='title' style={{marginTop: '80px', paddingInline: '40px'}}> Edu Act legal terms and conditions</h2>
+        <div className= "legal-body">
+            <h2 className='landing-header' style={{marginBottom: '20px', paddingInline: '40px'}}> Edu Act legal terms and conditions</h2>
             <div className='legal-border'>
               <h4> 1. Agreement to Terms</h4>
             <p>
@@ -67,11 +67,15 @@ function Legal() {
             recourse against us for anv aleded or actual intrIngement or misappropriation or any proprietary right in vour submissions
             </p>
             </div>
-            <Link to={'/register'} style={{textDecoration: 'none'}}>
-              <Button style={{ marginLeft: '75%'}}variant="contained" id='filled-button'>
+              <Button 
+              variant="contained" 
+              id='big-button-primary'
+              onClick={() => {
+                navigation('/register/indivTrainee  ')
+              }}
+              >
                 Back to Registeration
               </Button>
-            </Link>
         </div>
     </div>
   )
