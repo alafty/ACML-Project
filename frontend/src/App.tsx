@@ -26,6 +26,7 @@ import PurchasedCourseDetails from "./pages/Course/purchasedCourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from "./pages/Course/SolveSolveEx";
+
 import AdminDashboard from "./pages/admin/adminDashboard";
 import ApplyDiscount  from "./pages/admin/applyDiscount";
 
@@ -41,7 +42,9 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
+
 import RefundtoWallet from "./pages/admin/RefundtoWallet";
+
 import TraineeProfile from "./pages/TraineeProfile";
 import SearchPage from "./pages/SearchPage";
 import Admin from "./pages/admin/admin";
@@ -137,7 +140,7 @@ function app() {
             element={<CourseDetails />} />
 
             <Route 
-            path="/course=:id" 
+            path="/course/purchased=:id" 
             element={<PurchasedCourseDetails />} />
 
             <Route path="/legal" element={<Legal />} />

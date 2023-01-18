@@ -62,12 +62,12 @@ const getCourseDetails = async (id: string) => {
 };
 
 const getCourseQuizzes = async (Course: string) => {
-  const Body = {
-    CourseID: Course,
-  };
-  const data: [String] = [""];
-  await axios.post("http://localhost:8000/quiz/getCourseQuizzes", Body);
-  return data;
+  var data = qs.stringify( {
+    _id: Course,
+  });
+  const response = await httpClient.post("http://localhost:8000/quiz/getCourseQuizzes", data);
+
+  return response.data;
 };
 
 const createCourse = async (
@@ -80,7 +80,7 @@ const createCourse = async (
   description: String,
   quizzes: any[],
   Subtitles: any[]
-) => {
+) => 
   var data = qs.stringify({
     Name: name,
     Subject: subject,
@@ -110,8 +110,35 @@ const createCourse = async (
     });
 };
 
-const createQuiz = async () => {};
+const changeProgress = async (
+  courseID: string,
+  userID: string,
+  progress: number
+) => {
 
+var data = qs.stringify({
+  'id': userID,
+  'courseID': courseID,
+  'progress': progress 
+});
+var config = {
+  method: 'put',
+  url: 'http://localhost:8000/courses/progress',
+  headers: { 
+    'Content-Type': 'application/x-www-form-urlencoded', 
+  },
+  data : data
+};
+
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+
+}
 const createSubtitle = async (
   courseId: string,
   videoId: string,
@@ -252,7 +279,8 @@ const CoursesServices = {
   getRecommendedCourses,
   createCourse,
   createSubtitle,
-  BuyCourse,
+  changeProgress
+  BuyCourse
 };
 
 export default CoursesServices;
