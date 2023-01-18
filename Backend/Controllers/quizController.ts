@@ -4,29 +4,28 @@ import quiz from "../Models/quiz";
 import course from "../Models/course";
 
 const getQuiz= async (req: Request, res: Response) => {
-    //used Acml as test name, replace to get the required name from the user
-    // Courses should have attribute subject in them 
-    var QuizID = req.body.Subject
-    const Questions = await questionBankModel.find({QuizID: QuizID});
-    try {
-        res.send(Questions);
-      } catch (error) {
-        res.status(500).send(error);
-      }
-    // filter specific subjects
+  
+    var Quiz = await quiz.findOne({_id:req.body._id});
+    res.status(200).json(Quiz);
+    return Quiz;
+
 }
+    
 const getCourseQuizzes= async (req: Request, res: Response) => {
-    //used Acml as test name, replace to get the required name from the user
-    // Courses should have attribute subject in them 
-    var CourseID = req.body.CourseID
-    const Questions = await questionBankModel.findOne({Course:CourseID}).distinct('QuizID');
-    try {
-        res.send(Questions);
-      } catch (error) {
-        res.status(500).send(error);
-      }
-    // filter specific subjects
+  
+  var CourseID = req.body._id
+  var Course = await course.findOne({_id:CourseID})
+  var quizzesID = Course.Quizzes;
+  var quizzes =[];
+  for (let i=0;i<quizzesID.length;i++){
+    var Quiz = await quiz.findOne({_id:quizzesID[i]});
+    quizzes.push(Quiz);
+  }
+  console.log(quizzes);
+  res.status(200).json(quizzes);
+  return quizzes
 }
+
 const createQuestion = async (req: Request, res: Response) => {
     console.log (req.body);
     const question ={
