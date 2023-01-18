@@ -15,7 +15,6 @@ import InstructorRegister from "./pages/Register/InstructorRegister";
 import Home from "./pages/Home";
 import CorporateDashboard from "./pages/CorporateDashboard";
 
-import CreateQuiz from "./pages/Instructor/CreateQuiz";
 import InstructorDetails from "./pages/Instructor/InstructorDashboard";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
@@ -24,8 +23,11 @@ import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
 import LandingInstructor from "./pages/LandingInstructor";
+import Admin from "./pages/admin/admin";
+
 import AdminDashboard from "./pages/admin/adminDashboard";
 import ApplyDiscount  from "./pages/admin/applyDiscount";
+
 import CreateAdmin from "./pages/admin/createAdmin";
 import CreateInstructor from "./pages/admin/createInstructor";
 import CreateCTrainee from "./pages/admin/createCTrainee";
@@ -38,8 +40,10 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
-import TraineeProfile from "./pages/TraineeProfile";
 
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
+import TraineeProfile from "./pages/TraineeProfile";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -120,6 +124,14 @@ function app() {
             element={<InstructorDetails />} />
             
             <Route 
+            path="/adminDashboard" 
+            element={<AdminDashboard />} />
+            
+            <Route 
+            path="/admin" 
+            element={<Admin />} />
+
+            <Route 
             path="/pdf" 
             element={<PDFGenerator/>} />
 
@@ -135,12 +147,16 @@ function app() {
             path='/legalinstructor' 
             element= {<LegalInstructor/>} />
 
+            
+
             <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
+
             <Route path="/adminDashboard" element={<AdminDashboard />} />
             <Route path="/applyDiscount" element={<ApplyDiscount />} />
+
             <Route path="/createAdmin" element={<CreateAdmin />} />
             <Route path="/viewAdmins" element={<ViewAdmins />} />
             <Route path="/createInstructor" element={<CreateInstructor />} />
