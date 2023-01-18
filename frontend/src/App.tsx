@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import ForgotPassword  from './pages/Login/ForgotPassword'
-import ResetPassword  from './pages/Login/ResetPassword'
+import ForgotPassword from "./pages/Login/ForgotPassword";
+import ResetPassword from "./pages/Login/ResetPassword";
 import PDFGenerator from "./pages/PDFGenerator";
 import Landing from "./pages/Landing";
 import InstructorLanding from "./pages/Instructor/InstructorLanding";
@@ -22,10 +22,10 @@ import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
-import SolveSolveEx from './pages/Course/SolveSolveEx';
+import SolveSolveEx from "./pages/Course/SolveSolveEx";
 import LandingInstructor from "./pages/LandingInstructor";
 import AdminDashboard from "./pages/admin/adminDashboard";
-import ApplyDiscount  from "./pages/admin/applyDiscount";
+import ApplyDiscount from "./pages/admin/applyDiscount";
 import CreateAdmin from "./pages/admin/createAdmin";
 import CreateInstructor from "./pages/admin/createInstructor";
 import CreateCTrainee from "./pages/admin/createCTrainee";
@@ -39,7 +39,7 @@ import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
 import TraineeProfile from "./pages/TraineeProfile";
-
+import SearchPage from "./pages/SearchPage";
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -68,77 +68,60 @@ export const useGlobalState = () => [
 ];
 
 function app() {
-  
   return (
     <GlobalStateProvider>
       <Router>
         <div>
           <Routes>
-            <Route 
-            path='/' 
-            element={<Landing/>} />
+            <Route path="/" element={<Landing />} />
 
-            <Route 
-            path='/instructor' 
-            element={<InstructorLanding/>} />
+            <Route path="/instructor" element={<InstructorLanding />} />
 
-            <Route 
-            path='/corporate' 
-            element={<CorporateLanding/>} />         
+            <Route path="/corporate" element={<CorporateLanding />} />
 
             <Route
               path="/register/indivTrainee"
               element={<IndividualRegister />}
             />
 
-            <Route 
-            path="/register/corporate" 
-            element={<CorporateRegister />} />
-
-            <Route 
-            path="/register/instructor" 
-            element={<InstructorRegister />} />
-
-            <Route 
-            path="/login" 
-            element={<Login />} />
-
-            <Route 
-            path='/rate' 
-            element={<Rate/>} />
-
-            <Route 
-            path="/home" 
-            element={<Home />} />
-
-            <Route 
-            path="/corporate/dashboard" 
-            element={<CorporateDashboard />} />
+            <Route path="/register/corporate" element={<CorporateRegister />} />
 
             <Route
-            path="/instructor/dashboard" 
-            element={<InstructorDetails />} />
-            
-            <Route 
-            path="/pdf" 
-            element={<PDFGenerator/>} />
+              path="/register/instructor"
+              element={<InstructorRegister />}
+            />
 
-            <Route 
-            path="/course=:id" 
-            element={<CourseDetails />} />
+            <Route path="/login" element={<Login />} />
 
-            <Route 
-            path='/legal' 
-            element= {<Legal/>} />
+            <Route path="/rate" element={<Rate />} />
 
-            <Route 
-            path='/legalinstructor' 
-            element= {<LegalInstructor/>} />
+            <Route path="/home" element={<Home />} />
 
-            <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
+            <Route
+              path="/corporate/dashboard"
+              element={<CorporateDashboard />}
+            />
+
+            <Route
+              path="/instructor/dashboard"
+              element={<InstructorDetails />}
+            />
+
+            <Route path="/pdf" element={<PDFGenerator />} />
+
+            <Route path="/course=:id" element={<CourseDetails />} />
+
+            <Route path="/legal" element={<Legal />} />
+
+            <Route path="/legalinstructor" element={<LegalInstructor />} />
+
+            <Route path="/course=:id/sub=:subId" element={<SubtitleDetail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
-			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
-            <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
+            <Route
+              path="/password-reset/:id/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="/getQuiz" element={<SolveSolveEx QuizID={2} />} />
             <Route path="/adminDashboard" element={<AdminDashboard />} />
             <Route path="/applyDiscount" element={<ApplyDiscount />} />
             <Route path="/createAdmin" element={<CreateAdmin />} />
@@ -155,14 +138,12 @@ function app() {
             <Route path="/createCorporate" element={<CreateCorporate />} />
 
             <Route path="/traineeProfile" element={<TraineeProfile />} />
-
-
+            <Route path="/searchCourse=:term" element={<SearchPage />} />
           </Routes>
         </div>
       </Router>
     </GlobalStateProvider>
-    
-  )
+  );
 }
 
 export default app;
