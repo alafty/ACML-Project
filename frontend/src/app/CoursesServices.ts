@@ -80,7 +80,7 @@ const createCourse = async (
   description: String,
   quizzes: any[],
   Subtitles: any[]
-) => 
+) => {
   var data = qs.stringify({
     Name: name,
     Subject: subject,
@@ -279,7 +279,7 @@ const CoursesServices = {
   getRecommendedCourses,
   createCourse,
   createSubtitle,
-  changeProgress
+  changeProgress,
   BuyCourse
 };
 
