@@ -18,6 +18,8 @@ import Services from "../app/RequestsServices";
 import UserServices from "../app/UsersServices";
 import Grid from "@mui/system/Unstable_Grid";
 import { Card, CardContent, CardHeader, Paper } from "@mui/material";
+import CoursesSector from "../components/coursesSector";
+import TraineeServices from "../app/TraineeServices";
 
 ///TABS:
 /// - my courses => progression
@@ -36,38 +38,79 @@ function TraineeProfile() {
   const [state, dispatch] = useGlobalState();
   const [activeTab, setActiveTab] = useState(traineeProfileTabs.profile);
   const navigation = useNavigate();
-  const [isExpanded, setExpanded] = React.useState<String | false>("panel1");
-  const [packageConfirmation, setPackageConfirmation] = useState("");
 
-  const [traineeMail, setTraineeMail] = useState("");
-  const [traineePassword, setTraineePassword] = useState("");
-  const [traineeConfirm, setTraineeConfirm] = useState("");
-  const [traineeName, setTraineeName] = useState("");
-  const [traineeError, setTraineeError] = useState("");
-  const [isTraineeSuccess, setTraineeSuccess] = useState(false);
-
-  const [requests, setRequests] = useState(null);
+  const [problems, setProblems] = useState([]);
 
   useEffect(() => {
     UserServices.me().then((data) => {
       state.loggedInUser = data.data;
     });
+
+    TraineeServices.getMyProblems().then((data) => {
+      setProblems(data);
+    });
   }, []);
 
-  const handleTrainee = (data: any, isError?: boolean) => {
-    if (isError) {
-      setTraineeError(data);
-      setTraineeSuccess(false);
-    } else {
-      setTraineeError("Trainee Successfully Created");
-      setTraineeSuccess(true);
-    }
+  const renderCourses = ({ Name, Description, _id }) => {
+    return (
+      <div className="course-card-dashboard">
+        <p className="course-name">{Name}</p>
+        <p className="course-description"> {Description} </p>
+        <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={async () => {
+            navigation(`/course=${_id}`);
+          }}
+        >
+          {" "}
+          View Course{" "}
+        </Button>
+      </div>
+    );
   };
 
-  const handleAccordionChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
+  const renderProblems = ({
+    CourseName,
+    Description,
+    Type,
+    Status,
+  }: {
+    CourseName: String;
+    Description: String;
+    Type: String;
+    Status: String;
+  }) => {
+    return (
+      <Grid xs={8}>
+        <Card variant="outlined" style={{ backgroundColor: "var(--text)" }}>
+          {" "}
+          <CardContent>
+            <Typography
+              variant="body1"
+              fontFamily={"var(--font)"}
+              color="var(--white)"
+            >
+              {CourseName}
+            </Typography>
+            <Typography
+              variant="body2"
+              fontFamily={"var(--font)"}
+              color="var(--white)"
+            >
+              {Description}
+            </Typography>
+          </CardContent>{" "}
+          <CardHeader
+            title={Type}
+            subheader={Status}
+            subheaderTypographyProps={{ color: "white" }}
+            style={{ color: "var(--white)" }}
+          />{" "}
+        </Card>{" "}
+      </Grid>
+    );
+  };
 
   return (
     <div className="container">
@@ -83,14 +126,6 @@ function TraineeProfile() {
                 id="side-bar-button"
                 onClick={async () => {
                   setActiveTab(traineeProfileTabs.profile);
-                  const reqs = await Services.fetchCorporateRequests(
-                    state.loggedInUser._id
-                  );
-                  setRequests(reqs);
-
-                  setPackageConfirmation("");
-                  setTraineeError("");
-                  setTraineeSuccess(false);
                 }}
               >
                 {" "}
@@ -102,9 +137,6 @@ function TraineeProfile() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab(traineeProfileTabs.courses);
-                  setPackageConfirmation("");
-                  setTraineeError("");
-                  setTraineeSuccess(false);
                 }}
               >
                 {" "}
@@ -116,9 +148,6 @@ function TraineeProfile() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab(traineeProfileTabs.wallet);
-                  setPackageConfirmation("");
-                  setTraineeError("");
-                  setTraineeSuccess(false);
                 }}
               >
                 {" "}
@@ -130,9 +159,6 @@ function TraineeProfile() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab(traineeProfileTabs.problems);
-                  setPackageConfirmation("");
-                  setTraineeError("");
-                  setTraineeSuccess(false);
                 }}
               >
                 {" "}
@@ -159,64 +185,52 @@ function TraineeProfile() {
               {activeTab == traineeProfileTabs.profile ? (
                 <div className="dashboard-main-card">
                   <p className="dashboard-header"> Profile </p>
-                  <p> Email: {state.loggedInUser.Email} </p>
-                  <p> Username: {state.loggedInUser.Username}</p>
-                  {state.loggedInUser.Corporate ? (
-                    <p> Corporate {state.loggedInUser.Corporate}</p>
-                  ) : (
-                    <></>
-                  )}
+                  <p className="profile-items">
+                    {" "}
+                    Name: {state.loggedInUser.Username}
+                  </p>
+                  <p className="profile-items">
+                    Email: {state.loggedInUser.Email}
+                  </p>
+                  <p className="profile-items">
+                    {state.loggedInUser.Corporate ? (
+                      <p> Corporate {state.loggedInUser.Corporate}</p>
+                    ) : (
+                      <></>
+                    )}
+                  </p>
                 </div>
               ) : activeTab == traineeProfileTabs.courses ? (
-                <div className="dashboard-main-card">
-                  <p className="dashboard-header"> Courses </p>
-                  {JSON.stringify(state.loggedInUser.PurchasedCourses)}{" "}
-                  {state.loggedInUser.Corporate ? (
-                    <p> Corporate {state.loggedInUser.Corporate}</p>
-                  ) : (
-                    <></>
-                  )}
+                <div className="dashboard-courses-card">
+                  <p className="dashboard-header"> My Courses </p>
+                  <div className="grid-container">
+                    {state.loggedInUser.PurchasedCourses.length != 0 ? (
+                      state.loggedInUser.PurchasedCourses.map(renderCourses)
+                    ) : (
+                      <p className="profile-items">No Courses Yet</p>
+                    )}
+                  </div>
                 </div>
               ) : activeTab == traineeProfileTabs.wallet ? (
                 <div className="dashboard-package-card">
                   <h2 className="dashboard-header"> Wallet </h2>
-                  <div>Balance: ${state.loggedInUser.Wallet}</div>
+                  <p className="profile-items">
+                    Balance: ${state.loggedInUser.Wallet}
+                  </p>
                 </div>
               ) : activeTab == traineeProfileTabs.problems ? (
-                <Grid container spacing={2} columns={16}>
-                  <Grid xs={8}>
-                    <Card variant="outlined">
-                      {" "}
-                      <CardContent>
-                        <Typography variant="body1" color="text.secondary">
-                          <br />
-                          Course Name
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          <br />
-                          This is the very long description of my report. My
-                          problem report is a long report
-                        </Typography>
-                      </CardContent>{" "}
-                      <CardContent>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                        ></Typography>
-                      </CardContent>{" "}
-                      <CardHeader title="Type" subheader="Status" />{" "}
-                    </Card>{" "}
-                  </Grid>
-                  <Grid xs={8}>
-                    <Paper variant="outlined" />
-                  </Grid>
-                  <Grid xs={8}>
-                    <Paper variant="outlined" />
-                  </Grid>
-                  <Grid xs={8}>
-                    <Paper variant="outlined" />
-                  </Grid>
-                </Grid>
+                <div className="dashboard-package-card">
+                  <h2 className="dashboard-header"> Reported Problems </h2>
+                  {problems.length != 0 ? (
+                    <Grid container spacing={2} columns={16}>
+                      {problems.map(renderProblems)}
+                    </Grid>
+                  ) : (
+                    <p className="profile-items">
+                      Enjoy the moment with no problems
+                    </p>
+                  )}
+                </div>
               ) : (
                 <></>
               )}
