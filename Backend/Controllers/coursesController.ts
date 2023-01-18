@@ -9,6 +9,7 @@ import inidvTrainee from "../Models/individualTrainee";
 import course from "../Models/course";
 import instructor from "../Models/instructor";
 
+
 // @desc    Get All Courses
 // @rout    GET /courses/
 // @access  private
@@ -283,9 +284,52 @@ const putDiscount = async (req: Request, res: Response) => {
       }
       res.status(200).json(newDiscount);
     });
-  } else {
-    res.status(400).json({ message: "Make sure all fields are valid" });
-  }
+  } 
+};
+
+const putDiscountAllCourses = async (req: Request, res: Response) => {
+    
+     if ( req.type != userTypes.admin) {
+      res.status(401).json({ message: req.type });
+      return;
+     }
+    var c = await Course.find();
+    
+    if (!c) {
+      console.log("herwwwwe")
+      res
+        .status(400)
+
+        
+        .json({ message: "No courses Available " });
+      return;
+    }
+  
+    if (
+    ( !req.body.Duration ||!req.body.Percentage)
+    ) {
+      console.log("here");
+      res.status(400).json({
+        message:
+          "Make sure Discount duration and percentage are properly specified in body",
+      });
+      return;
+    }
+    c.forEach(function (i){
+    var newDiscount = i.Discounts.create({
+      Duration: req.body.Duration,
+      Percentage: req.body.Percentage,
+    });
+    i.Discounts.push(newDiscount);
+    i.save(function (err) {
+      if (err) {
+        res.status(400).json({ message: err });
+        return;
+      }
+      res.status(200).json(newDiscount);
+    });
+  });
+
 };
 
 const recommendedCourses = async (req: Request, res: Response) => {
@@ -331,6 +375,7 @@ export {
   putCourseSubtitle,
   putCourseVideo,
   putDiscount,
+  putDiscountAllCourses,
   recommendedCourses,
   purchaseCourse
 };

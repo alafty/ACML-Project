@@ -25,6 +25,7 @@ import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
 import LandingInstructor from "./pages/LandingInstructor";
 import AdminDashboard from "./pages/admin/adminDashboard";
+import ApplyDiscount  from "./pages/admin/applyDiscount";
 import CreateAdmin from "./pages/admin/createAdmin";
 import CreateInstructor from "./pages/admin/createInstructor";
 import CreateCTrainee from "./pages/admin/createCTrainee";
@@ -37,6 +38,8 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
+import TraineeProfile from "./pages/TraineeProfile";
+
 
 const defaultGlobalState = {
   loggedInUser: { user: String, instructor: String },
@@ -126,6 +129,7 @@ function app() {
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
             <Route path='/getQuiz' element={<SolveSolveEx QuizID= {2}/>} />
             <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/applyDiscount" element={<ApplyDiscount />} />
             <Route path="/createAdmin" element={<CreateAdmin />} />
             <Route path="/viewAdmins" element={<ViewAdmins />} />
             <Route path="/createInstructor" element={<CreateInstructor />} />
@@ -138,7 +142,7 @@ function app() {
             <Route path="/updateInstructor" element={<UpdateInstructor />} />
             <Route path="/viewCorporates" element={<ViewCorps />} />
             <Route path="/createCorporate" element={<CreateCorporate />} />
-
+            <Route path="/traineeProfile" element={<TraineeProfile />} />
 
 
 
