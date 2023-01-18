@@ -47,8 +47,8 @@ export default function SearchPage() {
   return (
     <div className="container">
       <SearchAppBar page="0" default="/home" />
-      <div className="body">
-        <p className="home-header"> Searching for {term}</p>
+      <div className="body" style={{backgroundColor: "var(--text)"}}>
+        <p className="home-header" style={{backgroundColor: "var(--text-dark)"}}> Searching for {term}</p>
         {}
 
         {!searching ? (
