@@ -31,6 +31,7 @@ function AdminDashboard() {
   const [adminPassword, setAdminPassword] = useState("");
   const [adminError, setAdminError] = useState("");
 
+
   const [corpName, setCorpName] = useState("");
   const [corpPassword, setCorpPassword] = useState("");
   const [corpEmail, setCorpEmail] = useState("");

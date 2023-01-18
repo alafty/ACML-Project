@@ -12,7 +12,7 @@ const setToken = (token: string) => {
 /// ```
 /// Then use the config in axios normally
 const getTokenHeader = () => {
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
     return { Authorization: `Bearer ${token}` }
 }
 

@@ -6,7 +6,7 @@ import {Button} from '@mui/material'
 import '../Styling/mainLayout.css'
 import CourseCard from './courseCard'
 
-function CoursesSector(props) {
+function CoursesSector(props: {title: string, coursesList: any[]}) {
   const renderCard =  ({Name, Description, _id, Price}) => {
     return(
       <CourseCard name={Name} desc={Description} id={_id} price={Price}/>
