@@ -1,10 +1,14 @@
 import axios from "axios";
 import { response } from "express";
 import e from "express";
+import { useState } from "react";
 import qs from "qs";
 import httpClient from "../utils/httpClient";
+import { getTokenHeader } from "../utils/authUtils";
+import { useGlobalState } from "../App";
 
 const COURSES_URL = "/courses";
+
 
 export const getAllCourses = async () => {
   const response = await httpClient.get(COURSES_URL);
@@ -203,7 +207,44 @@ export const rateCourses = async (courseID: String, rating: String) => {
       console.log(error);
     });
 };
+export const BuyCourse = async (courseID: String) => {
+  var data = qs.stringify({
+    courseID: courseID.trim(),
+  });
+  var config = {
+    method: "put",
+    url: "/courses/payCourse",
+    headers: {
+     ...getTokenHeader(), 
+    },
+    data: data,
+  };
 
+  httpClient(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    const [state, dispatch] = useGlobalState();
+    var config = {
+      method: "get",
+      url: "/create/me",
+      headers: {
+       ...getTokenHeader(), 
+      },
+      data: data,
+    };
+    httpClient(config)
+    .then(function (response) {
+      state.loggedInUser = response.data;
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+};
 const CoursesServices = {
   getAllCourses,
   searchCourses,
@@ -216,6 +257,7 @@ const CoursesServices = {
   getRecommendedCourses,
   createCourse,
   createSubtitle,
+  BuyCourse
 };
 
 export default CoursesServices;

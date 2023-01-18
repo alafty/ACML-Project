@@ -9,6 +9,9 @@ import Alert from '@mui/material/Alert';
 function PriceCard(props) {
   const navigation = useNavigate();
   const [request, setRequest] = useState(false);
+  const path = `/checkout= ${props.courseID}`;
+
+  
   return (
     <div>
     <div className="course-details-price-body">
@@ -23,6 +26,9 @@ function PriceCard(props) {
           if(props.type === "corporateTrainee" && !request){
               await Services.createCourseRequest(props.userDetails._id, props.courseDetails._id, props.userDetails.Corporate);
               setRequest(true);
+          }
+          else {
+            navigation(path);
           }
         }
       }} 
