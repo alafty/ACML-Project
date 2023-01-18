@@ -14,7 +14,26 @@ export const getMyProblems = async () => {
   }
 };
 
+export const createProblem = async (Type: string, Description: string, CourseID: string) => {
+  var data = {
+    Type: Type,
+    Description: Description,
+    Course: CourseID
+  }
+  const response = await httpClient.post(
+    "/problem/create",
+    data,
+    { headers: { ...getTokenHeader() } }
+  );
+  if (response.data) {
+    return response.data;
+  } else {
+    return {};
+  }
+};
+
 const TraineeServices = {
-    getMyProblems,
-}
+  getMyProblems,
+  createProblem
+};
 export default TraineeServices;
