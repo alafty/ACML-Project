@@ -11,8 +11,10 @@ import PriceCard from "../../components/PriceCard";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
+import { Button, TextField } from "@mui/material";
+import Services from "../../app/pdfServices";
 
-export default function CourseDetails() {
+export default function PurchasedCourseDetails() {
   const { id } = useParams();
   //const [quizzes, setQuizzes] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
@@ -24,7 +26,7 @@ export default function CourseDetails() {
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [state, dispatch] = useGlobalState();
   const [isPurchased, setPurchased] = useState(false);
-
+  const [Notes,setNotes] = useState('');
   
 
   useEffect(() => {
@@ -136,7 +138,21 @@ export default function CourseDetails() {
         <div>
           <CourseDetailsCenter courseDetails={courseDetails} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
-        
+          <TextField label="Notes" variant="standard" className='search-bar' required={true}
+            onChange={(e) => {
+              setNotes(e.target.value);
+            }}
+            />
+          <Button
+          variant="contained"
+          id="filled-button"
+          style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
+          onClick={
+            () => {
+                Services.generateNotesPDF(Notes);
+            }
+          }
+        > Download Notes </Button>
         </div>
       </div>
     </div>
