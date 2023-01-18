@@ -29,7 +29,6 @@ import SolveSolveEx from './pages/Course/SolveSolveEx';
 import LandingInstructor from "./pages/LandingInstructor";
 import Admin from "./pages/admin/admin";
 
-import AdminDashboard from "./pages/admin/adminDashboard";
 import ApplyDiscount  from "./pages/admin/applyDiscount";
 
 import CreateAdmin from "./pages/admin/createAdmin";
@@ -45,7 +44,7 @@ import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
 
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminDashboard from "./pages/admin/adminDashboard";
 
 import TraineeProfile from "./pages/TraineeProfile";
 
@@ -130,7 +129,7 @@ function app() {
             
 
             <Route path="/pdf" element={<PDFGenerator/>} />
-            <Route path="/createquiz" element={<CreateQuiz />} />
+            
             <Route path="/checkout=:id" element={<Checkout />} />
             <Route path="/course=:id" element={<CourseDetails />} />
             <Route path='/legal' element= {<Legal/>} />
