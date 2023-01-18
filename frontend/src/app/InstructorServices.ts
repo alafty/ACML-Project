@@ -43,10 +43,39 @@ export const editInstructorDetails = async (
       return;
   };
   
+  const createQuiz = async (
+    Order: String,
+    Questions: [Object],
+    callback: Function
+  ) => {
+    var data = qs.stringify({
+      Questions: Questions,
+      Order: Order,
+    });
+    var config = {
+      method: "post",
+      url: "/quiz/createQuiz",
+      data: data,
+    };
+
+    httpClient(config) 
+      .then(function (response) {
+        console.log(response.data._id);
+        
+       callback(response.data._id);
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      return;
+  };
+  
 
 const Services = {
     getInstructorData,
-    editInstructorDetails
+    editInstructorDetails,
+    createQuiz
 }
 
 export default Services;
