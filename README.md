@@ -68,6 +68,14 @@ hassle. We also opted to use typescript instead of javascript since it is more s
 yeild in a safer code and less time fixing type casting bugs. As for the version control client, Github was 
 our choice as it is very widestream so there would be a very large support base. 
 
+### Code Style
+This section is more about the "architecture" than the code style. For the frontend, the app is following the MVVM architecture, but not fully. In typical 
+MVVM, there should be the Model, the View and the ViewModel. In our case, there was no need for the Model part as the data wasn't large enough that we'd 
+need to cache it in a repository somewhere. The rest of the code was divided into the "Pages" - that resembe the View - and the "Services" - that resemble 
+the ViewModel. The backend, however, was more suited for the use of routes and controllers. They can be similar to the View and ViewModel, but they are a 
+bit more closely coupled. The backend and frontend architectures work hand-in-hand, but they have only 1 way to communicate. The the services from the 
+frontend interact with the controllers from the backend.
+
 
 ### Installation 
 In order to install and run our system first install node.js 
