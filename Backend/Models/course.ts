@@ -15,8 +15,7 @@ const courseSchema = new Schema(
       required: true,
     },
     Subtitles: {
-      type: [Subtitle.schema],
-      ref: 'Subtitle',
+      type: [],
       default: [],
     },
     Quizzes: {
