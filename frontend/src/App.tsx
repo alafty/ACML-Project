@@ -116,11 +116,22 @@ function app() {
             path="/instructor/dashboard" 
             element={<InstructorDetails />} />
             
-            <Route path="/pdf" element={<PDFGenerator/>} />
-            <Route path="/createquiz" element={<CreateQuiz />} />
-            <Route path="/course=:id" element={<CourseDetails />} />
-            <Route path='/legal' element= {<Legal/>} />
-            <Route path='/legalinstructor' element= {<LegalInstructor/>} />
+            <Route 
+            path="/pdf" 
+            element={<PDFGenerator/>} />
+
+            <Route 
+            path="/course=:id" 
+            element={<CourseDetails />} />
+
+            <Route 
+            path='/legal' 
+            element= {<Legal/>} />
+
+            <Route 
+            path='/legalinstructor' 
+            element= {<LegalInstructor/>} />
+
             <Route path='/course=:id/sub=:subId' element={<SubtitleDetail />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
 			      <Route path="/password-reset/:id/:token" element={<ResetPassword />} />
@@ -138,15 +149,6 @@ function app() {
             <Route path="/updateInstructor" element={<UpdateInstructor />} />
             <Route path="/viewCorporates" element={<ViewCorps />} />
             <Route path="/createCorporate" element={<CreateCorporate />} />
-
-
-
-
-
-
-
-
-
 
           </Routes>
         </div>
