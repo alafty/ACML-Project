@@ -17,9 +17,16 @@ import { useNavigate } from "react-router-dom";
 import Services from "../app/RequestsServices";
 import UserServices from "../app/UsersServices";
 import Grid from "@mui/system/Unstable_Grid";
-import { Card, CardContent, CardHeader, Paper } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  LinearProgress,
+  Paper,
+} from "@mui/material";
 import CoursesSector from "../components/coursesSector";
 import TraineeServices from "../app/TraineeServices";
+import CoursesServices from "../app/CoursesServices";
 
 ///TABS:
 /// - my courses => progression
@@ -40,6 +47,15 @@ function TraineeProfile() {
   const navigation = useNavigate();
 
   const [problems, setProblems] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [reportingProblem, setReportingProblem] = useState(false);
+  const [problemType, setProblemType] = useState("");
+  const [problemDescription, setProblemDescription] = useState("");
+  const [courseToReport, setCourseToReport] = useState("");
+  const [courseNameToReport, setcourseNameToReport] = useState("");
+  const [problemCreated, setProblemCreated] = useState(false);
+  const [updateUser, setUpdateUser] = useState({});
 
   useEffect(() => {
     UserServices.me().then((data) => {
@@ -49,7 +65,24 @@ function TraineeProfile() {
     TraineeServices.getMyProblems().then((data) => {
       setProblems(data);
     });
-  }, []);
+  }, [updateUser]);
+
+  useEffect(() => {
+    if (state.loggedInUser.PurchasedCourses) {
+      var tempCourses = [];
+      state.loggedInUser.PurchasedCourses.map(async (value: any) => {
+        console.log(value);
+
+        tempCourses.push(
+          await CoursesServices.getCourseDetails(value["courseID"])
+        );
+        setCourses(tempCourses);
+      });
+      // console.log(tempCourses);
+
+      setCoursesLoading(false);
+    }
+  }, [state.loggedInUser.PurchasedCourses]);
 
   const renderCourses = ({ Name, Description, _id }) => {
     return (
@@ -66,8 +99,35 @@ function TraineeProfile() {
           {" "}
           View Course{" "}
         </Button>
+        <Button
+          variant="contained"
+          id="big-button-primary"
+          onClick={async () => {
+            setCourseToReport(_id);
+            setReportingProblem(true);
+            setProblemCreated(false);
+            setcourseNameToReport(Name);
+          }}
+        >
+          {" "}
+          Report Problem{" "}
+        </Button>
       </div>
     );
+  };
+  const reportProblem = async () => {
+    if (problemType && problemDescription) {
+      setProblemType("");
+      setProblemDescription("");
+      await TraineeServices.createProblem(
+        problemType,
+        problemDescription,
+        courseToReport
+      );
+      setReportingProblem(false);
+      setProblemCreated(true);
+      setUpdateUser({});
+    }
   };
 
   const renderProblems = ({
@@ -204,12 +264,70 @@ function TraineeProfile() {
                 <div className="dashboard-courses-card">
                   <p className="dashboard-header"> My Courses </p>
                   <div className="grid-container">
-                    {state.loggedInUser.PurchasedCourses.length != 0 ? (
-                      state.loggedInUser.PurchasedCourses.map(renderCourses)
+                    {coursesLoading ? (
+                      <>
+                        <LinearProgress className="landing-progress" />
+                      </>
+                    ) : courses.length != 0 ? (
+                      <div className="grid-container">
+                        {courses.map(renderCourses)}
+                      </div>
                     ) : (
                       <p className="profile-items">No Courses Yet</p>
                     )}
                   </div>
+                  {problemCreated ? (
+                    <p className="dashboard-trainee-card">
+                      <p className="profile-items">Problem submitted</p>
+                    </p>
+                  ) : (
+                    <></>
+                  )}
+                  {reportingProblem ? (
+                    <div className="dashboard-trainee-card">
+                      <p className="dashboard-header">
+                        {" "}
+                        Report Problem
+                        <p className="profile-items">
+                          {courseNameToReport}{" "}
+                        </p>{" "}
+                      </p>
+
+                      <CustomTextField
+                        id="text-field"
+                        placeholder="Type"
+                        InputProps={{
+                          className: "text-field",
+                        }}
+                        value={problemType}
+                        onChange={(e) => {
+                          setProblemType(e.target.value);
+                        }}
+                      />
+
+                      <CustomTextField
+                        id="text-field"
+                        placeholder="Description"
+                        InputProps={{
+                          className: "text-field",
+                        }}
+                        value={problemDescription}
+                        onChange={(e) => {
+                          setProblemDescription(e.target.value);
+                        }}
+                      />
+                      <Button
+                        variant="contained"
+                        id="big-button-primary"
+                        onClick={reportProblem}
+                      >
+                        {" "}
+                        Report Problem{" "}
+                      </Button>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               ) : activeTab == traineeProfileTabs.wallet ? (
                 <div className="dashboard-package-card">
