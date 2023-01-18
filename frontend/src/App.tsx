@@ -41,10 +41,12 @@ import ViewCorps from "./pages/admin/viewCorps";
 import CreateCorporate from "./pages/admin/createCorporate";
 import ViewCTrainees from "./pages/admin/viewCTrainees";
 import ViewITrainees from "./pages/admin/viewITrainees";
+import RefundtoWallet from "./pages/admin/RefundtoWallet";
 import TraineeProfile from "./pages/TraineeProfile";
 import SearchPage from "./pages/SearchPage";
 import Admin from "./pages/admin/admin";
 import CreateQuiz from "./pages/Instructor/CreateQuiz";
+
 
 const defaultGlobalState = {
   loggedInUser: {},
@@ -156,6 +158,7 @@ function app() {
 
             <Route path="/createAdmin" element={<CreateAdmin />} />
             <Route path="/viewAdmins" element={<ViewAdmins />} />
+            <Route path="/refundtoWallet" element={<RefundtoWallet />} />
             <Route path="/createInstructor" element={<CreateInstructor />} />
             <Route path="/createCorpTrainee" element={<CreateCTrainee />} />
             <Route path="/viewCorpTrainee" element={<ViewCTrainees />} />
