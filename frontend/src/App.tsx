@@ -19,6 +19,7 @@ import InstructorDetails from "./pages/Instructor/InstructorDashboard";
 import Legal from "./pages/Legal/Legal";
 import LegalInstructor from "./pages/Legal/LegalInstructor";
 import CourseDetails from "./pages/Course/CourseDetails";
+import PurchasedCourseDetails from "./pages/Course/purchasedCourseDetails";
 import Rate from "./pages/Rate";
 import SubtitleDetail from "./pages/Course/SubtitleDetail";
 import SolveSolveEx from './pages/Course/SolveSolveEx';
@@ -138,6 +139,10 @@ function app() {
             <Route 
             path="/course=:id" 
             element={<CourseDetails />} />
+
+            <Route 
+            path="/course=:id" 
+            element={<PurchasedCourseDetails />} />
 
             <Route 
             path='/legal' 
