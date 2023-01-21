@@ -666,6 +666,10 @@ function InstructorDashboard() {
                     {" "}
                     Average Rating: {state.loggedInUser.avgRating}
                   </p>
+                  <p className="profile-items">
+                    {" "}
+                    Money Owed: {state.loggedInUser.MoneyOwed}
+                  </p>
 
                   <Button
                     variant="contained"

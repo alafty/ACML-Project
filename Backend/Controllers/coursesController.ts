@@ -372,7 +372,26 @@ const putCourseProgress = async (req: Request, res: Response) => {
   } else {
     type = "indiv";
   }
+
+  res.status(200).json(trainee.PurchasedCourses);
+});
+theCourse.PurchaseCount++;
+theCourse.save();
+var money = theCourse.Price*0.45 ;
+var instruct = await instructor.findOne({_id:theCourse.Instructor});
+instruct.MoneyOwed+=money;
+instruct.save();
+
+//const courses = trainee.PurchasedCourses;
+//courses.push((req.body.courseID,0));
+//await inidvTrainee.updateOne({_id : req.body._id}, {PurchasedCourses : courses});
+//res.status(200).json("Course purchased successfully");
+    }
+
+    const getCourseSubtitles= async (req: Request, res: Response) => {
+
   console.log(tempUser);
+
   
   if (tempUser) {
     for (let index = 0; index < tempUser.PurchasedCourses.length; index++) {
