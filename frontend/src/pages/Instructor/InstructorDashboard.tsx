@@ -122,8 +122,10 @@ function InstructorDashboard() {
   const handleUrlUpload = (url) => {
     try {
       const vidId = extractIdFromVideoUrl(url);
+      console.log(vidId);
+      
       if (vidId) {
-        return true;
+        return vidId;
       } else {
         return false;
       }
@@ -184,7 +186,7 @@ function InstructorDashboard() {
                 }}
               >
                 {" "}
-                Report a Problem{" "}
+                Problems{" "}
               </Button>
               <Divider variant="middle" />
 
@@ -330,6 +332,7 @@ function InstructorDashboard() {
                       }}
                       onChange={(e) => {
                         setSubtitleDescription(e.target.value);
+                        setSubtitleError('');
                       }}
                     />
                     <CustomTextField
@@ -350,8 +353,9 @@ function InstructorDashboard() {
                           setSubtitleError("Please Fill All Fields");
                         } else {
                           if (handleUrlUpload(vidUrl)) {
+                            const trimmedUrl = handleUrlUpload(vidUrl);
                             const newSubtitle = {
-                              VideoId: vidUrl,
+                              VideoId: trimmedUrl,
                               Description: subtitleDescription,
                               Order: courseSubtitles.length,
                             };
@@ -373,7 +377,7 @@ function InstructorDashboard() {
                     {subtitleError ? (
                       <Alert
                         severity={
-                          subtitleError == "success" ? "success" : "error"
+                          subtitleError != "Please Fill All Fields" ? "success" : "error"
                         }
                         className="alert"
                       >
@@ -535,6 +539,7 @@ function InstructorDashboard() {
                           tempQuiz[Number(selectedQuiz) - 1].Questions.push(tempQues);
                           setQuizzes(tempQuiz);
                           console.log(quizzes);
+                          setQuizError('success');
                         }
                       }}
                     >
@@ -544,7 +549,7 @@ function InstructorDashboard() {
                     {quizError ? (
                       <Alert
                         severity={
-                          subtitleError == "success" ? "success" : "error"
+                          quizError == "success" ? "success" : "error"
                         }
                         className="alert"
                       >
@@ -565,15 +570,12 @@ function InstructorDashboard() {
                           !totalHours ||
                           !subject
                         ) {
-                          console.log(courseDescription + '  ' +
-                            courseName + '  ' +
-                            coursePrice + '  ' +
-                            courseVidID + '  ' +
-                            totalHours + '  ' +
-                            subject);
-                          
                           setCourseError("Please Fill All Fields");
                         } else {
+                          if(!handleUrlUpload(courseVidID)){
+                            setCourseError('please enter a valid video url');
+                            return;
+                          }
                           setCourseError('');
                           let actualQuizzes = 1;
                           let quizzesid =[]
@@ -584,17 +586,19 @@ function InstructorDashboard() {
                               actualQuizzes ++;
                             }
                           }
+                          
                           const feedback = await coursesServices.createCourse(
                             courseName,
                             subject,
                             state.loggedInUser._id,
                             coursePrice,
                             totalHours,
-                            courseVidID,
+                            extractIdFromVideoUrl(courseVidID),
                             courseDescription,
                             quizzesIDs,
                             courseSubtitles
                           );
+                          setCourseError('success');
                           console.log(feedback);
                         }
                       }}
@@ -605,7 +609,7 @@ function InstructorDashboard() {
                     {courseError ? (
                       <Alert
                         severity={
-                          subtitleError == "success" ? "success" : "error"
+                          courseError == "success" ? "success" : "error"
                         }
                         className="alert"
                       >

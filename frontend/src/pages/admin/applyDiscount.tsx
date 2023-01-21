@@ -28,10 +28,9 @@ function ApplyDiscount() {
   }
 
   return (
-    <div className="container">
-      <SearchAppBar page={0} />
+
       <div className='login-body'>
-        <div className='login-card'>
+        <div className='dashboard-add-course-card'>
           <h2 className='login-header'> Add Discount to Course </h2>
           <CustomTextField
           id='text-field'
@@ -88,7 +87,6 @@ function ApplyDiscount() {
         > Apply Discount </Button>
         </div>
       </div>
-    </div>
 
   )
 }

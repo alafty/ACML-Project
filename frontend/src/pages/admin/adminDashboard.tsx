@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import httpClient from "../../utils/httpClient";
+import ApplyDiscount from "./applyDiscount";
 
 function AdminDashboard() {
   const [state, dispatch] = useGlobalState();
@@ -461,18 +462,14 @@ function AdminDashboard() {
                     : <></>}
                 </div>
               )    :activeTab == "REFUNDS" ? (
+                <>
                 <RefundtoWallet/>
+                <ApplyDiscount />
+                </>
               ): (
                 <></>
               )}
             </div>
-            {true ? (
-              <Alert severity="success" className="alert">
-                beta testing
-              </Alert>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       ) : (

@@ -26,7 +26,8 @@ function Home() {
     const loadPurchasedCourses = async () => {
       let tempPurchasedCourses = [];
       for (let index = 0; index < state.loggedInUser.PurchasedCourses.length ; index++) {
-        const courseDetails = await Services.getCourseDetails(state.loggedInUser.PurchasedCourses[index])
+        console.log(PurchasedCourses);
+        const courseDetails = await Services.getCourseDetails(state.loggedInUser.PurchasedCourses[index].courseID)
         const {Name, Description, _id, Price} = courseDetails;
         tempPurchasedCourses.push({Name, Description, _id, Price});
       }
@@ -37,7 +38,7 @@ function Home() {
     fetchCourses();
     loadPurchasedCourses();
     
-  }, []);
+  }, [PurchasedCourses]);
 
   
   return (

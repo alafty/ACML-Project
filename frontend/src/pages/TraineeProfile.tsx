@@ -105,6 +105,7 @@ function TraineeProfile() {
             setReportingProblem(true);
             setProblemCreated(false);
             setcourseNameToReport(Name);
+            reportProblem();
           }}
         >
           {" "}
@@ -314,7 +315,7 @@ function TraineeProfile() {
                     <></>
                   )}
                   {reportingProblem ? (
-                    <div className="dashboard-trainee-card">
+                    <div style={{margin: '20px'}}>
                       <p className="dashboard-header">
                         {" "}
                         Report Problem

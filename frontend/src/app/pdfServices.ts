@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { saveAs } from 'file-saver';
 
-export const generatePDF = async (name: String, course: String, date: String) => {
+export const generatePDF = async (name: String, course: String) => {
     const tod = new Date();
     var data = qs.stringify({
     name: name,
