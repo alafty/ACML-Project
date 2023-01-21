@@ -24,7 +24,12 @@ import services from "../../app/UsersServices";
 export default function PurchasedCourseDetails() {
   const { id } = useParams();
 
-  const [openedSubtitles, setOpenedSubtitles] = useState(0.0);
+  const [state, dispatch] = useGlobalState();
+
+  const [isCourseCompleted, setCourseCompleted] = useState(false);
+  const [isSubtitleClicked, setSubtitleClicked] = useState(false);
+  const [takenQuizzez, setTakenQuizes] = useState(new Array(50).fill(0));
+  const [openedSubtitles, setOpenedSubtitles] = useState(0);
   const [startedQuiz, setStartedQuiz] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState([]);
   const [quizGrade, setQuizGrade] = useState(0);
@@ -36,7 +41,6 @@ export default function PurchasedCourseDetails() {
   const [subtitles, setSubtitles] = useState(null);
   const [currentSubtitle, setCurrentSubtitle] = useState(null);
   const [courseDetails, setCourseDetails] = useState(null);
-  const [state, dispatch] = useGlobalState();
   const [isPurchased, setPurchased] = useState(false);
   const [Notes, setNotes] = useState("");
 
@@ -72,18 +76,13 @@ export default function PurchasedCourseDetails() {
     } else {
       console.log("done");
       setStartedQuiz(false);
-      var curr = quizzes;
-      if (!curr[currentQuiz.Order - 1].completed) {
-        curr[currentQuiz.Order - 1].completed = true;
-        setOpenedSubtitles(openedSubtitles + 1);
-        setQuizzes(curr);
-        const change = await Services.changeProgress(
-          courseDetails._id,
-          state.loggedInUser._id,
-          (openedSubtitles / parseFloat(quizzes.length)) * 100 + ""
-        );
-        console.log(change);
-      }
+      console.log(takenQuizzez);
+      const change = await Services.changeProgress(
+        courseDetails._id,
+        state.loggedInUser._id,
+        (openedSubtitles / parseFloat(subtitles.length)) * 100 + ""
+      );
+      console.log(change);
     }
   };
   useEffect(() => {
@@ -110,13 +109,29 @@ export default function PurchasedCourseDetails() {
           if (state.loggedInUser.PurchasedCourses[index].courseID === id) {
             //console.log(state.loggedInUser.PurchasedCourses[index].courseID);
             setPurchased(true);
+            if (state.loggedInUser.PurchasedCourses[index].progress >= 100) {
+              setCourseCompleted(true);
+            }
           }
         }
       }
     };
+
     fetchCourseDetails();
     isCoursePurchased();
-  }, [courseDetails]);
+
+    if (currentSubtitle && isSubtitleClicked) {
+      if (!takenQuizzez[currentSubtitle.Order - 1]) {
+        let tempArray = takenQuizzez;
+        tempArray[currentSubtitle.Order - 1] = true;
+        setTakenQuizes(tempArray);
+        let temp = openedSubtitles;
+        setOpenedSubtitles(temp + 1);
+        setSubtitleClicked(false);
+        console.log(openedSubtitles);
+      }
+    }
+  }, [courseDetails, currentSubtitle]);
 
   const renderSubtitle = ({ _id, Description, Order }) => {
     return (
@@ -128,6 +143,7 @@ export default function PurchasedCourseDetails() {
           id="big-button-secondary"
           onClick={() => {
             setCurrentSubtitle(subtitles[Order]);
+            setSubtitleClicked(true);
           }}
         >
           {" "}
@@ -194,6 +210,24 @@ export default function PurchasedCourseDetails() {
                 </p>
                 {quizzes?.map(renderQuizzes)}
               </div>
+              {isCourseCompleted ? (
+                <Button
+                  variant="contained"
+                  id="big-button-primary"
+                  
+                  onClick={() => {
+                    pdfServices.generatePDF(
+                      state.loggedInUser.Username,
+                      courseDetails.Name
+                    );
+                  }}
+                >
+                  {" "}
+                  Download Certificate{" "}
+                </Button>
+              ) : (
+                <></>
+              )}
             </div>
             <div style={{ width: "70%" }}>
               <CourseVideo embedId={currentSubtitle?.VideoId} />
@@ -278,68 +312,7 @@ export default function PurchasedCourseDetails() {
                     <Button
                       variant="contained"
                       id="big-button-primary"
-                      onClick={async () => {
-                        const choice =
-                          chosenAnswer === 1
-                            ? currentQuiz.Questions[currentQuestion].Choice1
-                            : chosenAnswer === 2
-                            ? currentQuiz.Questions[currentQuestion].Choice2
-                            : chosenAnswer === 3
-                            ? currentQuiz.Questions[currentQuestion].Choice3
-                            : chosenAnswer === 4
-                            ? currentQuiz.Questions[currentQuestion].Choice4
-                            : currentQuiz.Questions[currentQuestion].Choice1;
-
-                        if (
-                          currentQuiz.Questions[currentQuestion].Answer ===
-                          choice
-                        ) {
-                          setQuestionGrade(
-                            questionGrade +
-                              parseFloat(
-                                currentQuiz.Questions[currentQuestion].Grade
-                              )
-                          );
-                        }
-
-                        let tempAnswer = correctAnswers;
-                        tempAnswer.push(
-                          currentQuiz.Questions[currentQuestion].Answer
-                        );
-                        setCorrectAnswers(tempAnswer);
-
-                        setQuizGrade(
-                          quizGrade +
-                            parseFloat(
-                              currentQuiz.Questions[currentQuestion].Grade
-                            )
-                        );
-                        //console.log(quizGrade);
-
-                        if (
-                          currentQuiz.Questions.length - 1 >
-                          currentQuestion
-                        ) {
-                          setCurrentQuestion(currentQuestion + 1);
-                        } else {
-                          console.log("done");
-                          setStartedQuiz(false);
-                          var curr = quizzes;
-                          if (!curr[currentQuiz.Order - 1].completed) {
-                            curr[currentQuiz.Order - 1].completed = true;
-                            setOpenedSubtitles(openedSubtitles + 1);
-                            setQuizzes(curr);
-                            const change = await Services.changeProgress(
-                              id,
-                              state.loggedInUser.id,
-                              (openedSubtitles / parseFloat(quizzes.length)) *
-                                100 +
-                                ""
-                            );
-                            console.log(change);
-                          }
-                        }
-                      }}
+                      onClick={calulateScore}
                     >
                       {" "}
                       Next{" "}

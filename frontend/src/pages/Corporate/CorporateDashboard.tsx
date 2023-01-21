@@ -20,6 +20,8 @@ function CorporateDashboard() {
   const [state, dispatch] = useGlobalState();
   const [activeTab, setActiveTab] = useState("PROFILE ");
   const navigation = useNavigate();
+
+  const [requestError, setRequestError] = useState("");
   const [isExpanded, setExpanded] = React.useState<String | false>("panel1");
   const [packageConfirmation, setPackageConfirmation] = useState("");
 
@@ -32,7 +34,7 @@ function CorporateDashboard() {
 
   const [requests, setRequests] = useState(null);
   const [courseData, setCourseData] = useState(null);
-  const [courseID, setCourseID] = useState('');
+  const [courseID, setCourseID] = useState("");
 
   const handleTrainee = (data: any, isError?: boolean) => {
     if (isError) {
@@ -44,13 +46,13 @@ function CorporateDashboard() {
     }
   };
   const fetchCourseDetails = async (id: any) => {
-    if(id){
+    if (id) {
       const courseDetails = await coursesServices.getCourseDetails(id);
       setCourseData(courseDetails);
     }
   };
 
-  const renderRequests = ({_id, TraineeID, CourseID }) => {
+  const renderRequests = ({ _id, TraineeID, CourseID }) => {
     return (
       <div className="course-card-dashboard">
         <p className="course-name">{TraineeID}</p>
@@ -61,6 +63,7 @@ function CorporateDashboard() {
           id="big-button-primary"
           onClick={async () => {
             await Services.acceptRequest(TraineeID, CourseID, _id);
+            setRequestError("Course Added to Trainee Successfully");
           }}
         >
           {" "}
@@ -71,7 +74,8 @@ function CorporateDashboard() {
           variant="outlined"
           id="big-button-primary-outlined"
           onClick={async () => {
-            await Services.rejectRequest( _id);
+            await Services.rejectRequest(_id);
+            setRequestError("Request Rejected");
           }}
         >
           {" "}
@@ -115,6 +119,7 @@ function CorporateDashboard() {
                     state.loggedInUser._id
                   );
                   setRequests(reqs);
+                  setRequestError("");
                   console.log(reqs);
                   setPackageConfirmation("");
                   setTraineeError("");
@@ -130,6 +135,7 @@ function CorporateDashboard() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab("TRAINEES");
+                  setRequestError("");
                   setPackageConfirmation("");
                   setTraineeError("");
                   setTraineeSuccess(false);
@@ -144,6 +150,7 @@ function CorporateDashboard() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab("PACKAGE");
+                  setRequestError("");
                   setPackageConfirmation("");
                   setTraineeError("");
                   setTraineeSuccess(false);
@@ -158,6 +165,7 @@ function CorporateDashboard() {
                 id="side-bar-button"
                 onClick={() => {
                   setActiveTab("PROFILE");
+                  setRequestError("");
                   setPackageConfirmation("");
                   setTraineeError("");
                   setTraineeSuccess(false);
@@ -187,9 +195,25 @@ function CorporateDashboard() {
             <div>
               {activeTab == "REQUESTS" ? (
                 <div className="dashboard-main-card">
+                  
                   <p className="dashboard-header"> Latest Requests </p>
-                  {requests ? requests.map(renderRequests): 
-                  <p className="dashboard-header"> There are currently no requests</p>}
+                  <div className="grid-container">
+                  {requests ? (
+                    requests.map(renderRequests)
+                  ) : (
+                    <p className="dashboard-header">
+                      {" "}
+                      There are currently no requests
+                    </p>
+                  )}
+                  {requestError ? (
+                    <Alert severity="success" className="alert">
+                      {requestError}
+                    </Alert>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 </div>
               ) : activeTab == "TRAINEES" ? (
                 <>

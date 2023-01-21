@@ -11,9 +11,9 @@ function CourseDetailsCenter(props) {
 
   useEffect(() => {
     setRating(props.courseDetails?.RatingAvg);
-    console.log(props.isPurchased);
+    //console.log(props.isPurchased);
     
-  }, []);
+  }, [props.courseDetails]);
 
   const onRating = async () => {
     await rateCourse(props.courseDetails._id, rating.toString());
@@ -46,6 +46,7 @@ function CourseDetailsCenter(props) {
         </div>
         <div>
           <Rating
+          style={{marginInline: '20px'}}
             name={props.isPurchased ? "simple-controlled" : "read-only"}
             value={rating}
             readOnly={!props.isPurchased}

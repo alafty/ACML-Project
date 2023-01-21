@@ -40,6 +40,7 @@ export default function CourseDetails() {
  
       await instructorServices.getInstructorData(courseDetails?.Instructor)
       .then((data) =>{
+        //console.log(data);
         setInstructorDetails(data);
       })
       .catch((Error) => {
@@ -84,7 +85,7 @@ export default function CourseDetails() {
     isCoursePurchased();
     
     
-  }, []);
+  }, [courseDetails]);
 
   
 
