@@ -37,7 +37,7 @@ function PDFGenerator() {
           style={{ "width": "400px", "marginTop": "50px", "marginLeft": "70vw" }}
           onClick={
             () => {
-                Services.generatePDF(name, course, date);
+                Services.generatePDF(name, course);
             }
           }
         > Download PDF </Button>

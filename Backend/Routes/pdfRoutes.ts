@@ -9,7 +9,7 @@ import {
   
   pdfRouter.post('/generatePDF', createPDF);
   pdfRouter.post('/generateNotesPDF', createNotesPDF);
-  pdfRouter.get('/getPDF', getPDF );
+  pdfRouter.post('/getPDF', getPDF );
   pdfRouter.get('/getNotes', getNotes );
 
   

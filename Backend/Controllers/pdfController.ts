@@ -46,7 +46,7 @@ const createNotesPDF = (req: Request, res: Response) => {
 };
 
 const getPDF = (req: Request, res: Response) => {
-    res.sendFile(`${__dirname}/pdfs/result.pdf`)
+    res.sendFile(`${__dirname}/pdfs/${req.body.name}.pdf`)
 }
 const getNotes = (req: Request, res: Response) => {
     res.sendFile(`${__dirname}/TestDocument.pdf`)

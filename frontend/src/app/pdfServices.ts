@@ -19,10 +19,9 @@ export const generatePDF = async (name: String, course: String) => {
   };
   
   axios(config)
-  .then(() => axios.get('http://localhost:8000/pdf/getPDF', { responseType: 'blob' }))
+  .then(() => axios.post('http://localhost:8000/pdf/getPDF',data, { responseType: 'blob' }))
       .then((res) => {
         const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-
         saveAs(pdfBlob, 'newPdf.pdf');
       })
 
