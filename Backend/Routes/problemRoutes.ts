@@ -5,7 +5,7 @@ import {
   import { Router } from "express";
 import { protect } from "../Middleware/authMiddleware";
   const problemRouter = Router();
-  problemRouter.post("/create",createProblem);
+  problemRouter.post("/create", protect, createProblem);
   problemRouter.post("/view", protect ,getMyProblems);
   
   export default  problemRouter ;

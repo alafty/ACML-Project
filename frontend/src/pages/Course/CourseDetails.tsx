@@ -11,6 +11,8 @@ import PriceCard from "../../components/PriceCard";
 import CourseDetailsSubtitles from "../../components/Course/CourseDetailsSubtitles";
 import { useGlobalState } from "../../App";
 import LoggedInBar from "../../components/loggeedInAppBar";
+import httpClient from "../../utils/httpClient";
+import { getTokenHeader } from "../../utils/authUtils";
 
 export default function CourseDetails() {
   const { id } = useParams();
@@ -24,6 +26,7 @@ export default function CourseDetails() {
   const [discountPercentage, setDiscountPercentage] = useState("");
   const [state, dispatch] = useGlobalState();
   const [isPurchased, setPurchased] = useState(false);
+
   
 
   useEffect(() => {
@@ -34,83 +37,56 @@ export default function CourseDetails() {
       //courseServices.getCourseQuizzes(id).then((data) => setQuizzes(data));
     }
     const fetchInstructorDetails = async () => {
+ 
       await instructorServices.getInstructorData(courseDetails?.Instructor)
       .then((data) =>{
         setInstructorDetails(data);
       })
       .catch((Error) => {
-        console.log(Error);
+       // console.log(Error);
         
       });
+    
     }
     const isCoursePurchased = async () => {
+      var config = {
+        method: "get",
+        url: "/create/me",
+        headers: {
+         ...getTokenHeader(), 
+        },
+        data: null,
+      };
+      httpClient(config)
+      .then(function (response) {
+        state.loggedInUser = response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      //console.log(courseDetails._id);
       if(state.loggedInUser.Username){
+       var pur = false ;
+        for (let i = 0 ; i<state.loggedInUser.PurchasedCourses.length;i++){
+          console.log(state.loggedInUser.PurchasedCourses[i].courseID);
+          console.log(state.loggedInUser.PurchasedCourses);
+          if (state.loggedInUser.PurchasedCourses[i].courseID.includes(id.trim())){
+            pur=true;
+            break;
+          }
+        }
+        setPurchased(pur);
         console.log(isPurchased);
-        setPurchased(state.loggedInUser.PurchasedCourses.includes(courseDetails._id));
       }
-    }
+    } 
     fetchCourseDetails();
     fetchInstructorDetails();
     isCoursePurchased();
     
     
-  }, [courseDetails, id, instructorDetails]);
-
-  // const handleUrlUpload = async () => {
-  //   try {
-  //     const vidId = extractIdFromVideoUrl(videoUrl);
-  //     courseServices.uploadCourseVideo(id, vidId).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.VideoId = vidId;
-  //         setVideoStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setVideoUrl('');
-  //       } else {
-  //         setVideoStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setVideoStatusText("Make sure url is valid");
-  //   }
-  // };
-
-  // const handleDurationAdding = async () => {
-  //   try {
-  //     const duration = Number.parseInt(discountDuration);
-  //     const percentage = Number.parseInt(discountPercentage);
-      
-  //     courseServices.addCourseDiscount(id, duration, percentage).then((data) => {
-  //       if (data) {
-  //         var newCourse = courseDetails;
-  //         newCourse.Discounts.push(data);
-  //         setDiscountStatusText("Success!");
-  //         setCourseDetails(newCourse);
-  //         setDiscountDuration('');
-  //         setDiscountPercentage('')
-  //       } else {
-  //         setDiscountStatusText("Try again");
-  //       }
-  //     });
-  //   } catch {
-  //     setDiscountStatusText("Make sure discount is valid");
-  //   }
-  // };
+  }, []);
 
   
-
-  ///TODOLIST
-  //Course name
-  //Course subject
-  //Course video preview
-  //Course instructors
-  //Course price
-  //Course hours
-  //List of subtitles
-  //Each subtitle would go to the subtitle page
-  //Subtitle page has video, description and the quiz
-  //Price should be rendered with descount depending on country
-  //Course details page as 3 different styles. Non-purchaser, purchaser and instructor
 
   return (
     <div className="container">
@@ -127,14 +103,17 @@ export default function CourseDetails() {
             <PriceCard 
             userDetails={state.loggedInUser}
             courseDetails={courseDetails} 
+            courseID = {id}
             isPurchased={isPurchased} 
-            type={state.loggedInUser.type} />
+            type={state.loggedInUser.type} 
+            />
 
             <Divider variant= "fullWidth"/>
         </div>
         <div>
-          <CourseDetailsCenter courseDetails={courseDetails} />
+          <CourseDetailsCenter courseDetails={courseDetails} isPurchased={isPurchased} />
           <CourseDetailsSubtitles courseDetails={courseDetails} />
+        
         </div>
       </div>
     </div>

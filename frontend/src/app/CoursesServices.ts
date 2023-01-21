@@ -1,8 +1,11 @@
 import axios from "axios";
 import { response } from "express";
 import e from "express";
+import { useState } from "react";
 import qs from "qs";
 import httpClient from "../utils/httpClient";
+import { getTokenHeader } from "../utils/authUtils";
+import { useGlobalState } from "../App";
 
 const COURSES_URL = "/courses";
 
@@ -26,34 +29,26 @@ export const getRecommendedCourses = async () => {
   return {};
 };
 
-export const searchCourseBySubject = async (searchTerm: String) => {
+export const searchCourses = async (searchTerm: String) => {
   var data = qs.stringify({
     searchTerm: searchTerm,
   });
   var config = {
     method: "post",
     url: `${COURSES_URL}/search`,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
     data: data,
   };
-  axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response));
-
-      if (response.data) {
-        localStorage.setItem("SearchResults", JSON.stringify(response.data));
-      } else {
-        localStorage.setItem(
-          "SearchResults",
-          `No search items found ${searchTerm}`
-        );
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  try {
+    const response = await httpClient(config);
+    if (response.data) {
+      return response.data;
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
 };
 
 const getCourseDetails = async (id: string) => {
@@ -67,17 +62,17 @@ const getCourseDetails = async (id: string) => {
 };
 
 const getCourseQuizzes = async (Course: string) => {
-  const Body = {
-    CourseID: Course,
-  };
-  const data: [String] = [""];
-  await axios.post("http://localhost:8000/quiz/getCourseQuizzes", Body);
-  return data;
+  var data = qs.stringify( {
+    _id: Course,
+  });
+  const response = await httpClient.post("http://localhost:8000/quiz/getCourseQuizzes", data);
+
+  return response.data;
 };
 
 const createCourse = async (
-  name:String,
-  subject: String, 
+  name: String,
+  subject: String,
   instructor: String,
   price: String,
   totalHours: String,
@@ -86,42 +81,61 @@ const createCourse = async (
   quizzes: any[],
   Subtitles: any[]
 ) => {
+  var data = qs.stringify({
+    Name: name,
+    Subject: subject,
+    Instructor: instructor,
+    Price: price,
+    TotalHours: totalHours,
+    VideoId: vidID,
+    Description: description,
+    Quizzes: quizzes,
+    Subtitles: Subtitles,
+  });
+  var config = {
+    method: "post",
+    url: "http://localhost:8000/courses/",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+};
+
+const changeProgress = async (
+  courseID: string,
+  userID: string,
+  progress: string
+) => {
+
 var data = qs.stringify({
-  'Name': name,
-  'Subject':  subject,
-  'Instructor': instructor,
-  'Price': price,
-  'TotalHours': totalHours,
-  'VideoId': vidID,
-  'Description': description,
-  'Quizzes': quizzes,
-  'Subtitles': Subtitles
+  courseID: courseID,
+  progress: progress ,
+  userID: userID
 });
 var config = {
-  method: 'post',
-  url: 'http://localhost:8000/courses/',
+  method: 'put',
+  url: 'http://localhost:8000/courses/progress',
   headers: { 
     'Content-Type': 'application/x-www-form-urlencoded', 
   },
   data : data
 };
+console.log(data);
+const response = await httpClient.put("http://localhost:8000/courses/progress", data);
 
-axios(config)
-.then(function (response) {
-  console.log(JSON.stringify(response.data));
-})
-.catch(function (error) {
-  console.log(error);
-});
 
-};
+  return response.data;
 
-const createQuiz = async (
-
-) => {
-  
 }
-
 const createSubtitle = async (
   courseId: string,
   videoId: string,
@@ -132,13 +146,13 @@ const createSubtitle = async (
     id: courseId,
     VideoId: videoId,
     Description: description,
-    Order: order
+    Order: order,
   });
   var response = await httpClient.put(`${COURSES_URL}/subtitle`, data);
 
-  if(response.status == 200){
-    return 'success'
-  }else {
+  if (response.status == 200) {
+    return "success";
+  } else {
     return response.data;
   }
 };
@@ -188,39 +202,72 @@ const addCourseDiscount = async (
   return response.data;
 };
 
-export const rateCourses = async (courseID: String, rating: String) => {
+export const rateCourse = async (courseID: String, rating: String) => {
   var data = qs.stringify({
     id: courseID,
     rating: rating,
   });
   var config = {
     method: "post",
-    url: "http://localhost:8000/courses/rate",
+    url: "/courses/rate",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Cookie: "userData=j%3A%7B%22Country%22%3A%22Egypt%22%7D",
+      ...getTokenHeader(),
+    },
+    data: data,
+  };
+  try {
+    const response = await httpClient(config);
+    if (response.data) {
+      return response.data;
+    } else {
+      return {};
+    }
+  } catch (error) {
+    console.log(error);
+    return {};
+  }
+};
+export const BuyCourse = async (courseID: String) => {
+  var data = qs.stringify({
+    courseID: courseID.trim(),
+  });
+  var config = {
+    method: "put",
+    url: "/courses/payCourse",
+    headers: {
+      ...getTokenHeader(),
     },
     data: data,
   };
 
-  axios(config)
+  httpClient(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
-      if (response.data) {
-        localStorage.setItem("rateCourse", JSON.stringify(response.data));
-      } else {
-        localStorage.setItem("rateCourse", "Nothing Found");
-      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  const [state, dispatch] = useGlobalState();
+  var config = {
+    method: "get",
+    url: "/create/me",
+    headers: {
+      ...getTokenHeader(),
+    },
+    data: data,
+  };
+  httpClient(config)
+    .then(function (response) {
+      state.loggedInUser = response.data;
     })
     .catch(function (error) {
       console.log(error);
     });
 };
-
-const Services = {
+const CoursesServices = {
   getAllCourses,
-  searchCourseBySubject,
-  rateCourses,
+  searchCourses,
+  rateCourses: rateCourse,
   getCourseDetails,
   getCourseQuizzes,
   updateSubtitle,
@@ -228,7 +275,9 @@ const Services = {
   addCourseDiscount,
   getRecommendedCourses,
   createCourse,
-  createSubtitle
+  createSubtitle,
+  changeProgress,
+  BuyCourse
 };
 
-export default Services;
+export default CoursesServices;

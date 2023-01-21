@@ -13,7 +13,8 @@ import {
   recommendedCourses,
   purchaseCourse,
   getCourseSubtitles,
-  getSubtitle
+  getSubtitle,
+  putCourseProgress
 } from "../Controllers/coursesController";
 import { protect } from "../Middleware/authMiddleware";
 
@@ -35,6 +36,7 @@ coursesRouter.post("/subtitles",getCourseSubtitles);
 
 coursesRouter.post("/subtitle",getSubtitle)
 
+coursesRouter.put("/progress", putCourseProgress);
 
 coursesRouter.put("/videoId", protect, putCourseVideo); // Protect. Type = instructor || admin. Course creator == id
 
@@ -48,6 +50,6 @@ coursesRouter.post("/rate", protect, addRating); // Protect. Type == indivTraine
 
 coursesRouter.get('/recommended', recommendedCourses);
 
-coursesRouter.put("/payCourse",purchaseCourse);
+coursesRouter.put("/payCourse", protect, purchaseCourse);
 
 export default coursesRouter;

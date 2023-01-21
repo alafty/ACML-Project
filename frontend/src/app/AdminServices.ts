@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs';
 import { setToken } from '../utils/authUtils';
 import httpClient from '../utils/httpClient';
-
+import { getTokenHeader } from "../utils/authUtils";
 const createAdmin = async (
     username:String,
     email: String,
@@ -88,6 +88,34 @@ const createAdmin = async (
       });
   };
 
-  const Services = { createAdmin, createCorp, CreateInstructor}
+  const RefundUser = async (
+    userID:String,
+    amount: Number,
+    callback:any
+  
+  ) => {
+    var data = qs.stringify({
+      _id : userID,
+      amount: amount,
+    });
+    
+    var config = {
+      method: "post",
+      url: "/create/refund",
+      data: data,
+      headers: {
+        ...getTokenHeader(), 
+       }
+    };
+  
+    httpClient(config)
+    .then(function (response) {
+      callback(response.status);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  };
+  const Services = { createAdmin, createCorp, CreateInstructor,RefundUser}
 
   export default Services;

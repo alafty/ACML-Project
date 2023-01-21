@@ -29,7 +29,7 @@ html, body{
     flex-direction: column;
     align-items: center;
     width: 500px;
-    height: 350px;
+    height: min-content;
     padding: 20px;
     margin: 40px;
     border-radius: 20px;

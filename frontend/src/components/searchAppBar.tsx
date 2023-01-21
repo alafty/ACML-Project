@@ -56,9 +56,22 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+
 export default function SearchAppBar(props) {
   const[image, setImage] = React.useState(props.page);
   const navigation = useNavigate();
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const onChangeText = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchTerm(e.target.value);
+  };
+  
+  const redirectToSearch = () => {
+    if (searchTerm.length != 0) navigation(`/searchCourse=${searchTerm}`);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -103,11 +116,13 @@ export default function SearchAppBar(props) {
             <StyledInputBase
               placeholder="Search Courses or Instructors.."
               inputProps={{ 'aria-label': 'search' }}
+              onChange={onChangeText}
             />
           </Search>
           <Button 
           variant="contained" 
           id='small-button-primary'
+          onClick={redirectToSearch}
           >Search</Button>
           </div>
           <Link to={'/login'}>

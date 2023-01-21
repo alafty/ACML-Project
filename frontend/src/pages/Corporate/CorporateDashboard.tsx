@@ -48,7 +48,6 @@ function CorporateDashboard() {
       const courseDetails = await coursesServices.getCourseDetails(id);
       setCourseData(courseDetails);
     }
-    
   };
 
   const renderRequests = ({_id, TraineeID, CourseID }) => {
